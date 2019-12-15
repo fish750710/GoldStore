@@ -82,41 +82,41 @@
           <FrontSidebar class="sticky-top"></FrontSidebar>
         </div>
 
-        <swiper class="m-menu-Sidebar mt-5 pt-1 pb-2 menu-ul">
-          <swiper-slide class="mr-3 ml-2 pt-1" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar pl-4" @click="badgeSearch('Apple')">
-              <i class="fab fa-apple pr-2"></i>APPLE
+        <swiper class="m-menu-Sidebar mt-5  pb-2 menu-ul ">
+          <swiper-slide class="mr-3 ml-2 " style="border: 1px solid #50CBCB;max-width:44%">
+            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center  " @click="badgeSearch('Apple')" >
+              <i class="fab fa-apple pr-2 pt-1"></i>APPLE
             </a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 pt-1" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar pl-4" @click="badgeSearch('ASUS')">
-              <i class="fas fa-microchip pr-2"></i>ASUS
+          <swiper-slide class="mr-3 ml-2 " style="border: 1px solid #50CBCB;max-width:44%">
+            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('ASUS')">
+              <i class="fas fa-microchip pr-2 pt-1"></i>ASUS
             </a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 pt-1" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar pl-4" @click="badgeSearch('HTC')">
-              <i class="fas fa-glasses pr-2"></i>HTC
+          <swiper-slide class="mr-3 ml-2 " style="border: 1px solid #50CBCB;max-width:44%">
+            <a href="#" class="menuSidebar w-100 d-flex justify-content-center"   @click="badgeSearch('HTC')">
+              <i class="fas fa-glasses pr-2 pt-1"></i>HTC
             </a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 pt-1" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar pl-4" @click="badgeSearch('小米')">
-              <i class="fas fa-robot pr-2"></i>mi
+          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
+            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('小米')">
+              <i class="fas fa-robot pr-2 pt-1"></i>mi
             </a>
           </swiper-slide>
 
-          <swiper-slide class="mr-3 ml-2 pt-1" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar pl-4" @click="badgeSearch('三星')">
-              <i class="fas fa-robot pr-2"></i>三星
+          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
+            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('三星')">
+              <i class="fas fa-robot pr-2 pt-1"></i>三星
             </a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 pt-1" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar pl-4" @click="badgeSearch('NOKIA')">
-              <i class="fas fa-robot pr-2"></i>NOKIA
+          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
+            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('NOKIA')">
+              <i class="fas fa-robot pr-2 pt-1"></i>NOKIA
             </a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 pt-1" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar pl-4" @click="badgeSearch('MOTO')">
-              <i class="fas fa-robot pr-2"></i>MOTO
+          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
+            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('MOTO')">
+              <i class="fas fa-robot pr-2 pt-1"></i>MOTO
             </a>
           </swiper-slide>
         </swiper>
@@ -700,7 +700,8 @@ export default {
       color: $dark;
       // transition: all .7s;
       font-weight: bold;
-      width: 80px;
+      // width: 80px;
+     
     }
 
     a:hover {
@@ -725,7 +726,6 @@ export default {
       font-weight: bold;
       width: 80px;
     }
-
     a:hover {
       color: $primary;
       position: relative;

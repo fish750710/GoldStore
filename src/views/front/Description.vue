@@ -421,10 +421,10 @@ export default {
     margin-top: 58px;
   }
   .shop {
-    background-size: 800px;
+    background-size: 800px ;
   }
   .shop2 {
-    background-size: 800px;
+    background-size: 800px ;
   }
 }
 @include m568() {
@@ -471,10 +471,10 @@ export default {
     overflow: hidden;
   }
   .shop {
-    background-size: 600px;
+    background-size: 600px 250px;
   }
   .shop2 {
-    background-size: 600px;
+    background-size: 600px 250px;
   }
 }
 @include m480() {

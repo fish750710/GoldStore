@@ -6,7 +6,7 @@
     <div id="close-menu" class></div>
     <nav class="header navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <div class="col-1 col-sm-1 col-md-1 col-lg-2 col-xl-2 mr-0">
-        <a href="#" class @click="goIndex">
+        <a href="#" class="" @click="goIndex" >
           <img src="@/assets/images/Logo-3w150.png" alt class="d-logo" />
           <img src="@/assets/images/Logo-64.png" alt class="m-logo" style="width:45px" />
         </a>
