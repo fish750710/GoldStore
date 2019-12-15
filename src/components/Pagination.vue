@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav>
-            <ul class="pagination">
+            <ul class="pagination" v-if="getpagin">
                 <li class="page-item"  :class="{'disabled': !getpagin.has_pre}">
                     <a class="page-link" href="#" @click="getPage(getpagin.current_page - 1)" >Previous</a>
                 </li>

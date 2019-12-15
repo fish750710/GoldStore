@@ -1,31 +1,32 @@
 <template>
   <div>
-    <!-- <loading :active.sync="isLoading"></loading> -->
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-8 col-sm-12 my-5 text-center">
-          <!-- <img :src="product.imageUrl" alt width="500px" /> -->
           <pic-zoom :previewImg="product.imageUrl" :zoomImg="product.imageUrl"></pic-zoom>
         </div>
 
-        <div class="col-md-4 col-sm-12 my-5">
+        <div class="col-md-4 col-sm-12 my-5" >
           <h4>{{ product.title }}</h4>
-          <h5 class="text-info">{{ product.spec }} {{ product.content }}</h5>
-          <a href="#">
-            <i class="fas fa-heart text-danger position-absolute" v-if="getFilteredFavorite(product)"
-              @click.prevent="removeFavorite(product)" style="top:5px;right:15px; font-size:20px"></i>
-            <i class="far fa-heart text-danger position-absolute" v-else
-              @click.prevent="addFavorite(product)" style="top:5px;right:15px; font-size:20px"></i>
-          </a>
-          <a href="#" class="badge badge-warning ml-2" @click.prevent="badgeSearch">{{ product.brand }}</a>
-          <a href="#" class="badge badge-info ml-2" @click.prevent="badgeSearch">{{ product.category }}</a>
-          <a href="#" class="badge badge-secondary ml-2" @click.prevent="badgeSearch">{{ product.content }}</a>
-          <a href="#" class="badge badge-success ml-2" @click.prevent="badgeSearch">{{ product.spec }}</a>
+          <div class="d-flex justify-content-between">
+            <h5 class="text-info">{{ product.spec }} {{ product.content }}</h5>
+            <a href="#" class="">
+              <i class="fas fa-heart text-danger " v-if="getFilteredFavorite(product)"
+                @click.prevent="removeFavorite(product)" style="font-size:20px"></i>
+              <i class="far fa-heart text-danger " v-else
+                @click.prevent="addFavorite(product)" style="font-size:20px"></i>
+            </a>            
+          </div>
           
-          <div class="h5 text-right" v-if="product.origin_price">
+          <a href="#" class="badge badge-warning ml-2" @click="badgeSearch">{{ product.brand }}</a>
+          <a href="#" class="badge badge-info ml-2" @click="badgeSearch">{{ product.category }}</a>
+          <a href="#" class="badge badge-secondary ml-2" @click="badgeSearch">{{ product.content }}</a>
+          <a href="#" class="badge badge-success ml-2" @click="badgeSearch">{{ product.spec }}</a>
+          
+          <div class="h5 text-right" v-if="product.origin_price ">
             <del>{{ product.origin_price * quantity | currency }} 元</del>
           </div>
-          <div class="h2 text-danger text-right">{{ product.price * quantity | currency}} 元</div>
+          <div class="h2 text-danger text-right" v-if="product.price">{{ product.price * quantity | currency}} 元</div>
           <hr />
           <div class="text-left text-l">購買數量</div>
           <div class="h6 text-right" v-if="product.stock > 5">庫存：{{ product.stock }} 件</div>
@@ -33,7 +34,6 @@
           <div class="h6 text-right text-danger" v-if="product.stock == 0">補貨中</div>
 
           <select name class="form-control mt-3" v-model="quantity" v-if="product.stock != 0">
-            <!-- <option :value="num" disabled selected>--請選擇--</option> -->
             <option
               :value="num"
               v-for="num in Number(product.stock)"
@@ -73,18 +73,18 @@
 
 
 
-
+      <!-- swiper -->
       <div class="h5 text-center swiper-like-rwd"><i class="fas fa-heart text-danger mr-2"></i>猜你喜歡</div>
       <div class="swiper-container swiper-like-rwd" v-if="filterdata.length > 0">
         <div class="swiper-wrapper py-5">
           <div class="swiper-slide " v-for="item in filterdata" :key="item.id" >
             <div class="card border-0 bg-transparent" v-if="item.is_enabled" >
-              <!-- <a href="#" @click="sameProduct(item.id)"> -->
-                <img class="card-img-top" alt="..." :src="item.imageUrl" style="max-width:200px" />
-              <!-- </a> -->
+              <a href="#" @click="goDetail(item.id)" class="text-center">
+                <img class="card-img-top " alt="..." :src="item.imageUrl" style="max-width:200px" />
+              </a>
               <div class="card-body px-0" >
                 <div class="m-0">
-                    <a href="#" class="h6 text-primary text-decoration-none" >{{ item.title }} </a>
+                    <a href="#" class="h6 text-primary text-decoration-none" @click="goDetail(item.id)">{{ item.title }} </a>
                 </div>
                 <div class="d-flex justify-content-between mt-2">
                     <del class="h7 text-muted" v-if="item.origin_price > 0">原價 {{ item.origin_price | currency }} 元</del>
@@ -100,51 +100,7 @@
           </div>
         </div>
       </div>
-
-
     </div>
-
-    <!-- 查看更多 model
-        <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" >
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ product.title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img :src="product.imageUrl" class="img-fluid" alt="">
-                <blockquote class="blockquote mt-3">
-                <p class="mb-0">{{ product.content }}</p>
-                <footer class="blockquote-footer text-right">{{ product.description }}</footer>
-                </blockquote>
-                <div class="d-flex justify-content-between align-items-baseline">
-                <div class="h4" v-if="!product.price">{{ product.origin_price }} 元</div>
-                <del class="h6" v-if="product.price">原價 {{ product.origin_price }} 元</del>
-                <div class="h4" v-if="product.price">現在只要 {{ product.price }} 元</div>
-                </div>
-                <select name="" class="form-control mt-3" v-model="product.num">
-                <option :value="num" v-for="num in 10" :key="num">
-                    選購 {{num}} {{product.unit}}
-                </option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <div class="text-muted text-nowrap mr-3">
-                小計 <strong>{{ product.num * product.price }}</strong> 元
-                </div>
-                <button type="button" class="btn btn-primary"
-                @click="addtoCart(product.id, product.num)">
-                <i class="fas fa-spinner fa-spin" v-if="product.id === status.loadingItem"></i>
-                加到購物車
-                </button>
-            </div>
-            </div>
-        </div>
-    </div>-->
   </div>
 </template>
 
@@ -187,7 +143,7 @@ export default {
         vm.product = response.data.product; //將回傳資料存在 product
          //類別
         // $('#productModal').modal('show'); //開啟 modal
-        // console.log(vm.products);
+        // console.log(vm.product);
 
         vm.status.loadingItem = ""; //開啟後動畫清空
       });
@@ -336,6 +292,13 @@ export default {
       this.$router.push("/checkout").catch(err => {});
       this.$bus.$emit("refreshCheckOut");
     },
+    goDetail(id) {
+      // $("#favoritetModal").modal("hide");
+      // $("#cartModal").modal("hide");
+      console.log(this.id)
+      this.$router.push(`/detail/${id}`).catch(err => {});
+      this.$bus.$emit("refreshDetail");
+    },
     getswiper() {
       this.$nextTick(() => {
         setTimeout(() => {
@@ -374,7 +337,6 @@ export default {
     
     filterdata() {
       const vm = this;
-      
       return vm.filteritem = vm.products.filter((item, i) => {
         // console.log(item);
         if (vm.product.title != item.title) {
@@ -426,27 +388,19 @@ export default {
 
 
 @include desktop-top() {
-  
 }
 @include pc() {
-
- 
 }
 @include pad() {
-
-
 }
 @include m568() {
   .swiper-like-rwd{
     display: none;
   }
-
 }
 @include m480() {
-
 }
 @include iphone5() {
-
 }
 
 </style>

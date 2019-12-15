@@ -7,10 +7,6 @@
         </div>
 
        <div class=" mt-4" >
-         <!-- <div class="col-lg-2">
-           
-         </div> -->
-        
         <div class="row col-lg-12">
           <div class="col-xl-3 col-md-4 col-sm-6 mb-4 item-hover " v-for="item in products" :key="item.id" >
           <div class="card border-0 shadow-sm " v-if="item.is_enabled != 0" >
@@ -48,7 +44,6 @@
                 <span class="ml-4 text-white">加到購物車</span>
             </button>
                           
-            
           </div>
         </div>
         
@@ -60,79 +55,25 @@
 </template>
 
 <script>
-// import FrontNavbar from '@/components/FrontNavbar.vue';
-// import Alert from '@/components/AlertMsg.vue';
-
-// import Pagin from '@/components/Pagination.vue' //分頁
 import $ from 'jquery';
 
 export default {
     components: {
-      // Pagin, //分頁
-      // FrontNavbar,
-      // Alert,
+
   },
   data() {
     return {
-      // productsInfiniteScrollCount: 4,
       productsOriginal: [],
-      // productsGetCategory: [],
       products: [],
-      // pagination:{}, //分頁
-      // isLoading: false,
       product:{}, //單筆資料
       status:{
         loadingItem:'',
       },
       favorites: [],
       favoriteLength: 0,
-      // cart:{
-      //   carts:{
-      //     length:[],
-      //   }
-      // },
-      // coupon_code:'',
-      // coupon_msg:'',
-      // form:{
-      //   user:{
-      //     name:'',
-      //     email:'',
-      //     tel:'',
-      //     address:'',
-      //   },
-      //   message:'',
-      // },
-           
     };
   },
   methods: {
-    // getProducts(page = 1) {
-    //   //  this.$store.dispatch('getProducts');
-    //   const vm = this;
-    //   const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
-    //   vm.$store.dispatch('updateLoading', true);      
-      
-    //   this.$http.get(url).then((response) => {
-    //     vm.products =  response.data.products; //將回傳資料存在 products
-    //     // console.log(response);
-    //     vm.$store.dispatch('updateLoading', false);
-        
-    //     vm.pagination = response.data.pagination; //把分頁資料存起來
-      
-    //   });
-    // },
-    // getProduct(id){
-    //   const vm = this;
-    //   const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-    //   vm.status.loadingItem = id; //點選到的選項 loading動畫
-    //   this.$http.get(url).then((response) => {
-    //     vm.product = response.data.product;  //將回傳資料存在 product
-    //     $('#productModal').modal('show'); //開啟 modal
-    //     // console.log(response);
-              
-    //     vm.status.loadingItem = ''; //開啟後動畫清空
-    //   });  
-    // },
     //加入購物車
     addtoCart(id ,qty = 1){ // id 和 數量 預設=1
       //  this.$store.dispatch('addtoCart', { id, qty });
@@ -297,40 +238,15 @@ export default {
     this.favorites = JSON.parse(localStorage.getItem('favorite')) || [];
     this.getFavoriteLength();
     this.getProductAll();
-    // this.getCategory()
-    // const vm = this
-    // vm.currentPath = vm.$route
-    // // console.log(vm.currentPath);
-    // const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
-    // // vm.isLoading = true
-    // this.$http.get(api).then((response) => {
-    //   // console.log('getProducts', response.data)
-    //   vm.productsOriginal = response.data.products
-    //   // console.log(vm.productsOriginal);
-    //   // vm.isLoading = false
-    // }).then(() => {
-    //   vm.getCategory()
-    // }).then(() => {
-      // if (vm.products.length > vm.productsInfiniteScrollCount) {
-      //   window.addEventListener('scroll', vm.debounce(vm.scrollToLoading, 300))
-      // } else {
-      //   console.log('stop scroll', vm.products.length, vm.productsInfiniteScrollCount)
-      // }
-    // })
   },
 };
 </script>
 
 
 <style lang="scss" scoped>
-
-$primary:    #50CBCB;
-$secondary:  #CED3D3;
-$info:       #AAAAAA;
-$dark:       #5E5E5E;
+@import "@/assets/all";
 
 .item-hover div>a:hover{
-  // background: rgba(0, 0, 0, 0.02);
   box-shadow: 3px 3px 10px rgba(227,219,208, .5);
 }
 
@@ -342,7 +258,6 @@ $dark:       #5E5E5E;
     transform: translate(22px, 0);
     transition: transform 0.5s linear;
     color:$primary;
-    // transition: all 1s ease;
   }
   &:hover span{
     color:$secondary;

@@ -77,7 +77,7 @@
                   </div>
                   <div class="d-flex justify-content-between mt-5 btn-rwd">
                     <div class="text-right" >
-                      <button class="btn btn-primary font-weight-bold " @click.prevent="goIndex">再去逛逛</button>
+                      <button class="btn btn-primary font-weight-bold " @click="goIndex">再去逛逛</button>
                     </div>
                     <div class="text-right" v-if="order.is_paid === false">
                       <button class="btn btn-danger font-weight-bold ml-3">確認付款去</button>
@@ -89,15 +89,6 @@
             </tr>
           </tbody>
         </table>
-        <!-- <div class="d-flex justify-content-between">
-          <div class="text-right" >
-            <button class="btn btn-warning font-weight-bold" @click.prevent="goIndex">再去逛逛</button>
-          </div>
-          <div class="text-right" v-if="order.is_paid === false">
-            <button class="btn btn-danger font-weight-bold">確認付款去</button>
-          </div>        
-        </div> -->
-        
       </form>
     </div>
     </div>
@@ -281,10 +272,6 @@ export default {
       padding:10px 0px;
     }
   }
-}
-@media (max-width: 736px) {
-  
-  
 }
 
 </style>

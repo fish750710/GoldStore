@@ -58,19 +58,8 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/all";
 
-// .clearfix::after{
-//   clear: both;
-// }
 .footer{
-    // height:220px ;
-    // position: relative;
-    // bottom: 0;
     max-width:100%;
-    // .footer-bottom{
-    //     position: absolute;;
-    //     bottom: 0;
-    //     max-width:100%;
-    // }
 }
 .footer-list{
     list-style: none;
@@ -82,7 +71,6 @@ export default {
     font-size: 36px;
     padding-right: 15px;
     list-style: none;
-
     li {
         float: right;
         padding: 0px 10px;

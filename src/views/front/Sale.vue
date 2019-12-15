@@ -16,7 +16,7 @@
                         即刻享有限時
                         <span class="badge badge-primary">88</span>
                         折優惠
-                        <button class="btn btn-primary font-weight-bold ml-3 animated infinite flipInY " @click.prevent="goIndex"
+                        <button class="btn btn-primary font-weight-bold ml-3 animated infinite flipInY " @click="goIndex"
                             style="animation-duration: 3s;animation-iteration-count:3">
                             <i class="fas fa-running"><span class="ml-2">拜金去</span></i>
                         </button>
@@ -52,9 +52,4 @@ export default {
         max-width: 100%;
     }
 }
-
-
-// @media (max-width:320px) {
-
-// }
 </style>

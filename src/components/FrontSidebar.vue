@@ -5,13 +5,13 @@
         <div class=" col-md-2 d-none d-md-block " >
           <ul class="h6 menu-ul">
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('APPLE')">
-              <i class="fab fa-apple pr-2"></i>APPLE</a></li>
+              <i class="fab fa-apple pr-3 ico-1"></i><span class="">APPLE</span></a></li>
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('ASUS')">
-              <i class="fas fa-microchip pr-2"></i>ASUS</a></li>
+              <i class="fas fa-microchip pr-3 ico-2"></i><span class="">ASUS</span></a></li>
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('HTC')">
-              <i class="fas fa-glasses pr-2"></i>HTC</a></li>
+              <i class="fas fa-glasses pr-3 ico-3"></i><span class="">HTC</span></a></li>
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('小米')">
-              <i class="fas fa-robot pr-2"></i>mi</a></li>
+              <i class="fas fa-robot pr-3"></i><span class="">mi</span></a></li>
           </ul>
         </div>
      
@@ -53,7 +53,6 @@ export default {
   .menuSidebar{
     text-decoration: none;
     color: $dark;    
-    // transition: all .7s;
     font-weight: bold;
     width: 80px;
   }
@@ -77,32 +76,23 @@ export default {
   
 }
 
-// .menu-ul a:after {
-  
-//     content: ' ';
-//     position: absolute;
-//     z-index: 2;
-//     bottom: -2px;
-//     left: 28px;
-//     display: block;
-//     // width: 65px;
-//     // height: 1px;
-//     transform: translate(-50%);
-// }
-
-// .menu-ul a:hover:after {
-//     height: 2px;
-//     animation: ad_width .3s linear forwards;
-//     background: $info;
-// }
-
 .sticky-top{
   position:sticky;
   top:0;
   z-index: 999;
   // bottom: 50vh;
 }
-
+.ico-1{
+  margin-left: 3px;
+  margin-right: 2px;
+}
+.ico-2{
+  margin-left: 1px;
+  margin-right: 1px;
+}
+.ico-3{
+  margin-right: 1px;
+}
 @keyframes ad_width {
     from {
         width: 0

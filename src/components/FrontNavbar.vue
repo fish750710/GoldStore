@@ -6,7 +6,7 @@
     <div id="close-menu" class></div>
     <nav class="header navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <div class="col-1 col-sm-1 col-md-1 col-lg-2 col-xl-2 mr-0">
-        <a href="#" class @click.prevent="goIndex">
+        <a href="#" class @click="goIndex">
           <img src="@/assets/images/Logo-3w150.png" alt class="d-logo" />
           <img src="@/assets/images/Logo-64.png" alt class="m-logo" style="width:45px" />
         </a>
@@ -17,13 +17,13 @@
       >
         <ul class="d-menu nav">
           <li class="nav-item mt-2 menu-ul col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 m-0">
-            <a href="#" class="m-3 menuSidebar" @click.prevent="goDescription">產品介紹</a>
+            <a href="#" class="m-3 menuSidebar" @click="goDescription">產品介紹</a>
           </li>
           <li class="nav-item mt-2 menu-ul col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 m-0">
-            <a href="#" class="m-3 menuSidebar" @click.prevent="goSale">優惠活動</a>
+            <a href="#" class="m-3 menuSidebar" @click="goSale">優惠活動</a>
           </li>
           <li class="nav-item mt-2 menu-ul col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 m-0">
-            <a href="#" class="m-3 menuSidebar" @click.prevent="goIndex">購物商城</a>
+            <a href="#" class="m-3 menuSidebar" @click="goIndex">購物商城</a>
           </li>
         </ul>
 
@@ -57,7 +57,7 @@
               <a
                 href="#"
                 class="nav-link text-light menu-top"
-                @click.prevent="openLogin"
+                @click="openLogin"
                 v-if="!successStatus"
               >
                 <i class="far fa-user-circle userlogo"></i>
@@ -79,26 +79,23 @@
                 <button
                   class="dropdown-item dropdown-text"
                   type="button"
-                  @click.prevent="goUserOrders"
+                  @click="goUserOrders"
                 >
-                  <i class="far fa-address-book mr-1"></i>查訂單
+                  <i class="far fa-address-book mr-1 user-list-icon-1"></i><span>查訂單</span>
                 </button>
                 <button
                   class="dropdown-item dropdown-text"
                   type="button"
-                  @click.prevent="goProducts"
+                  @click="goProducts"
                 >
-                  <i class="far fa-clipboard mr-1"></i>管理商品
+                  <i class="fas fa-clipboard-list mr-1 user-list-icon-2"></i><span>管理商品</span>
                 </button>
-                <button class="dropdown-item dropdown-text" type="button" @click.prevent="signout">
-                  <i class="fas fa-sign-out-alt mr-1"></i>登出
+                <button class="dropdown-item dropdown-text" type="button" @click="signout">
+                  <i class="fas fa-sign-out-alt mr-1"></i><span>登出</span>
                 </button>
               </div>
             </div>
           </li>
-          <!-- <li class="nav-item"> 
-                <a href="#" class="nav-link text-light menu-top" @click.prevent="openLogin"><i class="fas fa-sign-in-alt"></i></a>
-          </li>-->
           <li class="nav-item">
             <a
               href="#"
@@ -115,7 +112,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <!-- <a href="#" class="nav-link text-light menu-top" @click.prevent="cartShow = !cartShow; navShow = false"><i class="fas fa-cart-arrow-down"></i></a> -->
             <a
               href="#"
               class="nav-link text-light menu-top"
@@ -139,13 +135,13 @@
       </div>
       <ul class="menu nav justify-content-center text-center">
         <li class="nav-item mt-2 menu-ul col-12 col-sm-12 col-md-12 p-0 m-0">
-          <a href="#" class="m-3 menuSidebar" @click.prevent="goDescription">產品介紹</a>
+          <a href="#" class="m-3 menuSidebar" @click="goDescription">產品介紹</a>
         </li>
         <li class="nav-item mt-2 menu-ul col-12 col-sm-12 col-md-12 p-0 m-0">
-          <a href="#" class="m-3 menuSidebar" @click.prevent="goSale">優惠活動</a>
+          <a href="#" class="m-3 menuSidebar" @click="goSale">優惠活動</a>
         </li>
         <li class="nav-item mt-2 menu-ul col-12 col-sm-12 col-md-12 p-0 m-0">
-          <a href="#" class="m-3 menuSidebar" @click.prevent="goIndex">購物商城</a>
+          <a href="#" class="m-3 menuSidebar" @click="goIndex">購物商城</a>
         </li>
       </ul>
     </nav>
@@ -174,13 +170,6 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <!-- <div class="modal-title text-center p-4" style="border-bottom: 1px solid black"  >
-                <div class="h5 m-0">
-                  購物車
-                </div>
-          </div>-->
-          <!-- v-if="navCart.carts != ''" -->
-
           <div class="modal-body py-0 d-flex justify-content-center">
             <table class="table table-borderless table-sm" v-if="cart.carts.length > 0">
               <thead>
@@ -191,7 +180,7 @@
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
                   <td class width="100">
-                    <a href="#" @click.prevent="goDetail(item.product.id)">
+                    <a href="#" @click="goDetail(item.product.id)">
                       <img :src="item.product.imageUrl" class="w-100 p-1 border" />
                     </a>
                   </td>
@@ -201,7 +190,7 @@
                         <a
                           href="#"
                           class="text-decoration-none font-color-main text-primary"
-                          @click.prevent="goDetail(item.product.id)"
+                          @click="goDetail(item.product.id)"
                         >{{ item.product.title }}</a>
                       </th>
                     </thead>
@@ -215,14 +204,14 @@
                     </tbody>
                   </td>
                   <td>
-                    <button class="btn pt-0 pb-0 pl-1" @click.prevent="cutqty(item)">
+                    <button class="btn pt-0 pb-0 pl-1" @click="cutqty(item)">
                       <i class="fas fa-minus" v-if="item.id != status.loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
                     </button>
                     {{ item.qty }}
                     <button
                       class="btn pt-0 pb-0 pr-1"
-                      @click.prevent="addqty(item)"
+                      @click="addqty(item)"
                     >
                       <i class="fas fa-plus" v-if="item.id != status.loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
@@ -239,13 +228,6 @@
                   </td>
                 </tr>
               </tbody>
-              <!-- <tfoot>
-                     
-                      <tr v-if="cart.final_total !== cart.total">
-                        <td  class="text-right text-success">折扣價</td>
-                        <td class="text-right text-success">{{ cart.final_total | currency}}</td>
-                      </tr>
-              </tfoot>-->
             </table>
             <div class="text-center h4 align-self-center" v-if="cart.carts == ''">
               空無一物
@@ -255,7 +237,7 @@
                   class="btn btn-outline-danger mt-3"
                   data-dismiss="modal"
                   aria-label="Close"
-                  @click.prevent="goIndex"
+                  @click="goIndex"
                 >購物去</button>
               </div>
             </div>
@@ -273,16 +255,9 @@
               </span>
             </div>
             <div>
-              <!-- <a
-                    href="#"
-                    class="text-decoration-none "
-                    @click.prevent="payment"
-              >-->
-              <button class="btn btn-primary" @click.prevent="goCheckOuter">
+              <button class="btn btn-primary" @click="goCheckOuter">
                 <i class="fa fa-cart-plus" aria-hidden="true"></i> 結帳去
               </button>
-
-              <!-- </a> -->
             </div>
           </div>
         </div>
@@ -324,7 +299,7 @@
               <tbody>
                 <tr v-for="item in myfavorite" :key="item.id">
                   <td class width="100">
-                    <a href="#" @click.prevent="goDetail(item.id)">
+                    <a href="#" @click="goDetail(item.id)">
                       <img :src="item.imageUrl" class="w-100 p-1 border" />
                     </a>
                   </td>
@@ -334,7 +309,7 @@
                         <a
                           href="#"
                           class="text-decoration-none font-color-main"
-                          @click.prevent="goDetail(item.id)"
+                          @click="goDetail(item.id)"
                         >{{ item.title }}</a>
                       </th>
                     </thead>
@@ -345,7 +320,6 @@
                     </tbody>
                   </td>
                   <td>
-                    <!-- <div class="mt-3">{{ item.final_total | currency }} x {{ item.qty }}</div> -->
                     <button
                       type="button"
                       class="btn btn-outline-danger btn-sm mt-2"
@@ -365,7 +339,7 @@
                   class="btn btn-outline-info mt-3"
                   data-dismiss="modal"
                   aria-label="Close"
-                  @click.prevent="goIndex"
+                  @click="goIndex"
                 >尋寶去</button>
               </div>
             </div>
@@ -393,7 +367,7 @@
                 </button>
 
                 <div class="form-group">
-                  <form class="form-signin" @submit.prevent="signin">
+                  <form class="form-signin" @submit="signin">
                     <div class="d-flex justify-content-between">
                       <h1 class="h5 mb-3 font-weight-normal" v-if="!ischange">會員登入</h1>
                       <h2 class="h5 mb-3 font-weight-normal" v-else>註冊</h2>
@@ -411,7 +385,6 @@
                         v-else
                       >登入</button>
                     </div>
-                    <!-- <label for="inputEmail" class="sr-only ">Email address</label> -->
                     <input
                       type="email"
                       id="inputEmail"
@@ -421,7 +394,6 @@
                       required
                       autofocus
                     />
-                    <!-- <label for="inputPassword" class="sr-only">Password</label> -->
                     <input
                       type="password"
                       id="inputPassword"
@@ -482,7 +454,6 @@
 </template>
 
 <script>
-// import FrontNavbar from '@/components/FrontNavbar.vue';
 import Alert from "@/components/AlertMsg.vue";
 import Pagin from "@/components/Pagination.vue"; //分頁
 import $ from "jquery";
@@ -491,7 +462,6 @@ import Search from "@/components/Search";
 export default {
   components: {
     Pagin, //分頁
-    // FrontNavbar,
     Alert,
     Search
   },
@@ -499,7 +469,6 @@ export default {
     return {
       products: [],
       pagination: {}, //分頁
-      // isLoading: false,
       product: {}, //單筆資料
       ischange: false,
       successStatus: false,
@@ -669,6 +638,7 @@ export default {
           // vm.$router.push('/admin/Products');
         } else {
           vm.successStatus = false;
+          vm.$bus.$emit("messsage:push", response.data.message, "danger");
         }
       });
     },
@@ -691,7 +661,7 @@ export default {
     issuccess() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
-      this.$http.post(url).then(response => {
+      vm.$http.post(url).then(response => {
         if (response.data.success) {
           //檢查用戶是否仍持續登入狀態
           // console.log(response.data.success);
@@ -706,11 +676,12 @@ export default {
     signout() {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/logout`;
-      this.$http.post(url).then(response => {
+      vm.$http.post(url).then(response => {
         // console.log(response.data);
         if (response.data.success) {
           vm.successStatus = false;
-          this.$bus.$emit("messsage:push", response.data.message, "success");
+          vm.$bus.$emit("messsage:push", response.data.message, "success");
+          vm.goIndex();
           // console.log('登出')
         } else {
           vm.successStatus = true;
@@ -771,6 +742,7 @@ export default {
     },
     goUserOrders() {
       this.$router.push("/userorders").catch(err => {});
+      this.$bus.$emit("refreshTable");
     },
     goCheckOuter() {
       $("#cartModal").modal("hide");
@@ -798,11 +770,7 @@ export default {
     isLoading() {
       // 讀取 /store/index.js 裡面的屬性
       return this.$store.state.isLoading;
-    }
-
-    //  cart() {
-    //   return this.$store.state.cart;
-    // },
+    },
   },
   created() {
     this.getProducts();
@@ -862,17 +830,13 @@ export default {
   font-size: 13px;
   padding: 0 17px;
 }
-
-// .search{
-//   font-size:18px;
-
-// }
-
-// .ico-search{
-//   position: relative;
-//   right:50px;
-//   color:$primary;
-// }
+.user-list-icon-1{
+  padding-right: 3px;
+}
+.user-list-icon-2{
+  margin-left: 1px;
+  padding-right: 3px;
+}
 .menu-top {
   position: relative;
   margin: 10px 16px 5px 16px;
@@ -886,7 +850,6 @@ export default {
     z-index: 1;
   }
 }
-
 .menu-top i:hover {
   color: $primary;
 }
@@ -896,15 +859,6 @@ export default {
 .font-color-title {
   color: $primary;
 }
-// .menu-bar a{
-//   color: #fff;
-//   font-weight: bold;
-//   &:hover{
-//     color:$primary;
-//     text-decoration: none;
-//   }
-// }
-
 .dropdown-text {
   &:hover {
     color: $primary;
@@ -913,7 +867,6 @@ export default {
     color: $dark;
   }
 }
-
 .menu-ul {
   .menuSidebar {
     text-decoration: none;

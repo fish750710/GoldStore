@@ -7,7 +7,6 @@
       ref="previewBox"
       @mouseenter="enter"
     >
-    <!-- <img src="@/assets/Logo-3w150.png" alt=""> -->
       <img :src="previewImg" style="width:350px">
       <div class="mask" ref="hoverBox" v-show="maskShow"></div>
     </div>

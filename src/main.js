@@ -59,7 +59,7 @@ router.beforeEach((to, from, next) => {
       } else {
         //未登入狀態將導頁登入頁面
         next({
-          path: '/login',
+          path: '/',
         })
       }
     })

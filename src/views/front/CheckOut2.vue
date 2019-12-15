@@ -13,7 +13,7 @@
         <div class="card">
           <div class="card-header" id="headingOne">
             <h2 class="mb-0">
-              <button class="btn btn-link text-decoration-none font-color-main " type="button" data-toggle="collapse" data-target="#shoplist" aria-expanded="true" aria-controls="collapseOne">
+              <button class="btn btn-link text-decoration-none font-weight-bold " type="button" data-toggle="collapse" data-target="#shoplist" aria-expanded="true" aria-controls="collapseOne">
                 購物資訊
                   <i class="fa fa-angle-down fa-lg menu_icon-open"></i>
                   <i class="fa fa-angle-up fa-lg menu_icon-close"></i>
@@ -53,15 +53,9 @@
                 <tfoot>
                   <tr>
                      <td colspan="4" data-th="總計" class="text-right text-danger font-weight-bold">總計 <span class="font-weight-bold h5 ">{{ cart.total | currency }}</span></td>
-              
-                    <!-- <td colspan="3" class="text-right text-danger font-weight-bold" data-th="總計">總計</td>
-                    <td class="text-right text-danger font-weight-bold h5">{{ cart.total | currency }}</td>                     -->
                   </tr>
                   <tr v-if="cart.final_total !== cart.total">
                     <td colspan="4"  data-th="折扣價" class="text-right text-success ">折扣價  <span class=" h5">{{ cart.final_total | currency}}</span></td>
-          
-                    <!-- <td colspan="3" class="text-right text-success" data-th="折扣價">折扣價</td>
-                    <td class="text-right text-success h5">{{ cart.final_total | currency}}</td> -->
                   </tr>          
                 </tfoot>
                 
@@ -113,12 +107,9 @@
             v-model="form.message"></textarea>
         </div>
         <div class="d-flex justify-content-between">
-          <button class="btn btn-secondary" @click.prevent="goCheckOut">
+          <button class="btn btn-secondary" @click="goCheckOut">
              <i class="fas fa-backspace pl-3"><span class="pl-2 h6 font-weight-bold">上一步</span></i> 
           </button>
-          <!-- <button class="btn btn-info" >
-            <i class="fas fa-arrow-alt-circle-right"><span class="pl-2 h6 font-weight-bold">送出訂單</span></i>
-          </button>  -->
           <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#checkorder">
             <i class="fas fa-arrow-alt-circle-right"><span class="pl-2 h6 font-weight-bold">送出訂單</span></i>
           </button>
@@ -258,12 +249,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/all";
-.font-color-main{
-  color:rgb(60, 182, 4);
-}
-.font-color-title{
-  color:rgb(36, 114, 1);
-}
 
 @include desktop-top() {
   .shop-title-rwd p{
@@ -370,7 +355,7 @@ export default {
   
   
 }
-
+// icon變化
 [aria-expanded="false"] .menu_icon-open {
   display: inline;
 }
@@ -386,7 +371,4 @@ export default {
 [aria-expanded="true"] .menu_icon-close {
   display: inline;
 }
-// @media (max-width:320px) {
-
-// }
 </style>

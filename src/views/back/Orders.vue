@@ -47,10 +47,6 @@
                         </ul>
                         
                     </td>
-                    <!-- <td >
-                        <span class="text-success" v-if="item.is_paid">已付款</span>
-                        <span class="text-danger" v-else>未付款</span>
-                    </td> -->
                     <td data-th="付款狀態" class="text-success" v-if="item.is_paid">已付款</td>
                     <td data-th="付款狀態" class="text-danger" v-else>未付款</td>
                    
@@ -59,7 +55,6 @@
                     
                     <td data-th="編輯" class="btn-group">
                         <button class="btn btn-outline-primary btn-sm" @click="openOrder(item)">編輯</button>
-                        <!-- <button class="btn btn-outline-danger btn-sm" >刪除</button> -->
                     </td>
                 
                 </tr>

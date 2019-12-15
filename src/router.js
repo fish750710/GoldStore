@@ -25,6 +25,7 @@ const routes = [
         path: 'userorders', //路徑要小寫
         name: 'UserOrders',
         component: () => import('@/views/front/UserOrders.vue'),
+        meta: { requiresAuth: true }, //router 路由訊息 需要被驗證的頁面
       },
       {
         path: 'checkout', //路徑要小寫

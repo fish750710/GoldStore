@@ -12,30 +12,30 @@
 
             <ul class="nav mb-2 col-10 col-sm-11 col-md-11 col-lg-10 justify-content-end">
               <li class="nav-item col-3 col-sm-3 col-md-2 col-lg-2 p-0">
-                <router-link class="nav-link text-white menu-bar text-right" to="/">
-                  <i class="fas fa-store pr-1"></i> <span class="">回賣場</span>  
+                <router-link class="nav-link text-white menu-bar text-right pl-0 pr-0" to="/">
+                  <i class="fas fa-store"></i>  <span class="pl-2">回賣場</span> 
                 </router-link>                
               </li> 
               <li class="nav-item col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 p-0">
-                <router-link class="nav-link text-white menu-bar text-right" to="/admin/Products">
-                  <i class="fas fa-box-open pr-1"></i> <span class="">產品列表</span>  
+                <router-link class="nav-link text-white menu-bar text-right pl-0 pr-0" to="/admin/Products">
+                  <i class="fas fa-box-open pr-1"> </i>  <span class="pl-2">產品列表</span>
                 </router-link>                
               </li>  
 
               <li class="nav-item col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 p-0">
-                <router-link class="nav-link text-white menu-bar text-right" to="/admin/Orders">                  
+                <router-link class="nav-link text-white menu-bar text-right pl-0 pr-0" to="/admin/Orders">                  
                   <div class="ml-1">
-                    <i class="far fa-file-alt pr-2"></i><span class="">訂單列表</span>
+                    <i class="far fa-file-alt pr-2"></i><span class="pl-2">訂單列表</span>
                   </div>                  
                 </router-link>
                 
               </li>   
               <li class="nav-item col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 p-0">
-                <router-link class="nav-link text-white menu-bar text-right" to="/admin/Coupons">
-                  <i class="fas fa-ticket-alt pr-2"></i><span class="">優惠卷</span>
+                <router-link class="nav-link text-white menu-bar text-right pl-0 pr-0" to="/admin/Coupons">
+                  <i class="fas fa-ticket-alt pr-2"></i><span class="pl-2">優惠卷</span>
                 </router-link>                
               </li>   
-              <li class="nav-item text-nowrap signout-rwd col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 p-0">          
+              <li class="nav-item text-nowrap signout-rwd col-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 p-0 signout-ico">          
                 <a class="nav-link text-light text-right" href="#"  @click.prevent="signout"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
               </li>  
             </ul>
@@ -101,12 +101,13 @@ export default {
 
 @import "@/assets/all";
 
-.menu-bar i{
-  color: #fff;
+.menu-bar {
   font-weight: bold;
-  &:hover{
-    color:$primary;
-    text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  span:hover{
+    color: $primary;
+    
   }
 }
 @include desktop-top() {
@@ -143,6 +144,9 @@ export default {
   }
   .d-logo{
     display:none !important; 
+  }
+  .signout-ico a{
+    padding-bottom: 0px;
   }
   
 }
@@ -182,31 +186,5 @@ export default {
     }
   }
 }
-
-@media (max-width: 414px) {
-  // .nav-link{
-  //  padding: 6px; 
-  //  position: relative;
-  // }
-  // .signout-rwd a{
-  //   position: absolute;
-  //   right:0;
-  // }
-}
-
-
-
-// @include pad() {
-  
-// }
-// @include m568() {
-
-// }
-// @include m480() {
-
-// }
-// @include iphone5() {
-
-// }
 
 </style>
