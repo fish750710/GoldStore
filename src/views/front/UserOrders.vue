@@ -60,7 +60,6 @@
         </tr>
       </tbody>
     </table>
-
     <!-- 分頁 -->
     <Pagin @postPage="getOrders" :getpagin="pagination"></Pagin>
   </div>
@@ -78,38 +77,35 @@ export default {
     return {
       orders: [],
       isLoading: false,
-      pagination: {}, //分頁
+      pagination: {}
     };
   },
   methods: {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
       const vm = this;
-      vm.isLoading = true; //讀取效果
+      vm.isLoading = true;
       this.$http.get(api).then(response => {
         // console.log(response.data);
         vm.isLoading = false;
-        vm.orders = response.data.orders; //儲存到變數裡面
-        vm.pagination = response.data.pagination; //把分頁資料存起來
+        vm.orders = response.data.orders;
+        vm.pagination = response.data.pagination;
       });
     },
     goPay(id) {
-      // console.log(id);
-      this.$router.push(`/checkout3/${id}`); //轉付款頁面
+      //轉付款頁面
+      this.$router.push(`/checkout3/${id}`).catch(err => {});
     }
   },
   created() {
     this.getOrders();
-    // this.$bus.$emit("refreshTable");
   },
   mounted() {
     // 從frontNavbar傳來
     this.$bus.$on("refreshTable", () => {
-      // console.log('監聽')
       this.getOrders();
     });
-  },
-
+  }
 };
 </script>
 

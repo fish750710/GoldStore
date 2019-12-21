@@ -1,19 +1,19 @@
 <template>
   <div>
-    <ul class="d-flex justify-content-center mt-5 pt-5">
+    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5">
       <li class=" mb-0 p-2 " style="list-style-type:none">1-購物資訊</li>
       <li class=" mb-0 p-2 " style="list-style-type:none">2-訂單資訊</li>
-      <li class=" mb-0 p-2 " :class="[order.is_paid ? '' : 'shop-title-rwd text-danger font-weight-bold' ]" style="list-style-type:none"><p>3-付款方式</p></li>
-      <li class=" mb-0 p-2 " :class="[order.is_paid ? 'shop-title-rwd text-danger font-weight-bold' : '' ]" style="list-style-type:none" ><p>4-付款完成</p></li>
+      <li class=" mb-0 p-2 " :class="[order.is_paid ? '' : 'shop-title-rwd text-danger font-weight-bold' ]" style="list-style-type:none"><p class="mb-1">3-付款方式</p></li>
+      <li class=" mb-0 p-2 " :class="[order.is_paid ? 'shop-title-rwd text-danger font-weight-bold' : '' ]" style="list-style-type:none" ><p class="mb-1">4-付款完成</p></li>
     </ul> 
     <div class="container">
     <div class=" row justify-content-center my-5">
       <form class="col-md-12" @submit.prevent="payOrder">
         <table class="table">
-          <thead>
+          <thead class="bg-primary">
             <th>商品</th>
             <th width="80">數量</th>
-            <th class="text-right" width="100">價格</th>
+            <th class="text-right" width="110">價格</th>
           </thead>
           <tbody>
             <tr v-for="item in order.products" :key="item.id">
@@ -24,12 +24,11 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2" class="text-right" >總計</td>
-              <td class="text-right text-danger">{{ order.total | currency}}</td>
+              <td colspan="2" class="text-right h6" >總計</td>
+              <td class="text-right text-danger h6">{{ order.total | currency}}</td>
             </tr>
           </tfoot>
         </table>
-
         <table class="table">
           <tbody>
             <tr>
@@ -59,32 +58,29 @@
             <tr>
               <th>付款方式</th>
               <td colspan="2">
-                <!-- <form @submit.prevent="goPay"> -->
                   <div class="form-check form-check-inline " :class="[ paymethod=='貨到付款' ?'text-primary' : '']" >
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="cash" value="貨到付款" v-model="paymethod" required>
-                    <label class="form-check-label" for="inlineRadio1" data-toggle="tooltip" data-placement="bottom" title="目前貨到付款只提供平日配送。">
+                    <input class="form-check-input"  type="radio" name="inlineRadioOptions" id="cash" value="貨到付款" v-model="paymethod" required>
+                    <label class="form-check-label" for="cash" data-toggle="tooltip" data-placement="bottom" title="目前貨到付款只提供平日配送。">
                       貨到付款<i class="fas fa-shipping-fast ml-2 mr-3"></i></label>
                   </div>
                   <div class="form-check form-check-inline"  :class="[ paymethod=='線上刷卡' ?'text-primary' : '']" >
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="creditcard" value="線上刷卡" v-model="paymethod" required>
-                    <label class="form-check-label" for="inlineRadio2" data-toggle="tooltip" data-placement="bottom" title="歡迎使用信用卡刷卡，優惠期間免刷卡手續費。">
+                    <label class="form-check-label" for="creditcard" data-toggle="tooltip" data-placement="bottom" title="歡迎使用信用卡刷卡，優惠期間免刷卡手續費。">
                       線上刷卡<i class="far fa-credit-card ml-2 mr-3"></i></label>
                   </div>
                   <div class="form-check form-check-inline"  :class="[ paymethod=='超商取貨' ?'text-primary' : '']" >
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="storepickup" value="超商取貨" disabled v-model="paymethod" required>
-                    <label class="form-check-label" for="inlineRadio3">
+                    <label class="form-check-label" for="storepickup">
                       超商取貨 (尚未開放) <i class="fas fa-store ml-2 mr-3"></i></label>
                   </div>
-                  <div class="d-flex justify-content-between mt-5 btn-rwd">
+                  <div class="d-flex justify-content-end mt-5 btn-rwd">
                     <div class="text-right" >
-                      <button class="btn btn-primary font-weight-bold " @click="goIndex">再去逛逛</button>
+                      <button class="btn btn-primary font-weight-bold text-black" @click="goIndex">再去逛逛</button>
                     </div>
                     <div class="text-right" v-if="order.is_paid === false">
-                      <button class="btn btn-danger font-weight-bold ml-3">確認付款去</button>
-                    </div>        
-                  </div>
-                <!-- </form> -->
-                                
+                      <button class="btn btn-danger font-weight-bold ml-3" >確認付款去</button>
+                    </div>  
+                  </div>               
               </td>
             </tr>
           </tbody>
@@ -92,80 +88,92 @@
       </form>
     </div>
     </div>
+     <!-- 付款完成 Modal -->
+    <div class="modal fade" id="isPaid" tabindex="-1" role="dialog" aria-labelledby="isPaid" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-primary">
+            <h5 class="modal-title text-black" id="isPaid">感謝您的訂購</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body h5">
+            <p>貨品將3天內送達，敬請留意快遞，謝謝!</p>
+            <i class="fas fa-shipping-fast animated infinite bounceOutRight text-danger ml-3" style="animation-duration: 12s" ></i>
+          </div>
+        </div>
+      </div>
+    </div> 
   </div>
-  
 </template>
 
 <script>
+import $ from 'jquery'
 export default {
-    data(){
-        return{
-            orderId :'', //取得orderId
-            order: {
-                user: {},
-            },
-            paymethod:'',
-            
-        }
+  data(){
+    return{
+      orderId :'', //取得orderId
+      order: {
+        user: {},
+      },
+        paymethod:'',
+    }
+  },
+  methods:{
+  // 取得單一筆訂單資料
+    getOrder(){
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`;            
+      vm.isLoading = true;
+      vm.$http.get(url).then((response) => {                
+      vm.order = response.data.order; 
+      vm.isLoading = false;                    
+      });
     },
-    methods:{
-        // 取得單一筆訂單資料
-        getOrder(){
-            const vm = this;
-            const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`;            
-            vm.isLoading = true;
-            this.$http.get(url).then((response) => {                
-                vm.order = response.data.order; //將回傳資料存在 order
-                // console.log(response);
-                vm.isLoading = false;                    
-            });
-        },
-        // 結帳付款
-        payOrder(){
-            const vm = this;
-            const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`;
-            // console.log(vm.orderId);
-            vm.isLoading = true;
-            this.$http.post(url).then((response) => {                
-                // console.log(response);
-                if(response.data.success){
-                    vm.getOrder(); //重新取得訂單資料(更新畫面)
-                }
-                this.$bus.$emit('refreshCart');   
-                vm.isLoading = false;                    
-            });
-        },
-        goIndex(){
-          // 購物去按鈕(首頁跳首頁有問題)
-          this.$router.push('/');
-        },
-        goPay(){
-          this.order.is_paid = true;
-        },
+    // 結帳付款
+    payOrder(){
+      const vm = this;
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`;
+      vm.isLoading = true;
+      vm.$http.post(url).then((response) => {                
+        if(response.data.success){
+          setTimeout(() => {
+            $('#isPaid').modal('show')
+          }, 1000);
+          setTimeout(() => {
+            $('#isPaid').modal('hide')
+          }, 5000);
+          vm.getOrder(); //重新取得訂單資料(更新畫面)                    
+        };
+          vm.$bus.$emit('refreshCart');   
+          vm.isLoading = false;                    
+      });
     },
-    created(){
-        this.orderId = this.$route.params.orderId; //取得網址上的ID
-        // console.log(this.orderId);
-        this.getOrder();
+    goIndex(){
+      this.$router.push('/').catch(err => {});
     },
-    // 跳離頁面前先檢查
-    beforeRouteLeave (to, from, next) {
-      // console.log(this.cart.carts)
-      // console.log('to', to, 'from', from, 'next', next);
-      if(this.order.is_paid == true){
+  },
+  created(){
+    this.orderId = this.$route.params.orderId; //取得網址上的ID
+    this.getOrder();
+  },
+  // 跳離頁面前先檢查
+  beforeRouteLeave (to, from, next) {
+    // console.log(this.cart.carts)
+    // console.log('to', to, 'from', from, 'next', next);
+    if(this.order.is_paid == true){
+      next()
+    }else{
+      const answer = confirm(`您尚未付款完成，\n您確定要離開！`)
+      if (answer) {        
         next()
-      }else{
-        const answer = confirm(`您尚未付款完成，\n您確定要離開！`)
-        if (answer) {        
-          next()
-        } else {
-          // 取消
-          next(false)
-        }
-      }    
-        
-      
-    },
+      } else {
+      // 取消
+        next(false)
+      };
+    };     
+  },
 }
 </script>
 
@@ -174,9 +182,9 @@ export default {
 
 @include desktop-top() {
   .shop-title-rwd p{
-   font-size: 24px;
- }
- .table-rwd td {
+    font-size: 24px;
+  }
+  .table-rwd td {
     img{
       width: 100px;
     }
@@ -190,32 +198,33 @@ export default {
 	}
 }
 @include pc() {
- .table-price-rwd{
-   width: 80px;
- }
- .table-num-rwd{
-   width: 50px;
- }
- .shop-title-rwd p{
-   font-size: 24px;
- }
- .table-rwd td {
+  .table-price-rwd{
+    width: 80px;
+  }
+  .table-num-rwd{
+    width: 50px;
+  }
+  .shop-title-rwd p{
+    font-size: 24px;
+  }
+  .table-rwd td {
     img{
       width: 100px;
     }
 	}
-  
 }
 @include pad() {
-.table-rwd{min-width: 100%;}
+  .table-rwd{
+    min-width: 100%;
+  }
   /*針對tr去做隱藏*/
   tr.tr-only-hide {display: none !important;}
   /*讓tr變成區塊主要讓他有個區塊*/
   thead{
-      display: none;
+    display: none;
   }
   .qty-rwd{
-        display: inline-block;
+    display: inline-block;
   }
   .table-rwd tr{
     display: block;
@@ -244,27 +253,22 @@ export default {
   }
   /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
   .table-rwd.table-bordered td,.table-rwd.table-bordered th,.table-rwd.table-bordered{border:0;}
- .table-num-rwd-input{
-
-   button{
-     padding:5px;
-   }
-   input{
-     padding:0px;
-     font-size: 14px;
-   }
- }
- .shop-title-rwd p{
-   font-size: 18px;
- }
-  
+  .table-num-rwd-input{
+    button{
+      padding:5px;
+    }
+    input{
+      padding:0px;
+      font-size: 14px;
+    }
+  }
+  .shop-title-rwd p{
+    font-size: 18px;
+  }
 }
 @include m568() {
-
-  
 }
 @include m480() {
- 
 }
 @include iphone5() {
   .btn-rwd{
@@ -273,5 +277,4 @@ export default {
     }
   }
 }
-
 </style>

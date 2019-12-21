@@ -1,6 +1,6 @@
 <template>
   <div class="message-alert">
-    <div class="alert alert-dismissible"
+    <div class="alert alert-dismissible "
       :class="'alert-' + item.status" style="z-index:9999"
       v-for="(item, i) in messages" :key="i">
       <i class="fas fa-heart" v-if="item.message=='加入收藏'"></i>
@@ -56,16 +56,12 @@ export default {
     });
     vm.$bus.$on('like',() => {
       vm.removeMessage();
-      vm.updateMessage('加入收藏', 'primary'); //渲染到畫面上
-      // console.log('收藏')
+      vm.updateMessage('加入收藏', 'primary'); 
     });
     vm.$bus.$on('dislike',() => {
       vm.removeMessage();
-      vm.updateMessage('取消收藏', 'info'); //渲染到畫面上
-      // console.log(this.messages)
-      // console.log('取消收藏')
+      vm.updateMessage('取消收藏', 'info'); 
     });
-    // vm.$bus.$emit('messsage:push');
   },
 };
 </script>
@@ -74,10 +70,9 @@ export default {
 .message-alert {
   position: fixed;
   top: 40%;
-  left: 30%;
+  left: 43%;
   z-index: 1100;
   font-size: 22px;
-  
 }
 .alert-dismissible{
   font-weight: bold;

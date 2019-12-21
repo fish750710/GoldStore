@@ -5,34 +5,41 @@
         <div class="col-md-8 col-sm-12 my-5 text-center">
           <pic-zoom :previewImg="product.imageUrl" :zoomImg="product.imageUrl"></pic-zoom>
         </div>
-
-        <div class="col-md-4 col-sm-12 my-5" >
+        <div class="col-md-4 col-sm-12 my-5">
           <h4>{{ product.title }}</h4>
           <div class="d-flex justify-content-between">
-            <h5 class="text-info">{{ product.spec }} {{ product.content }}</h5>
-            <a href="#" class="">
-              <i class="fas fa-heart text-danger " v-if="getFilteredFavorite(product)"
-                @click.prevent="removeFavorite(product)" style="font-size:20px"></i>
-              <i class="far fa-heart text-danger " v-else
-                @click.prevent="addFavorite(product)" style="font-size:20px"></i>
-            </a>            
+            <h5 class="text-dark">{{ product.spec }} {{ product.content }}</h5>
+            <a href="#" class>
+              <i
+                class="fas fa-heart text-danger"
+                v-if="getFilteredFavorite(product)"
+                @click.prevent="removeFavorite(product)"
+                style="font-size:20px"
+              ></i>
+              <i
+                class="far fa-heart text-danger"
+                v-else
+                @click.prevent="addFavorite(product)"
+                style="font-size:20px"
+              ></i>
+            </a>
           </div>
-          
           <a href="#" class="badge badge-warning ml-2" @click="badgeSearch">{{ product.brand }}</a>
           <a href="#" class="badge badge-info ml-2" @click="badgeSearch">{{ product.category }}</a>
           <a href="#" class="badge badge-secondary ml-2" @click="badgeSearch">{{ product.content }}</a>
           <a href="#" class="badge badge-success ml-2" @click="badgeSearch">{{ product.spec }}</a>
-          
           <div class="h5 text-right" v-if="product.origin_price ">
             <del>{{ product.origin_price * quantity | currency }} 元</del>
           </div>
-          <div class="h2 text-danger text-right" v-if="product.price">{{ product.price * quantity | currency}} 元</div>
+          <div
+            class="h2 text-danger text-right"
+            v-if="product.price"
+          >{{ product.price * quantity | currency}} 元</div>
           <hr />
           <div class="text-left text-l">購買數量</div>
           <div class="h6 text-right" v-if="product.stock > 5">庫存：{{ product.stock }} 件</div>
           <div class="h6 text-right text-danger" v-if="product.stock < 5">只剩最後 {{ product.stock }} 件</div>
           <div class="h6 text-right text-danger" v-if="product.stock == 0">補貨中</div>
-
           <select name class="form-control mt-3" v-model="quantity" v-if="product.stock != 0">
             <option
               :value="num"
@@ -40,12 +47,11 @@
               :key="num"
             >選購 {{num}} {{product.unit}}</option>
           </select>
-
           <hr />
           <div class="d-flex justify-content-between">
             <button
               type="button"
-              class="btn btn-primary btn-sm col-5 text-white"
+              class="btn btn-primary btn-sm col-5 text-black"
               @click="addtoCart(product.id, quantity)"
             >
               <i class="fas fa-spinner fa-pulse" v-if="product.id === status.loadingItem"></i>
@@ -62,7 +68,6 @@
               立即結帳
             </button>
           </div>
-
           <hr class="mt-5" />
           <div>
             <!-- 商品說明 -->
@@ -70,31 +75,37 @@
           </div>
         </div>
       </div>
-
-
-
       <!-- swiper -->
-      <div class="h5 text-center swiper-like-rwd"><i class="fas fa-heart text-danger mr-2"></i>猜你喜歡</div>
+      <div class="h5 text-center swiper-like-rwd">
+        <i class="fas fa-heart text-danger mr-2"></i>猜你喜歡
+      </div>
       <div class="swiper-container swiper-like-rwd" v-if="filterdata.length > 0">
         <div class="swiper-wrapper py-5">
-          <div class="swiper-slide " v-for="item in filterdata" :key="item.id" >
-            <div class="card border-0 bg-transparent" v-if="item.is_enabled" >
-              <a href="#" @click="goDetail(item.id)" class="text-center">
-                <img class="card-img-top " alt="..." :src="item.imageUrl" style="max-width:200px" />
+          <div class="swiper-slide" v-for="item in filterdata" :key="item.id">
+            <div class="card border-0 bg-transparent" v-if="item.is_enabled">
+              <a href="#" @click.prevent="goDetail(item.id)" class="text-center">
+                <img class="card-img-top" alt="..." :src="item.imageUrl" style="max-width:200px" />
               </a>
-              <div class="card-body px-0" >
+              <div class="card-body px-0">
                 <div class="m-0">
-                    <a href="#" class="h6 text-primary text-decoration-none" @click="goDetail(item.id)">{{ item.title }} </a>
+                  <a
+                    href="#"
+                    class="h6 text-black text-decoration-none"
+                    @click.prevent="goDetail(item.id)"
+                  >{{ item.title }}</a>
                 </div>
                 <div class="d-flex justify-content-between mt-2">
-                    <del class="h7 text-muted" v-if="item.origin_price > 0">原價 {{ item.origin_price | currency }} 元</del>
-                  <div  v-if="!item.price">
+                  <del
+                    class="h7 text-muted"
+                    v-if="item.origin_price > 0"
+                  >原價 {{ item.origin_price | currency }} 元</del>
+                  <div v-if="!item.price">
                     <span class="h5 text-danger">{{ item.origin_price | currency }}元</span>
                   </div>
-                  <div  v-if="item.price">
+                  <div v-if="item.price">
                     <span class="h5 text-danger">{{ item.price | currency }}元</span>
                   </div>
-                </div>     
+                </div>
               </div>
             </div>
           </div>
@@ -107,18 +118,17 @@
 
 <script>
 import PicZoom from "@/components/PicZoom.vue"; //放大鏡
-import Swiper from 'swiper'
+import Swiper from "swiper";
 import $ from "jquery";
 
 export default {
   components: {
-    PicZoom,
+    PicZoom
   },
   data() {
     return {
       product: {
         stock: ""
-        // imageUrl:'',
       },
       productId: "",
       productIdS: "",
@@ -130,29 +140,23 @@ export default {
       favoriteLength: 0,
       smallImg: "", //小圖
       bigImg: "", //大圖
-      products: [],
-      
+      products: []
     };
   },
   methods: {
     getProduct(id) {
-      const vm = this;      
+      const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-      vm.status.loadingItem = id; //點選到的選項 loading動畫
+      vm.status.loadingItem = id;
       vm.$http.get(url).then(response => {
-        vm.product = response.data.product; //將回傳資料存在 product
-         //類別
-        // $('#productModal').modal('show'); //開啟 modal
-        // console.log(vm.product);
-
-        vm.status.loadingItem = ""; //開啟後動畫清空
+        vm.product = response.data.product;
+        vm.status.loadingItem = "";
       });
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;        
-      vm.$http.get(api).then((response) => {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      vm.$http.get(api).then(response => {
         vm.products = response.data.products;
-      });    
+      });
     },
-    
     //加入購物車(新增前先判斷購物車是否有重複資料，如有先刪除後新增)
     addtoCart(id, qty = 1) {
       // id 和 數量 預設=1
@@ -161,27 +165,17 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       vm.status.loadingItem = id; //點選到的選項 loading動畫
       // vm.$store.dispatch('updateLoading', true);
-
       // 一樣商品合併(先抓購物車內容判斷 ID是否一樣)
       this.$http.get(url).then(response => {
         vm.cartItem = response.data.data.carts;
-
         if (vm.cartItem.length != 0) {
-          // console.log('array',vm.cartItem.length);
           let added = 0;
           for (let i = 0; i < vm.cartItem.length; i++) {
-            //  console.log('i',i);
-
             if (id == vm.cartItem[i].product_id) {
               added = 1; //新增
               //刪除購物車內容
-              // console.log('一樣', i ,vm.cartItem[i].id)
               const removeurl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${vm.cartItem[i].id}`;
-              this.$http.delete(removeurl).then(() => {
-                // console.log('刪除後',vm.cartItem[i]);
-                // vm.getCart(); //重新取得購物車內容
-                // this.$bus.$emit('refreshCart');
-              });
+              this.$http.delete(removeurl).then(() => {});
               // 新增
               let itemQty = vm.cartItem[i].qty; //原購物車商品數量
               const cart = {
@@ -189,14 +183,12 @@ export default {
                 qty: qty + itemQty
               };
               this.$http.post(url, { data: cart }).then(response => {
-                vm.status.loadingItem = ""; //開啟後動畫清空
-                // vm.getCart(); //取得購物車內容
-                $("#productModal").modal("hide"); //關閉 modal
+                vm.status.loadingItem = "";
+                $("#productModal").modal("hide");
                 // vm.$store.dispatch('updateLoading', false);
                 this.$bus.$emit("refreshCart");
               });
             } else {
-              // console.log('added',added)
               // forLoop全部跑完，無重複商品且要新增才新增，
               if (i == vm.cartItem.length - 1 && added == 0) {
                 // console.log('無重複')
@@ -205,10 +197,8 @@ export default {
                   qty
                 };
                 this.$http.post(url, { data: cart }).then(response => {
-                  // console.log(response);
-                  vm.status.loadingItem = ""; //開啟後動畫清空
-                  // vm.getCart(); //取得購物車內容
-                  $("#productModal").modal("hide"); //關閉 modal
+                  vm.status.loadingItem = "";
+                  $("#productModal").modal("hide");
                   // vm.$store.dispatch('updateLoading', false);
                   this.$bus.$emit("refreshCart");
                 });
@@ -267,7 +257,6 @@ export default {
     getFilteredFavorite(item) {
       // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
       return this.favorites.some(el => {
-        // console.log(item);
         const result = item.id === el.id;
         return result;
       });
@@ -275,16 +264,11 @@ export default {
     },
     // 取得我的最愛產品數量
     getFavoriteLength() {
-      // if (!JSON.parse(localStorage.getItem('favorite'))) {
-      //   console.log('近來')
-      //   return;
-      // }
       this.favoriteLength = JSON.parse(localStorage.getItem("favorite")).length;
       this.$bus.$emit("favorite", this.favoriteLength);
     },
     badgeSearch(e) {
       let str = e.target.firstChild.nodeValue;
-      // console.log(e.target.firstChild);
       this.$router.push(`/search/${str}`).catch(err => {});
     },
     goCheckOuter(id, quantity) {
@@ -293,16 +277,13 @@ export default {
       this.$bus.$emit("refreshCheckOut");
     },
     goDetail(id) {
-      // $("#favoritetModal").modal("hide");
-      // $("#cartModal").modal("hide");
-      console.log(this.id)
       this.$router.push(`/detail/${id}`).catch(err => {});
       this.$bus.$emit("refreshDetail");
     },
     getswiper() {
       this.$nextTick(() => {
         setTimeout(() => {
-          new Swiper('.swiper-container', {
+          new Swiper(".swiper-container", {
             slidesPerView: 4,
             spaceBetween: 40,
             loop: true,
@@ -311,81 +292,51 @@ export default {
               delay: 4000,
               disableOnInteraction: false
             }
-          })
-        }, 800)
-      })
-    },
-    
+          });
+        }, 800);
+      });
+    }
   },
-  
-  computed: {
-    // filterdata:{
-    //   get(){
-    //       const vm = this;
-    //       vm.filteritem = vm.products.filter((item, i) => {
-    //         // console.log(item);
-    //         if (vm.product.title != item.title) {
-    //           return item.category == vm.product.category
-    //         }
-    //       })
-    //       return vm.filteritem
-    //   },
-    //   set(){
 
-    //   },
-    // },
-    
+  computed: {
     filterdata() {
       const vm = this;
-      return vm.filteritem = vm.products.filter((item, i) => {
+      return (vm.filteritem = vm.products.filter((item, i) => {
         // console.log(item);
         if (vm.product.title != item.title) {
-          return item.category == vm.product.category
+          return item.category == vm.product.category;
         }
-        
-      });
-    },   
+      }));
+    }
   },
 
   mounted() {
-    // // 從frontsidebar傳來
-    // this.$bus.$on('change', ()=> {
-    // // console.log('監聽')
-    //   this.getProductAll()
-    // })
-    this.$bus.$on("removefavoritet", () => {
-      // console.log('清除icon');
-      this.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
-      this.getFavoriteLength();
+    const vm = this;
+    vm.$bus.$on("removefavoritet", () => {
+      vm.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
+      vm.getFavoriteLength();
     });
-    
   },
   created() {
     const vm = this;
     vm.productId = vm.$route.params.productId;
-    // console.log(vm.currentPath.params.productId);
     vm.getProduct(vm.productId);
     vm.getswiper();
-
     // 購物車和收藏更新畫面
     vm.$bus.$on("refreshDetail", () => {
-      // console.log('refreshDetail',id);
       vm.productId = vm.$route.params.productId;
       vm.getProduct(vm.productId);
     });
     //先抓 localStorage 判斷商品的我的最愛ICON
     vm.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
-    vm.getFavoriteLength();   
+    vm.getFavoriteLength();
   }
-  
 };
 </script>
 
 
 <style lang="scss" scoped>
-
 @import "@/assets/all";
-
 
 @include desktop-top() {
 }
@@ -394,7 +345,7 @@ export default {
 @include pad() {
 }
 @include m568() {
-  .swiper-like-rwd{
+  .swiper-like-rwd {
     display: none;
   }
 }
@@ -402,7 +353,6 @@ export default {
 }
 @include iphone5() {
 }
-
 </style>
 
 

@@ -75,61 +75,98 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-
     <div class="container">
       <div class="row mt-4">
         <div class="col-sm-0 col-md-0 col-lg-2">
           <FrontSidebar class="sticky-top"></FrontSidebar>
         </div>
+        <swiper class="m-menu-Sidebar mt-5 pb-2 menu-ul">
+          <swiper-slide class="mr-3 ml-2" style="border: 1px solid #50CBCB;max-width:44%">
+            <a
+              href="#"
+              class="menuSidebar w-100 d-flex justify-content-center"
+              :class="[ activeitem =='APPLE' ? 'text-primary':'' ]"
+              @click="badgeSearch('Apple')"
+            >APPLE</a>
+          </swiper-slide>
+          <swiper-slide class="mr-3 ml-2" style="border: 1px solid #50CBCB;max-width:44%">
+            <a
+              href="#"
+              class="menuSidebar w-100 d-flex justify-content-center"
+              :class="[ activeitem =='ASUS' ? 'text-primary':'' ]"
+              @click="badgeSearch('ASUS')"
+            >ASUS</a>
+          </swiper-slide>
+          <swiper-slide class="mr-3 ml-2" style="border: 1px solid #50CBCB;max-width:44%">
+            <a
+              href="#"
+              class="menuSidebar w-100 d-flex justify-content-center"
+              :class="[ activeitem =='HTC' ? 'text-primary':'' ]"
+              @click="badgeSearch('HTC')"
+            >HTC</a>
+          </swiper-slide>
+          <swiper-slide
+            class="mr-3 ml-2 d-flex justify-content-center"
+            style="border: 1px solid #50CBCB;max-width:44%"
+          >
+            <a
+              href="#"
+              class="menuSidebar w-100 d-flex justify-content-center"
+              :class="[ activeitem =='小米' ? 'text-primary':'' ]"
+              @click="badgeSearch('小米')"
+            >小米</a>
+          </swiper-slide>
 
-        <swiper class="m-menu-Sidebar mt-5  pb-2 menu-ul ">
-          <swiper-slide class="mr-3 ml-2 " style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center  " @click="badgeSearch('Apple')" >
-              <i class="fab fa-apple pr-2 pt-1"></i>APPLE
-            </a>
-          </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 " style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('ASUS')">
-              <i class="fas fa-microchip pr-2 pt-1"></i>ASUS
-            </a>
-          </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 " style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar w-100 d-flex justify-content-center"   @click="badgeSearch('HTC')">
-              <i class="fas fa-glasses pr-2 pt-1"></i>HTC
-            </a>
-          </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('小米')">
-              <i class="fas fa-robot pr-2 pt-1"></i>mi
-            </a>
-          </swiper-slide>
-
-          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('三星')">
+          <swiper-slide
+            class="mr-3 ml-2 d-flex justify-content-center"
+            style="border: 1px solid #50CBCB;max-width:44%"
+          >
+            <a
+              href="#"
+              class="menuSidebar w-100 d-flex justify-content-center"
+              :class="[ activeitem =='三星' ? 'text-primary':'' ]"
+              @click="badgeSearch('三星')"
+            >
               <i class="fas fa-robot pr-2 pt-1"></i>三星
             </a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('NOKIA')">
+          <swiper-slide
+            class="mr-3 ml-2 d-flex justify-content-center"
+            style="border: 1px solid #50CBCB;max-width:44%"
+          >
+            <a
+              href="#"
+              class="menuSidebar w-100 d-flex justify-content-center"
+              :class="[ activeitem =='NOKIA' ? 'text-primary':'' ]"
+              @click="badgeSearch('NOKIA')"
+            >
               <i class="fas fa-robot pr-2 pt-1"></i>NOKIA
             </a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2 d-flex justify-content-center" style="border: 1px solid #50CBCB;max-width:44%">
-            <a href="#" class="menuSidebar  w-100 d-flex justify-content-center " @click="badgeSearch('MOTO')">
+          <swiper-slide
+            class="mr-3 ml-2 d-flex justify-content-center"
+            style="border: 1px solid #50CBCB;max-width:44%"
+          >
+            <a
+              href="#"
+              class="menuSidebar w-100 d-flex justify-content-center"
+              :class="[ activeitem =='MOTO' ? 'text-primary':'' ]"
+              @click="badgeSearch('MOTO')"
+            >
               <i class="fas fa-robot pr-2 pt-1"></i>MOTO
             </a>
           </swiper-slide>
         </swiper>
-
         <div class="col-sm-12 col-md-12 col-lg-10">
           <div class="dropdown my-3 text-right">
             <button
-              class="btn btn-outline-primary dropdown-toggle"
+              class="btn btn-primary dropdown-toggle btn-sm"
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
+              style="font-size:14px"
             >排列順序</button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="#" @click.prevent="arrayLtoH('lowPrice')">價格:低到高</a>
@@ -145,8 +182,8 @@
                 v-for="item in products"
                 :key="item.id"
               >
-                <div class="card border-0 shadow-sm" v-if="item.is_enabled != 0">
-                  <a href="#" @click="goDetail(item.id)">
+                <div class="card border-0" v-if="item.is_enabled != 0">
+                  <a href="#" @click.prevent="goDetail(item.id)">
                     <div
                       style="height: 200px; background-size: 60%; background-repeat: no-repeat; background-position: center"
                       :style="{backgroundImage: `url(${item.imageUrl})`}"
@@ -193,18 +230,18 @@
                       >特價 {{ item.price }} 元</div>
                     </div>
                   </div>
-
                   <button
                     type="button"
                     class="btn btn-primary btn-sm col-12 cart-move"
                     @click="addtoCart(item.id)"
+                    style="border-top-left-radius:0px ; border-top-right-radius:0px "
                   >
                     <i
-                      class="fas fa-spinner fa-pulse ttext-white"
+                      class="fas fa-spinner fa-pulse text-black"
                       v-if="item.id === status.loadingItem"
                     ></i>
-                    <i class="fas fa-cart-plus text-white" v-else></i>
-                    <span class="ml-4 text-white">加到購物車</span>
+                    <i class="fas fa-cart-plus text-black" v-else></i>
+                    <span class="ml-4 text-black">加到購物車</span>
                   </button>
                 </div>
               </div>
@@ -257,7 +294,8 @@ export default {
       favoriteLength: 0,
       added: "",
       ProductAll: false,
-      newData: ""
+      newData: "",
+      activeitem: ""
     };
   },
   methods: {
@@ -266,63 +304,36 @@ export default {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
       // vm.$store.dispatch('updateLoading', true);
-
       this.$http.get(url).then(response => {
-        vm.products = response.data.products; //將回傳資料存在 products
-        // console.log(response);
+        vm.products = response.data.products;
         // vm.$store.dispatch('updateLoading', false);
-        // console.log(vm.$route.params.Str)
         if (vm.$route.params.Str == undefined) {
           vm.ProductAll = true;
         } else {
           vm.ProductAll = false;
         }
-
-        vm.pagination = response.data.pagination; //把分頁資料存起來
-        // console.log(vm.pagination)
+        vm.pagination = response.data.pagination;
       });
     },
-    // getProduct(id){
-    //   const vm = this;
-    //   const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-    //   vm.status.loadingItem = id; //點選到的選項 loading動畫
-    //   this.$http.get(url).then((response) => {
-    //     vm.product = response.data.product;  //將回傳資料存在 product
-    //     $('#productModal').modal('show'); //開啟 modal
-    //     // console.log(response);
-
-    //     vm.status.loadingItem = ''; //開啟後動畫清空
-    //   });
-    // },
     //加入購物車(新增前先判斷購物車是否有重複資料，如有先刪除後新增)
     addtoCart(id, qty = 1) {
       // id 和 數量 預設=1
       //  this.$store.dispatch('addtoCart', { id, qty });
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.status.loadingItem = id; //點選到的選項 loading動畫
+      vm.status.loadingItem = id;
       // vm.$store.dispatch('updateLoading', true);
-
       // 一樣商品合併(先抓購物車內容判斷 ID是否一樣)
       this.$http.get(url).then(response => {
         vm.cartItem = response.data.data.carts;
-
         if (vm.cartItem.length != 0) {
-          // console.log('array',vm.cartItem.length);
           let added = 0;
           for (let i = 0; i < vm.cartItem.length; i++) {
-            //  console.log('i',i);
-
             if (id == vm.cartItem[i].product_id) {
               added = 1; //新增
               //刪除購物車內容
-              // console.log('一樣', i ,vm.cartItem[i].id)
               const removeurl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${vm.cartItem[i].id}`;
-              this.$http.delete(removeurl).then(() => {
-                // console.log('刪除後',vm.cartItem[i]);
-                // vm.getCart(); //重新取得購物車內容
-                // this.$bus.$emit('refreshCart');
-              });
+              this.$http.delete(removeurl).then(() => {});
               // 新增
               let itemQty = vm.cartItem[i].qty; //原購物車商品數量
               const cart = {
@@ -330,14 +341,12 @@ export default {
                 qty: qty + itemQty
               };
               this.$http.post(url, { data: cart }).then(response => {
-                vm.status.loadingItem = ""; //開啟後動畫清空
-                // vm.getCart(); //取得購物車內容
-                $("#productModal").modal("hide"); //關閉 modal
+                vm.status.loadingItem = "";
+                $("#productModal").modal("hide");
                 // vm.$store.dispatch('updateLoading', false);
                 this.$bus.$emit("refreshCart");
               });
             } else {
-              // console.log('added',added)
               // forLoop全部跑完，無重複商品且要新增才新增，
               if (i == vm.cartItem.length - 1 && added == 0) {
                 // console.log('無重複')
@@ -346,10 +355,8 @@ export default {
                   qty
                 };
                 this.$http.post(url, { data: cart }).then(response => {
-                  // console.log(response);
-                  vm.status.loadingItem = ""; //開啟後動畫清空
-                  // vm.getCart(); //取得購物車內容
-                  $("#productModal").modal("hide"); //關閉 modal
+                  vm.status.loadingItem = "";
+                  $("#productModal").modal("hide");
                   // vm.$store.dispatch('updateLoading', false);
                   this.$bus.$emit("refreshCart");
                 });
@@ -363,14 +370,13 @@ export default {
             qty
           };
           this.$http.post(url, { data: cart }).then(response => {
-            // console.log(response);
-            vm.status.loadingItem = ""; //開啟後動畫清空
-            // vm.getCart(); //取得購物車內容
-            $("#productModal").modal("hide"); //關閉 modal
+            vm.status.loadingItem = "";
+            $("#productModal").modal("hide");
             // vm.$store.dispatch('updateLoading', false);
             this.$bus.$emit("refreshCart");
           });
         }
+        vm.$bus.$emit("messsage:push", "已加入購物車", "success");
       });
     },
 
@@ -380,14 +386,9 @@ export default {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // vm.$store.dispatch('updateLoading', true);
-      // vm.isLoading = true;
       this.$http.get(url).then(response => {
-        // vm.products =  response.data.products; //將回傳資料存在 products
         vm.cart = response.data.data;
-        // console.log(vm.cart)
         // vm.$store.dispatch('updateLoading', false);
-        // vm.isLoading = false;
-        // vm.pagination = response.data.pagination; //把分頁資料存起來
       });
     },
     removeCartItem(id) {
@@ -395,10 +396,9 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       vm.$store.state.isLoading = true;
       this.$http.delete(url).then(() => {
-        // console.log('刪除')
-        vm.getCart(); //重新取得購物車內容
+        vm.getCart();
         this.$bus.$emit("refreshCart");
-        vm.$store.state.isLoading = false; //讀取效果關閉
+        vm.$store.state.isLoading = false;
       });
     },
     goDetail(id) {
@@ -416,16 +416,12 @@ export default {
       if (value === undefined) {
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
         this.$http.get(url).then(response => {
-          vm.products = response.data.products; //將回傳資料存在 products
+          vm.products = response.data.products;
           vm.ProductAll = true; //換頁打開
-          // vm.pagination = response.data.pagination; //把分頁資料存起來
-          // console.log('全部',vm.products);
         });
       } else {
         array = vm.productsOriginal.filter(e => {
-          // console.log('過濾', e);
           //關鍵字搜尋標題忽略大小寫
-          // return ((e.title === value) || (e.title.indexOf(value) !== -1) || (e.title.toUpperCase().indexOf(value) !== -1) || (e.title.toLowerCase().indexOf(value) !== -1));
           return (
             e.brand === value ||
             e.brand.toUpperCase().indexOf(value) !== -1 ||
@@ -440,15 +436,11 @@ export default {
     getProductAll() {
       const vm = this;
       vm.currentPath = vm.$route;
-      // console.log(vm.currentPath);
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      // vm.isLoading = true
       this.$http.get(api).then(response => {
         // console.log('getProducts', response.data)
         vm.productsOriginal = response.data.products;
         this.getCategory();
-        // console.log(vm.pagination);
-        // vm.isLoading = false
       });
     },
     // 加入我的最愛
@@ -468,7 +460,6 @@ export default {
       this.getFavoriteLength();
       this.$bus.$emit("favorite", this.favorites);
       this.$bus.$emit("like");
-      // console.log('加入')
     },
     // 移除我的最愛
     removeFavorite(item) {
@@ -481,23 +472,17 @@ export default {
       this.getFavoriteLength();
       this.$bus.$emit("favorite", this.favorites);
       this.$bus.$emit("dislike");
-      // console.log('移除')
     },
     // 有商品於我的最愛時，icon更換
     getFilteredFavorite(item) {
       // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
       return this.favorites.some(el => {
-        // console.log(el);
         const result = item.id === el.id;
         return result;
       });
     },
     // 取得我的最愛產品數量
     getFavoriteLength() {
-      // if (!JSON.parse(localStorage.getItem('favorite'))) {
-      //   console.log('近來')
-      //   return;
-      // }
       this.favoriteLength = JSON.parse(localStorage.getItem("favorite")).length;
       this.$bus.$emit("favorite", this.favoriteLength);
     },
@@ -529,6 +514,7 @@ export default {
       });
     },
     badgeSearch(str) {
+      this.activeitem = str;
       this.$router.push(`/${str}`).catch(err => {});
       this.$bus.$emit("change");
     },
@@ -538,29 +524,17 @@ export default {
       let updateProduct = "";
       updateProduct = "products";
       if (this.$route.params.Str === undefined) {
-        // 全部商品
-        //  vm.getCategory();
-        // return new Promise((resolve, reject)=>{
-        //   vm.getCategory();
-        //   console.log('跑完')
-        //   console.log('全部3',vm.products);
-        // })
         return new Promise((resolve, reject) => {
           const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
           this.$http.get(url).then(response => {
-            vm.products = response.data.products; //將回傳資料存在 products
-            vm.ProductAll = false; //換頁打開
-            // vm.pagination = response.data.pagination; //把分頁資料存起來
-
-            // console.log('全部',vm.products);
+            vm.products = response.data.products;
+            vm.ProductAll = false; //換頁關閉
             if (item === "lowPrice") {
-              // console.log('lowPrice')
               return this[updateProduct].sort(function(a, b) {
                 return a.price - b.price;
                 // return a[vm.price] < b[vm.price] ? 1 : -1;
               });
             } else if (item === "upPrice") {
-              // console.log('upPrice')
               return this[updateProduct].sort(function(a, b) {
                 return b.price - a.price;
                 //  return a[vm.price] > b[vm.price] ? 1 : -1;
@@ -571,13 +545,11 @@ export default {
       } else {
         // 篩選商品
         if (item === "lowPrice") {
-          // console.log('lowPrice')
           return this[updateProduct].sort(function(a, b) {
             return a.price - b.price;
             // return a[vm.price] < b[vm.price] ? 1 : -1;
           });
         } else if (item === "upPrice") {
-          // console.log('upPrice')
           return this[updateProduct].sort(function(a, b) {
             return b.price - a.price;
             //  return a[vm.price] > b[vm.price] ? 1 : -1;
@@ -587,18 +559,7 @@ export default {
     }
   },
 
-  computed: {
-    // isLoading(){
-    //   // 讀取 /store/index.js 裡面的屬性
-    //   return this.$store.state.isLoading;
-    // }
-    //  categories() {
-    //   return this.$store.state.categories;
-    // },
-    // products() {
-    //   return this.$store.state.products;
-    // },
-  },
+  computed: {},
   mounted() {
     // 從frontsidebar傳來
     this.$bus.$on("change", () => {
@@ -606,12 +567,10 @@ export default {
       this.getProductAll();
     });
     this.$bus.$on("removefavoritet", () => {
-      // console.log('清除icon');
       this.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
       this.getFavoriteLength();
     });
     this.$bus.$on("refresh", () => {
-      // console.log('監聽')
       this.getProducts();
     });
   },
@@ -636,29 +595,21 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/all";
 
-.item-hover div > a:hover {
-  // background: rgba(0, 0, 0, 0.02);
-  box-shadow: 3px 3px 10px rgba(227, 219, 208, 0.5);
+.item-hover > div:hover {
+  box-shadow: 5px 5px 10px rgba(227, 219, 208, 0.5);
 }
 .cart-move {
   width: 100%;
-  transition: all 0.5s;
-
+  transition: all 0.3s;
   &:hover i {
     transform: translate(22px, 0);
-    transition: transform 0.5s linear;
-    color: $primary;
-    // transition: all 1s ease;
-  }
-  &:hover span {
-    color: $secondary;
+    transition: transform 0.3s linear;
   }
 }
 .sticky-top {
   position: sticky;
   top: 70px;
   z-index: 999;
-  // bottom: 50vh;
 }
 .d-md-block {
   background: rgba(0, 0, 0, 0.2);
@@ -698,10 +649,7 @@ export default {
     .menuSidebar {
       text-decoration: none;
       color: $dark;
-      // transition: all .7s;
       font-weight: bold;
-      // width: 80px;
-     
     }
 
     a:hover {
@@ -722,7 +670,6 @@ export default {
     .menuSidebar {
       text-decoration: none;
       color: $dark;
-      // transition: all .7s;
       font-weight: bold;
       width: 80px;
     }

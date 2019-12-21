@@ -68,8 +68,7 @@ const routes = [
         name: 'category',
         component: () => import('@/views/front/Index.vue')
       },
-      
-      
+
     ]
   },
   {

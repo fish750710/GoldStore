@@ -61,7 +61,8 @@ $colors: map-merge(
     "cyan":       $cyan,
     "white":      $white,
     "gray":       $gray-600,
-    "gray-dark":  $gray-800
+    "gray-dark":  $gray-800,
+    "black":      $black,
   ),
   $colors
 );
@@ -86,7 +87,8 @@ $theme-colors: map-merge(
     "warning":    $warning,
     "danger":     $danger,
     "light":      $light,
-    "dark":       #5E5E5E
+    "dark":       #5E5E5E,
+    "black":      $black,
   ),
   $theme-colors
 );

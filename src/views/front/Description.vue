@@ -16,14 +16,12 @@
             </div>
           </div>
         </div>
-
         <div class="shop mt-5">
           <div class="text-center pt-4 shop-content">
             <h3>款式最多的watch</h3>
             <button class="btn btn-primary btn-radius mt-2" @click="goIndex">立馬拜金去</button>
           </div>
         </div>
-
         <div class="img-1 my-5">
           <div class="title">
             <h3>1,000 萬首歌，免額外付費試聽 1 個月。</h3>
@@ -33,7 +31,6 @@
             </button>
           </div>
         </div>
-
         <!-- swiper -->
         <swiper :options="swiperOption" class="img-rwd">
           <div class="swiper-slide swiper-list">
@@ -65,19 +62,16 @@
               <button class="btn btn-primary btn-radius" @click="goIndex">了解更多</button>
             </div>
           </div>
-
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
-
         <div class="shop2 mt-5">
           <div class="text-center pt-4 shop-content">
             <h3>最專業的3C網站</h3>
             <button class="btn btn-info btn-radius mt-2" @click="goIndex">立馬拜金去</button>
           </div>
         </div>
-
         <div class="evaluation">
           <div class="img-4 my-5">
             <div class="title">
@@ -135,12 +129,10 @@ export default {
         //偵測畫面滾動
         let windowHeight = $(window).height(); //目前視窗高度
         let scrollPos = $(window).scrollTop(); //目前滾動到位置
-        // console.log('高',windowHeight,'滾動位置',scrollPos)
         //css位移漸出
         if ($(window).width() >= 768) {
           $(".evaluation").each(function() {
             var thisPos = $(this).offset().top;
-            // console.log(thisPos);
             if (windowHeight / 1.3 + scrollPos >= thisPos) {
               //視窗高度+目前滾動位置 >= evaluation的位置
               $(this).addClass("evaluation-fadeIn");
@@ -148,7 +140,6 @@ export default {
           });
         } else {
           $(".evaluation").removeClass("evaluation");
-          // $(this).removeClass("intro");
         }
       });
     });
@@ -169,10 +160,9 @@ export default {
   background-image: url(../../assets/images/music__g13pd5xxmzmi_large.png);
   background-repeat: no-repeat;
   background-color: white;
-  background-position: center; //圖片維持置中
+  background-position: center;
   background-size: 100%;
   height: 420px;
-  // max-width: 100%;
   .title {
     position: relative;
     top: 100px;
@@ -180,10 +170,8 @@ export default {
     margin: 0 auto;
     max-width: 460px;
     height: 152px;
-    // background: rgba(0, 0, 0, 0.4);
     text-align: center;
     color: #fff;
-
     h3 {
       font-size: 36px;
       padding-top: 30px;
@@ -209,7 +197,7 @@ export default {
   background-image: url(../../assets/images/accessories_for_mac_tile__1y124l6fa1ei_large.jpg);
   background-repeat: no-repeat;
   background-color: #fff;
-  background-position: left; //圖片維持置中
+  background-position: left;
   background-size: 100%;
   height: 420px;
   right: 0px;
@@ -220,7 +208,6 @@ export default {
     height: 152px;
     text-align: center;
     color: $primary;
-
     h3 {
       font-size: 36px;
       padding-top: 30px;
@@ -236,7 +223,7 @@ export default {
   background-image: url(../../assets/images/u12-plus-customised_web-banner.jpg);
   background-repeat: no-repeat;
   background-color: #fff;
-  background-position: top; //圖片維持置中
+  background-position: top;
   background-size: 100%;
   height: 720px;
   max-height: 720px;
@@ -246,7 +233,7 @@ export default {
   background-image: url(../../assets/images/ipad_pro_hero__phf9t8u0esii_large.jpg);
   background-repeat: no-repeat;
   background-color: #fff;
-  background-position: left; //圖片維持置中
+  background-position: left;
   background-size: 100%;
   height: 520px;
   overflow: hidden;
@@ -258,10 +245,8 @@ export default {
     margin: 0 auto;
     width: 260px;
     height: 152px;
-    // background: rgba(0, 0, 0, 0.4);
     text-align: center;
     color: $primary;
-
     h3 {
       font-size: 36px;
       padding-top: 30px;
@@ -300,7 +285,6 @@ export default {
 .shop-content {
   position: relative;
   top: 50px;
-  // left: 350px;
   margin: 0 auto;
   width: 400px;
   height: 152px;
@@ -326,9 +310,6 @@ export default {
 }
 
 @include desktop-top() {
-  //  .body-rwd{
-  //      margin-top: 58px;
-  //  }
 }
 @include pc-top() {
   .img-1 {
@@ -342,7 +323,6 @@ export default {
       height: 152px;
       text-align: center;
       color: #fff;
-
       h3 {
         font-size: 36px;
         padding-top: 30px;
@@ -359,10 +339,9 @@ export default {
     background-image: url(../../assets/images/ipad_pro_hero__phf9t8u0esii_large.jpg);
     background-repeat: no-repeat;
     background-color: #fff;
-    background-position: left; //圖片維持置中
+    background-position: left;
     background-size: 100%;
     height: 520px;
-    // max-width: 100%;
     .title {
       position: relative;
       top: 100px;
@@ -370,10 +349,8 @@ export default {
       margin: 0 auto;
       width: 260px;
       height: 152px;
-      // background: rgba(0, 0, 0, 0.4);
       text-align: center;
       color: $primary;
-
       h3 {
         font-size: 36px;
         padding-top: 30px;
@@ -421,10 +398,10 @@ export default {
     margin-top: 58px;
   }
   .shop {
-    background-size: 800px ;
+    background-size: 800px;
   }
   .shop2 {
-    background-size: 800px ;
+    background-size: 800px;
   }
 }
 @include m568() {
@@ -491,7 +468,6 @@ export default {
       height: 152px;
       text-align: left;
       color: #000;
-
       h3 {
         font-size: 18px;
         padding-top: 40px;
@@ -524,8 +500,6 @@ export default {
 }
 @include iphone5() {
   .img-1 {
-    // height: 300px;
-    // min-height: 300px;
     width: 300px;
     .title {
       position: relative;
@@ -536,7 +510,6 @@ export default {
       height: 152px;
       text-align: left;
       color: #000;
-
       h3 {
         font-size: 16px;
         padding-top: 40px;

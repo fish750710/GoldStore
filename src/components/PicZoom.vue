@@ -114,7 +114,6 @@ export default {
         left:200px;
       width: 350px;
       height: 350px;
-    //   border: 1px solid #dddddd;
       position: relative;
       cursor: crosshair;
       .mask{
@@ -164,7 +163,6 @@ export default {
         left:200px;
       width: 350px;
       height: 350px;
-    //   border: 1px solid #dddddd;
       position: relative;
       cursor: crosshair;
       .mask{
@@ -214,7 +212,6 @@ export default {
         left:0px;
       width: 350px;
       height: 350px;
-    //   border: 1px solid #dddddd;
       position: relative;
       cursor: crosshair;
       .mask{
@@ -245,8 +242,6 @@ export default {
       z-index: 100;
       background: #FFF;
       img {
-        // width: 500px;
-        // height: 500px;
         position: absolute;
         border: 0px;
         display: block;
@@ -260,12 +255,10 @@ export default {
 @include pad() {
   .pic-zoom {
     .preview-box {
-      // display: none;
         //搜尋範圍
         left:0px;
       width: 250px;
       height: 250px;
-    //   border: 1px solid #dddddd;
       position: relative;
       cursor: pointer;
       .mask{
@@ -279,58 +272,10 @@ export default {
 
 }
 @include m568() {
-
-
 }
 @include m480() {
-  
 }
 @include iphone5() {
-
 }
-  // .pic-zoom {
-  //   .preview-box {
-  //       //搜尋範圍
-  //       left:200px;
-  //     width: 350px;
-  //     height: 350px;
-  //   //   border: 1px solid #dddddd;
-  //     position: relative;
-  //     cursor: crosshair;
-  //     .mask{
-  //       //遮罩範圍
-  //       top: 75px;
-  //       left: 75px;
-  //       width: 150px;
-  //       height: 150px;
-  //       position: absolute;
-  //       background-color: #FFF;
-  //       opacity: .6;
-  //       border: 1px solid #CCC;
-  //       cursor: crosshair;
-  //       z-index: 101;
-  //     }
-  //   }
-  //   .zoom-box {
-  //       //大圖
-  //     top: 0px;
-  //     left: 565px;
-  //     width: 500px;
-  //     height: 500px;
-  //     border: 1px solid #999;
-  //     position: absolute;
-  //     overflow: hidden;
-  //     z-index: 100;
-  //     background: #FFF;
-  //     img {
-  //       // width: 500px;
-  //       // height: 500px;
-  //       position: absolute;
-  //       border: 0px;
-  //       display: block;
-  //       left: -100.286px;
-  //       top: -125.357px;
-  //     }
-  //   }
-  // }
+
 </style>

@@ -6,12 +6,11 @@
     <div id="close-menu" class></div>
     <nav class="header navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <div class="col-1 col-sm-1 col-md-1 col-lg-2 col-xl-2 mr-0">
-        <a href="#" class="" @click="goIndex" >
+        <a href="#" class @click="goIndex">
           <img src="@/assets/images/Logo-3w150.png" alt class="d-logo" />
           <img src="@/assets/images/Logo-64.png" alt class="m-logo" style="width:45px" />
         </a>
       </div>
-
       <div
         class="row col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mb-2 mt-2 justify-content-end text-center"
       >
@@ -26,17 +25,21 @@
             <a href="#" class="m-3 menuSidebar" @click="goIndex">購物商城</a>
           </li>
         </ul>
-
         <ul class="nav">
           <li class="nav-item d-search">
             <Search class="pt-1"></Search>
           </li>
           <li class="nav-item m-search mt-1">
             <div class="dropdown">
-              <a href="#" class="dropdown-toggle" id="dropdownMenu2"
+              <a
+                href="#"
+                class="dropdown-toggle"
+                id="dropdownMenu2"
                 data-toggle="dropdown"
                 aria-haspopup="true"
-                aria-expanded="false"><i class="fas fa-search text-white p-2"></i>
+                aria-expanded="false"
+              >
+                <i class="fas fa-search text-white p-2"></i>
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width:220px">
                 <input
@@ -50,18 +53,17 @@
               </div>
             </div>
           </li>
-
           <li class="nav-item">
+            <!-- 未登入 -->
+            <a
+              href="#"
+              class="nav-link text-light menu-top"
+              @click="openLogin"
+              v-if="!successStatus"
+            >
+              <i class="far fa-user-circle userlogo"></i>
+            </a>
             <div class="dropdown">
-              <!-- 未登入 -->
-              <a
-                href="#"
-                class="nav-link text-light menu-top"
-                @click="openLogin"
-                v-if="!successStatus"
-              >
-                <i class="far fa-user-circle userlogo"></i>
-              </a>
               <!-- 已登入 -->
               <a
                 id="dropdownUserMenu"
@@ -74,24 +76,18 @@
               >
                 <i class="fas fa-user-circle userlogo"></i>
               </a>
-
               <div class="dropdown-menu" aria-labelledby="dropdownUserMenu" v-if="successStatus">
-                <button
-                  class="dropdown-item dropdown-text"
-                  type="button"
-                  @click="goUserOrders"
-                >
-                  <i class="far fa-address-book mr-1 user-list-icon-1"></i><span>查訂單</span>
+                <button class="dropdown-item dropdown-text" type="button" @click="goUserOrders">
+                  <i class="far fa-address-book mr-1 user-list-icon-1"></i>
+                  <span>查訂單</span>
                 </button>
-                <button
-                  class="dropdown-item dropdown-text"
-                  type="button"
-                  @click="goProducts"
-                >
-                  <i class="fas fa-clipboard-list mr-1 user-list-icon-2"></i><span>管理商品</span>
+                <button class="dropdown-item dropdown-text" type="button" @click="goProducts">
+                  <i class="fas fa-clipboard-list mr-1 user-list-icon-2"></i>
+                  <span>管理商品</span>
                 </button>
                 <button class="dropdown-item dropdown-text" type="button" @click="signout">
-                  <i class="fas fa-sign-out-alt mr-1"></i><span>登出</span>
+                  <i class="fas fa-sign-out-alt mr-1"></i>
+                  <span>登出</span>
                 </button>
               </div>
             </div>
@@ -145,7 +141,6 @@
         </li>
       </ul>
     </nav>
-
     <!-- cartModal -->
     <div
       class="modal"
@@ -156,16 +151,16 @@
       aria-hidden="true"
     >
       <div
-        class="modal-dialog-scrollable position-absolute "
+        class="modal-dialog-scrollable position-absolute"
         role="document"
         style="right:0; z-index:999;"
       >
         <div class="modal-content vh-100 mh-100 rounded-0" style="border-left: 1px solid black">
-          <div class="modal-header">
-            <h5
-              class="modal-title pl-3 font-color-title font-weight-bold"
-              id="exampleModalLabel"
-            >我的購物車</h5>
+          <div
+            class="modal-header bg-dark"
+            style="border-top-left-radius:0px ; border-top-right-radius:0px"
+          >
+            <h5 class="modal-title pl-3 text-white font-weight-bold" id="exampleModalLabel">我的購物車</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -175,7 +170,7 @@
               <thead>
                 <th width="100"></th>
                 <th>商品</th>
-                <th width="90">價格 / 數量</th>
+                <th width="110">價格 / 數量</th>
               </thead>
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
@@ -189,7 +184,7 @@
                       <th class="border-0 pl-0 pt-0">
                         <a
                           href="#"
-                          class="text-decoration-none font-color-main text-primary"
+                          class="text-decoration-none text-black"
                           @click="goDetail(item.product.id)"
                         >{{ item.product.title }}</a>
                       </th>
@@ -204,13 +199,13 @@
                     </tbody>
                   </td>
                   <td>
-                    <button class="btn pt-0 pb-0 pl-1" @click="cutqty(item)">
+                    <button class="btn pt-0 pb-0 pl-1 pr-1" @click="cutqty(item)">
                       <i class="fas fa-minus" v-if="item.id != status.loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
                     </button>
                     {{ item.qty }}
                     <button
-                      class="btn pt-0 pb-0 pr-1"
+                      class="btn pt-0 pb-0 pr-1 pl-1"
                       @click="addqty(item)"
                     >
                       <i class="fas fa-plus" v-if="item.id != status.loadingItem"></i>
@@ -242,7 +237,6 @@
               </div>
             </div>
           </div>
-
           <div
             class="d-flex justify-content-around align-items-center p-2"
             style="border-top: 1px solid black"
@@ -263,7 +257,6 @@
         </div>
       </div>
     </div>
-
     <!-- favoritetModal -->
     <div
       class="modal"
@@ -274,27 +267,26 @@
       aria-hidden="true"
     >
       <div
-        class="modal-dialog-scrollable position-absolute "
+        class="modal-dialog-scrollable position-absolute"
         role="document"
         style="right:0; z-index:999;"
       >
         <div class="modal-content vh-100 mh-100 rounded-0" style="border-left: 1px solid black">
-          <div class="modal-header">
-            <h5
-              class="modal-title pl-3 font-color-title font-weight-bold"
-              id="exampleModalLabel"
-            >我的收藏</h5>
+          <div
+            class="modal-header bg-dark"
+            style="border-top-left-radius:0px ; border-top-right-radius:0px"
+          >
+            <h5 class="modal-title pl-3 font-weight-bold text-white" id="exampleModalLabel">我的收藏</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-
           <div class="modal-body py-0 d-flex justify-content-center">
             <table class="table table-borderless table-sm" v-if="myfavorite.length > 0">
               <thead>
                 <th width="100"></th>
                 <th>商品</th>
-                <th width="">收藏</th>
+                <th width>收藏</th>
               </thead>
               <tbody>
                 <tr v-for="item in myfavorite" :key="item.id">
@@ -308,7 +300,7 @@
                       <th class="border-0 pl-0 pt-0">
                         <a
                           href="#"
-                          class="text-decoration-none font-color-main"
+                          class="text-decoration-none text-black"
                           @click="goDetail(item.id)"
                         >{{ item.title }}</a>
                       </th>
@@ -347,7 +339,6 @@
         </div>
       </div>
     </div>
-
     <!-- Login Modal -->
     <div
       class="modal fade"
@@ -390,7 +381,7 @@
                       id="inputEmail"
                       class="form-control mb-2"
                       v-model="user.username"
-                      placeholder="Email address"
+                      placeholder="電子郵件"
                       required
                       autofocus
                     />
@@ -399,7 +390,7 @@
                       id="inputPassword"
                       class="form-control mb-2"
                       v-model="user.password"
-                      placeholder="Password"
+                      placeholder="密碼"
                       required
                     />
                     <input
@@ -407,7 +398,7 @@
                       id="checkPassword"
                       class="form-control mb-2"
                       v-if="ischange"
-                      placeholder="Check Password"
+                      placeholder="再次確認密碼"
                       required
                     />
                     <div class="checkbox mb-3 d-flex justify-content-between">
@@ -415,22 +406,22 @@
                         <input type="checkbox" value="remember-me" /> 記住我
                       </label>
 
-                      <a href="#">忘記密碼</a>
+                      <a href="#" class="text-decoration-none">忘記密碼</a>
                     </div>
                     <div v-if="!message.success" class="text-danger mb-3">{{ message.message }}</div>
 
                     <button
-                      class="btn btn-lg btn-primary btn-block"
+                      class="btn btn-lg btn-primary btn-block font-weight-bold"
                       type="submit"
                       @keyup.enter="signin()"
                       v-if="!ischange"
-                    >Sign in</button>
+                    >登入</button>
                   </form>
                   <button
-                    class="btn btn-lg btn-primary btn-block"
+                    class="btn btn-lg btn-primary btn-block font-weight-bold"
                     @click="signup()"
                     v-if="ischange"
-                  >Sign up</button>
+                  >我要註冊</button>
                   <div v-if="ischange" class="text-danger mt-3">{{ message }}</div>
                   <hr />
                   <div class="d-flex justify-content-between mt-3">
@@ -500,22 +491,9 @@ export default {
         length: 0
       },
       searchValue: ""
-
     };
   },
   methods: {
-    getProducts(page = 1) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
-      // vm.$store.dispatch('updateLoading', true);//使用 VUEX actions:操作行為
-      this.$http.get(url).then(response => {
-        vm.products = response.data.products; //將回傳資料存在 products
-        // console.log(response);
-
-        // vm.$store.dispatch('updateLoading', false);
-        vm.pagination = response.data.pagination; //把分頁資料存起來
-      });
-    },
     getProduct(id) {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
@@ -523,8 +501,6 @@ export default {
       this.$http.get(url).then(response => {
         vm.product = response.data.product; //將回傳資料存在 product
         $("#productModal").modal("show"); //開啟 modal
-        // console.log(response);
-
         vm.status.loadingItem = ""; //開啟後動畫清空
       });
     },
@@ -533,14 +509,14 @@ export default {
       // id 和 數量 預設=1
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.status.loadingItem = id; //點選到的選項 loading動畫
+      vm.status.loadingItem = id; 
       const cart = {
         product_id: id,
         qty
       };
       this.$http.post(url, { data: cart }).then(response => {
         // console.log(response);
-        vm.status.loadingItem = ""; //開啟後動畫清空
+        vm.status.loadingItem = ""; 
         vm.getCart(); //取得購物車內容
         $("#productModal").modal("hide"); //關閉 modal
       });
@@ -567,13 +543,12 @@ export default {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       vm.status.loadingItem = id;
-      // console.log(id)
       // vm.$store.dispatch('updateLoading', true);
       // vm.isLoading = true;
       this.$http.delete(url).then(() => {
         vm.getCart(); //重新取得購物車內容
         // vm.$store.dispatch('updateLoading', false); //讀取效果關閉
-        vm.status.loadingItem = ""; //開啟後動畫清空
+        vm.status.loadingItem = ""; 
         // vm.isLoading = false;
       });
     },
@@ -598,14 +573,11 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
       const order = vm.form;
       vm.$store.dispatch("updateLoading", true);
-
       this.$validator.validate().then(result => {
         if (result) {
           this.$http.post(url, { data: order }).then(response => {
-            // console.log('訂單已建立', response);
             // vm.getCart();
             if (response.data.success) {
-              // console.log('準備跳轉也面');
               vm.$router.push(`/customer_checkout/${response.data.orderId}`); // $router 轉換頁面
             }
             vm.$store.dispatch("updateLoading", false);
@@ -620,7 +592,6 @@ export default {
       this.message = "";
       this.user.password = "";
       $("#loginModel").modal("show"); //顯示
-      // console.log(this.tempOrder);
     },
     //登入
     signin() {
@@ -628,9 +599,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       const vm = this;
       this.$http.post(api, vm.user).then(response => {
-        // console.log(response.data);
         vm.message = response.data;
-
         if (response.data.success) {
           vm.successStatus = true;
           //登入成功跳轉首頁
@@ -664,10 +633,8 @@ export default {
       vm.$http.post(url).then(response => {
         if (response.data.success) {
           //檢查用戶是否仍持續登入狀態
-          // console.log(response.data.success);
           vm.successStatus = true;
         } else {
-          //  console.log(response.data.success);
           vm.successStatus = false;
         }
       });
@@ -677,12 +644,10 @@ export default {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/logout`;
       vm.$http.post(url).then(response => {
-        // console.log(response.data);
         if (response.data.success) {
           vm.successStatus = false;
           vm.$bus.$emit("messsage:push", response.data.message, "success");
           vm.goIndex();
-          // console.log('登出')
         } else {
           vm.successStatus = true;
         }
@@ -690,36 +655,29 @@ export default {
     },
     searchProduct() {
       const str = this.searchValue;
-      //   console.log(str)
       this.$router.push(`/search/${this.searchValue}`).catch(err => {});
       this.$bus.$emit("search");
       if (str.trim() === "") {
         this.$bus.$emit("messsage:push", `請輸入商品名稱`, "danger");
       }
-      // console.log('searchValue', this.searchValue, this.searchStatus)
       this.searchValue = "";
     },
     getfavorite() {
       const vm = this;
-      vm.myfavorite = JSON.parse(localStorage.getItem("favorite"));
-      // console.log(vm.myfavorite);
+      vm.myfavorite = JSON.parse(localStorage.getItem("favorite") || "");
     },
     removefavoritet(item) {
       // 檢查索引
-      //  console.log(item)
       const i = this.myfavorite.findIndex(el => {
-        // console.log(el.id,item);
         const result = el.id === item;
         return result;
       });
-      // console.log(i);
       this.myfavorite.splice(i, 1);
       localStorage.setItem("favorite", JSON.stringify(this.myfavorite));
       this.$bus.$emit("removefavoritet", this.myfavorite);
     },
     // 增加數量
     addqty(item) {
-      // console.log(item.product.id)
       item.qty += 1;
       item.final_total = item.product.price * item.qty;
       this.addtoCart(item.product.id, item.qty);
@@ -770,10 +728,9 @@ export default {
     isLoading() {
       // 讀取 /store/index.js 裡面的屬性
       return this.$store.state.isLoading;
-    },
+    }
   },
   created() {
-    this.getProducts();
     this.getCart();
     this.issuccess();
     this.getfavorite();
@@ -797,16 +754,11 @@ export default {
   mounted() {
     // 從frontNavbar傳來
     this.$bus.$on("refreshCart", () => {
-      // console.log('監聽')
       this.getCart();
     });
     this.$bus.$on("favorite", () => {
-      // console.log('我的最愛')
       this.getfavorite();
     });
-    // this.$bus.$on('favoriteLength',()=>{
-    //   this.getfavorite();
-    // })
   }
 };
 </script>
@@ -830,10 +782,10 @@ export default {
   font-size: 13px;
   padding: 0 17px;
 }
-.user-list-icon-1{
+.user-list-icon-1 {
   padding-right: 3px;
 }
-.user-list-icon-2{
+.user-list-icon-2 {
   margin-left: 1px;
   padding-right: 3px;
 }
@@ -853,12 +805,7 @@ export default {
 .menu-top i:hover {
   color: $primary;
 }
-.font-color-main {
-  color: $primary;
-}
-.font-color-title {
-  color: $primary;
-}
+
 .dropdown-text {
   &:hover {
     color: $primary;
@@ -900,7 +847,7 @@ export default {
   background: $primary;
 }
 
-.userlogo{
+.userlogo {
   font-size: 22px;
 }
 
