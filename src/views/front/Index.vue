@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- 輪播 -->
-    <div
-      id="carouselExampleIndicators"
-      class="carousel slide my-5 m-banner-rwd"
-      data-ride="carousel"
-    >
+    <div id="carouselExampleIndicators" class="carousel slide my-5 m-banner-rwd" data-ride="carousel">
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -13,41 +9,31 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active banner-rwd">
-          <a href="#" @click="goDetail('-LuQFEYmntflhE3g3af6')">
-            <img
-              src="@/assets/images/macbook_air__csdfieli984m_large.jpg"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>全新macbook air</h5>
-              <p>絢麗多彩的 Retina 顯示器採用「原彩」顯示技術， 帶來更真實自然的觀看體驗。 • 功能多元的觸控列，提供你更多高效的工作方式</p>
+          <a href="#" @click="goDetail('-LuQFEYmntflhE3g3af6')" class="d-block">
+            <div class="benner-img1">
+              <div class="title carousel-caption d-none d-md-block">
+                <h5>全新macbook air</h5>
+                <p>絢麗多彩的 Retina 顯示器採用「原彩」顯示技術， 帶來更真實自然的觀看體驗。 • 功能多元的觸控列，提供你更多高效的工作方式</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="carousel-item">
+          <a href="#" @click="goDetail('-LuQ9Z8JhBgR4O1L2Gb5')" class="d-block">
+            <div class="benner-img2">
+              <div class="title carousel-caption d-none d-md-block">
+                <h5>新上市 iphone11 PRO</h5>
+                <p>• 5.8 吋超 Retina XDR OLED 顯示器</p>
+                <p>• 防潑抗水與防塵功能 (在最深達 4 公尺水中最長可達 30 分鐘，IP68)</p>
+                <p>• 三相機系統，具備 1200 萬像素超廣角、廣角與望遠相機；夜間模式、人像模式與 4K 影片拍攝功能 (最高可達 60 fps)</p>
+              </div>
             </div>
           </a>
         </div>
         <div class="carousel-item banner-rwd">
-          <a href="#" @click="goDetail('-LuQ9Z8JhBgR4O1L2Gb5')">
-            <img
-              src="@/assets/images/hero_iphone11_pro__je9i781j99u2_large.jpg"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
-              <h5>新上市 iphone11 PRO</h5>
-              <p>• 5.8 吋超 Retina XDR OLED 顯示器</p>
-              <p>• 防潑抗水與防塵功能 (在最深達 4 公尺水中最長可達 30 分鐘，IP68)</p>
-              <p>• 三相機系統，具備 1200 萬像素超廣角、廣角與望遠相機；夜間模式、人像模式與 4K 影片拍攝功能 (最高可達 60 fps)</p>
-            </div>
-          </a>
-        </div>
-        <div class="carousel-item banner-rwd">
-          <a href="#" @click="goDetail('-LuQIo2AsSzBCxvJKok_')">
-            <img
-              src="@/assets/images/u19e_home_banner_desktop_bg_2000x683.jpg"
-              class="d-block w-100"
-              alt="..."
-            />
-            <div class="carousel-caption d-none d-md-block">
+          <a href="#" @click="goDetail('-LuQIo2AsSzBCxvJKok_')" class="d-block">
+            <div class="benner-img3"></div>
+            <div class="title carousel-caption d-none d-md-block">
               <h5>HTC u19e</h5>
               <p>6吋 18:9 全屏大螢幕</p>
               <p>雙主鏡頭相機1600+500萬畫素</p>
@@ -618,6 +604,52 @@ export default {
   max-height: 500px;
 }
 
+.benner-img1 {
+  background-image: url(../../assets/images/macbook_air__csdfieli984m_large.jpg);
+  background-repeat: no-repeat;
+  background-color: #fff;
+  background-position: center;
+  background-size: cover;
+  height: 500px;
+  right: 0px;
+  overflow: hidden;
+  position: relative;
+  .title {
+    position: absolute;
+    bottom: 80px;
+  }
+}
+.benner-img2 {
+  background-image: url(../../assets/images/hero_iphone11_pro__je9i781j99u2_large.jpg);
+  background-repeat: no-repeat;
+  background-color: #000;
+  background-position: bottom;
+  background-size: 100%;
+  height: 500px;
+  right: 0px;
+  overflow: hidden;
+  position: relative;
+  .title {
+    position: absolute;
+    bottom: 50px;
+  }
+}
+.benner-img3 {
+  background-image: url(../../assets/images/u19e_home_banner_desktop_bg_2000x683.jpg);
+  background-repeat: no-repeat;
+  background-color: #000;
+  background-position: left;
+  background-size: cover;
+  height: 500px;
+  right: 0px;
+  overflow: hidden;
+  position: relative;
+  .title {
+    position: absolute;
+    bottom: 80px;
+  }
+}
+
 @keyframes ad_width {
   from {
     width: 0;
@@ -631,16 +663,10 @@ export default {
   .m-menu-Sidebar {
     display: none;
   }
-  .banner-rwd img {
-    height: 500px;
-  }
 }
 @include pc-top() {
   .m-menu-Sidebar {
     display: none;
-  }
-  .banner-rwd img {
-    height: 400px;
   }
 }
 @include pc() {
@@ -657,14 +683,8 @@ export default {
       position: relative;
     }
   }
-  .banner-rwd img {
-    height: 400px;
-  }
 }
 @include pad() {
-  .banner-rwd img {
-    height: 260px;
-  }
   .menu-ul {
     list-style-type: none;
     .menuSidebar {
@@ -677,6 +697,15 @@ export default {
       color: $primary;
       position: relative;
     }
+  }
+  .benner-img1{
+    height: 350px;
+  }
+  .benner-img2{
+    height: 350px;
+  }
+  .benner-img3{
+    height: 350px;
   }
 }
 @include m568() {

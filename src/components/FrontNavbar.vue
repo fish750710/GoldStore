@@ -55,16 +55,13 @@
           </li>
           <li class="nav-item">
             <!-- 未登入 -->
-            <a
-              href="#"
-              class="nav-link text-light menu-top"
-              @click="openLogin"
-              v-if="!successStatus"
-            >
-              <i class="far fa-user-circle userlogo"></i>
-            </a>
-            <div class="dropdown">
-              <!-- 已登入 -->
+            <div v-if="!successStatus">
+              <a href="#" class="nav-link text-light menu-top" @click="openLogin">
+                <i class="far fa-user-circle userlogo"></i>
+              </a>
+            </div>
+            <div v-else>
+            <!-- 已登入 -->
               <a
                 id="dropdownUserMenu"
                 data-toggle="dropdown"
@@ -72,23 +69,24 @@
                 aria-expanded="false"
                 href="#"
                 class="nav-link text-light menu-top"
-                v-if="successStatus"
               >
                 <i class="fas fa-user-circle userlogo"></i>
               </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownUserMenu" v-if="successStatus">
-                <button class="dropdown-item dropdown-text" type="button" @click="goUserOrders">
-                  <i class="far fa-address-book mr-1 user-list-icon-1"></i>
-                  <span>查訂單</span>
-                </button>
-                <button class="dropdown-item dropdown-text" type="button" @click="goProducts">
-                  <i class="fas fa-clipboard-list mr-1 user-list-icon-2"></i>
-                  <span>管理商品</span>
-                </button>
-                <button class="dropdown-item dropdown-text" type="button" @click="signout">
-                  <i class="fas fa-sign-out-alt mr-1"></i>
-                  <span>登出</span>
-                </button>
+              <div class="dropdown">
+                <div class="dropdown-menu" aria-labelledby="dropdownUserMenu" v-if="successStatus">
+                  <button class="dropdown-item dropdown-text" type="button" @click="goUserOrders">
+                    <i class="far fa-address-book mr-1 user-list-icon-1"></i>
+                    <span>查訂單</span>
+                  </button>
+                  <button class="dropdown-item dropdown-text" type="button" @click="goProducts">
+                    <i class="fas fa-clipboard-list mr-1 user-list-icon-2"></i>
+                    <span>管理商品</span>
+                  </button>
+                  <button class="dropdown-item dropdown-text" type="button" @click="signout">
+                    <i class="fas fa-sign-out-alt mr-1"></i>
+                    <span>登出</span>
+                  </button>
+                </div>
               </div>
             </div>
           </li>
@@ -509,14 +507,14 @@ export default {
       // id 和 數量 預設=1
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.status.loadingItem = id; 
+      vm.status.loadingItem = id;
       const cart = {
         product_id: id,
         qty
       };
       this.$http.post(url, { data: cart }).then(response => {
         // console.log(response);
-        vm.status.loadingItem = ""; 
+        vm.status.loadingItem = "";
         vm.getCart(); //取得購物車內容
         $("#productModal").modal("hide"); //關閉 modal
       });
@@ -548,7 +546,7 @@ export default {
       this.$http.delete(url).then(() => {
         vm.getCart(); //重新取得購物車內容
         // vm.$store.dispatch('updateLoading', false); //讀取效果關閉
-        vm.status.loadingItem = ""; 
+        vm.status.loadingItem = "";
         // vm.isLoading = false;
       });
     },
@@ -604,6 +602,7 @@ export default {
           vm.successStatus = true;
           //登入成功跳轉首頁
           $("#loginModel").modal("hide"); //關閉
+          this.$bus.$emit("refreshCart"); //重新整理navbar
           // vm.$router.push('/admin/Products');
         } else {
           vm.successStatus = false;
