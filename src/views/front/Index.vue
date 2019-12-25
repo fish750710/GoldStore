@@ -287,7 +287,6 @@ export default {
       ProductAll: false,
       newData: "",
       activeitem: "",
-      productsOriginal: []
     };
   },
   methods: {
@@ -378,36 +377,30 @@ export default {
       const vm = this;
       let array = [];
       let value = "";
-      //搜尋
       value = vm.$route.params.Str; //搜尋關鍵字
-      if (value === undefined) {
-        const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-        this.$http.get(url).then(response => {
+      //撈全部後過濾
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      this.$http.get(url).then(response => {
+        if (value === undefined) {
           vm.products = response.data.products;
-        });
-        vm.ProductAll = true; //換頁打開
-      } else {
-        array = vm.productsOriginal.filter(e => {
-          //關鍵字搜尋標題忽略大小寫
-          return (
-            e.brand === value ||
-            e.brand.toUpperCase().indexOf(value) !== -1 ||
-            e.brand.toLowerCase().indexOf(value) !== -1
-          );
-        });
-        vm.products = Object.assign([], array);
-        vm.ProductAll = false; //換頁關閉
-      }
+          vm.ProductAll = true; //換頁打開
+        } else {
+          array = response.data.products.filter(e => {
+            //關鍵字搜尋標題忽略大小寫
+            return (
+              e.brand === value ||
+              e.brand.toUpperCase().indexOf(value) !== -1 ||
+              e.brand.toLowerCase().indexOf(value) !== -1
+            );
+          });
+          vm.products = Object.assign([], array);
+          vm.ProductAll = false; //換頁關閉
+        }
+      });
     },
     // 撈全部
     getProductAll() {
-      // this.$store.dispatch('getProductAll');
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
-      this.$http.get(api).then(response => {
-        vm.productsOriginal = response.data.products;
-        vm.getCategory();
-      });
+      this.getCategory();
     },
     // 加入我的最愛
     addFavorite(item) {
