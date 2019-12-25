@@ -223,11 +223,6 @@ export default {
         },
         message: ""
       },
-      // cart: {
-      //   carts: {
-      //     length: []
-      //   }
-      // },
       coupon_code: "",
       coupon_msg: ""
     };
@@ -264,13 +259,6 @@ export default {
     // 取得購物車內容
     getCart() {
       this.$store.dispatch('getCart');
-      // const vm = this;
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // vm.$store.dispatch("updateLoading", true);
-      // this.$http.get(url).then(response => {
-      //   vm.cart = response.data.data;
-      //   vm.$store.dispatch("updateLoading", false);
-      // });
     },
     goCheckOut() {
       this.$router.push(`/checkout`).catch(err => {});
@@ -286,7 +274,6 @@ export default {
   },
   // 跳離頁面前先檢查
   beforeRouteLeave(to, from, next) {
-    // console.log(this.cart.carts)
     // console.log('to', to, 'from', from, 'next', next);
     if (this.cart.carts === 0) {
       next();

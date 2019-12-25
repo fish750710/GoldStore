@@ -154,6 +154,7 @@ export default {
       });
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       vm.$http.get(api).then(response => {
+        // 猜你喜歡
         vm.products = response.data.products;
       });
     },
@@ -302,7 +303,6 @@ export default {
     filterdata() {
       const vm = this;
       return (vm.filteritem = vm.products.filter((item, i) => {
-        // console.log(item);
         if (vm.product.title != item.title) {
           return item.category == vm.product.category;
         }

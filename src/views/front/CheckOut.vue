@@ -236,7 +236,11 @@ export default {
       this.$router.push("/").catch(err => {});
     }
   },
-  mounted() {},
+  mounted() {
+    this.$bus.$on("refreshCheckOut", () => {
+      this.getCart();
+    });
+  },
   computed: {
     // cart(){
     //   return this.$store.state.cart;
@@ -244,9 +248,6 @@ export default {
   },
   created() {
     this.getCart();
-    this.$bus.$on("refreshCheckOut", () => {
-      this.getCart();
-    });
   }
 };
 </script>
