@@ -28,6 +28,7 @@ export default {
   methods:{
     badgeSearch (str) {
         this.activeitem = str; 
+        // this.$store.dispatch('getCategory', str);
         this.$router.push(`/${str}`).catch(err=>{});
         this.$bus.$emit('change');   
         // 更新畫面方法
@@ -73,17 +74,6 @@ export default {
   position:sticky;
   top:0;
   z-index: 999;
-}
-.ico-1{
-  margin-left: 3px;
-  margin-right: 2px;
-}
-.ico-2{
-  margin-left: 1px;
-  margin-right: 1px;
-}
-.ico-3{
-  margin-right: 1px;
 }
 @keyframes ad_width {
   from {

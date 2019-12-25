@@ -271,10 +271,10 @@ export default {
       pagination: {}, //分頁
       tempProduct: {}, //綁定欄位資料
       isNew: false,
-      isLoading: false,
       status: {
         fileUploading: false
-      }
+      },
+      isLoading: false,
     };
   },
   methods: {
@@ -284,7 +284,6 @@ export default {
       const vm = this;
       vm.isLoading = true;
       this.$http.get(api).then(response => {
-        // console.log(response.data);
         vm.isLoading = false;
         vm.products = response.data.products;
         vm.pagination = response.data.pagination;

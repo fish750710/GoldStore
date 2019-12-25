@@ -223,11 +223,11 @@ export default {
         },
         message: ""
       },
-      cart: {
-        carts: {
-          length: []
-        }
-      },
+      // cart: {
+      //   carts: {
+      //     length: []
+      //   }
+      // },
       coupon_code: "",
       coupon_msg: ""
     };
@@ -263,19 +263,24 @@ export default {
     },
     // 取得購物車內容
     getCart() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.state.isLoading = true;
-      this.$http.get(url).then(response => {
-        vm.cart = response.data.data;
-        vm.$store.state.isLoading = false;
-      });
+      this.$store.dispatch('getCart');
+      // const vm = this;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // vm.$store.dispatch("updateLoading", true);
+      // this.$http.get(url).then(response => {
+      //   vm.cart = response.data.data;
+      //   vm.$store.dispatch("updateLoading", false);
+      // });
     },
     goCheckOut() {
       this.$router.push(`/checkout`).catch(err => {});
     }
   },
-
+  computed: {
+    cart(){
+      return this.$store.state.cart;
+    },
+  },
   created() {
     this.getCart();
   },

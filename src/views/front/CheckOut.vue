@@ -44,7 +44,7 @@
                     data-th="數量"
                   >
                     <div class="d-flex">
-                      <button class="btn pt-0" @click.prevent="cutqty(item)">
+                      <button class="btn pt-0" @click.prevent="cutqty( item )">
                         <i class="fas fa-minus"></i>
                       </button>
                       <input
@@ -55,7 +55,7 @@
                         v-model="item.qty"
                         style="width:60px; height:30px"
                       />
-                      <button class="btn pt-0" @click.prevent="addqty(item)">
+                      <button class="btn pt-0" @click.prevent="addqty( item )">
                         <i class="fas fa-plus"></i>
                       </button>
                     </div>
@@ -64,7 +64,7 @@
                     class="align-middle text-right d-flex justify-content-between align-items-center"
                     data-th="單價"
                   >
-                    {{ item.final_total | currency }}
+                    {{ item.product.price | currency }} x {{ item.qty }}
                     <button
                       type="button"
                       class="btn btn-outline-danger btn-sm"
@@ -151,12 +151,13 @@ export default {
   methods: {
     // 取得購物車內容
     getCart() {
+      // this.$store.dispatch('getCart');
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.get(url).then(response => {
         vm.cart = response.data.data;
-        vm.$store.state.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
       });
     },
     //加入購物車
@@ -177,13 +178,14 @@ export default {
     },
     //刪除購物車內容
     removeCartItem(id) {
+      // this.$store.dispatch('removeCart', id);
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.delete(url).then(() => {
         vm.getCart();
         this.$bus.$emit("refreshCart");
-        vm.$store.state.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
       });
     },
     //增加優惠卷
@@ -193,25 +195,24 @@ export default {
       const coupon = {
         code: vm.coupon_code
       };
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.post(url, { data: coupon }).then(response => {
         vm.coupon_msg = response.data.message;
         vm.getCart();
-        vm.$store.state.isLoading = false;
+        vm.$store.dispatch("updateLoading", false);
       });
     },
     // 增加數量
     addqty(item) {
+      // this.$store.dispatch('addqty', item);
       item.qty += 1;
-      item.final_total = item.product.price * item.qty;
       this.removeCartItem(item.id);
       this.addtoCart(item.product.id, item.qty);
     },
     // 減少數量
     cutqty(item) {
       item.qty -= 1;
-      item.final_total = item.product.price * item.qty;
-      if (item.final_total === 0) {
+      if (item.qty <= 0) {
         this.removeCartItem(item.id);
       } else {
         this.removeCartItem(item.id);
@@ -220,7 +221,6 @@ export default {
     },
     //改變數量
     inputqty(item) {
-      item.final_total = item.product.price * item.qty;
       if (item.final_total === 0) {
         this.removeCartItem(item.id);
       } else {
@@ -237,6 +237,11 @@ export default {
     }
   },
   mounted() {},
+  computed: {
+    // cart(){
+    //   return this.$store.state.cart;
+    // },
+  },
   created() {
     this.getCart();
     this.$bus.$on("refreshCheckOut", () => {

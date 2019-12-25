@@ -1,33 +1,33 @@
 <template>
   <div>
     <div class="body-rwd banner-rwd">
-      <div class="img-3 w-100"></div>
+      <div class="banner-img-big w-100"></div>
       <div class="container">
         <div class="evaluation">
-          <div class="img-2 my-5">
+          <div class="content-img-first my-5">
             <div class="title">
               <h3>隨心所欲，怎麼擺都好看。</h3>
               <p>設計大師，時尚潮流。</p>
               <button
-                class="btn btn-primary btn-radius animated infinite jello"
+                class="btn btn-primary btn-radius animated infinite bounceIn text-black"
                 style="animation-duration: 2s"
                 @click="goIndex"
               >購買</button>
             </div>
           </div>
         </div>
-        <div class="shop mt-5">
-          <div class="text-center pt-4 shop-content">
+        <div class="bg-fixed-img-first mt-5">
+          <div class="text-center pt-4 bg-fixed-img-content">
             <h3>款式最多的watch</h3>
             <button class="btn btn-primary btn-radius mt-2" @click="goIndex">立馬拜金去</button>
           </div>
         </div>
-        <div class="img-1 my-5">
+        <div class="content-img-center my-5">
           <div class="title">
             <h3>1,000 萬首歌，免額外付費試聽 1 個月。</h3>
             <p>高音質音樂，一聽就上癮。</p>
-            <button class="btn btn-secondary btn-radius" @click="goIndex">
-              <i class="fas fa-headphones-alt mr-2"></i>現在試聽
+            <button class="btn btn-primary btn-radius" @click="goIndex">
+              現在試聽
             </button>
           </div>
         </div>
@@ -66,19 +66,19 @@
           <div class="swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
-        <div class="shop2 mt-5">
-          <div class="text-center pt-4 shop-content">
+        <div class="bg-fixed-img-end mt-5">
+          <div class="text-center pt-4 bg-fixed-img-content">
             <h3>最專業的3C網站</h3>
-            <button class="btn btn-info btn-radius mt-2" @click="goIndex">立馬拜金去</button>
+            <button class="btn btn-primary btn-radius mt-2" @click="goIndex">立馬拜金去</button>
           </div>
         </div>
         <div class="evaluation">
-          <div class="img-4 my-5">
+          <div class="content-img-end my-5">
             <div class="title">
               <h3>薄如紙，輕如羽毛，旗艦規格。</h3>
               <p>激發你的創意，無限手套在手，想怎畫就怎畫。</p>
               <button
-                class="btn btn-outline-primary btn-radius animated infinite bounceIn"
+                class="btn btn-primary btn-radius animated infinite bounceIn text-black"
                 style="animation-duration: 2s"
                 @click="goIndex"
               >購買</button>
@@ -156,7 +156,7 @@ export default {
   }
 }
 
-.img-1 {
+.content-img-center {
   background-image: url(../../assets/images/music__g13pd5xxmzmi_large.png);
   background-repeat: no-repeat;
   background-color: white;
@@ -173,7 +173,6 @@ export default {
     text-align: center;
     color: #fff;
     h3 {
-      font-size: 36px;
       padding-top: 30px;
     }
     p {
@@ -193,7 +192,7 @@ export default {
   opacity: 1;
   transform: translateX(0);
 }
-.img-2 {
+.content-img-first {
   background-image: url(../../assets/images/accessories_for_mac_tile__1y124l6fa1ei_large.jpg);
   background-repeat: no-repeat;
   background-color: #fff;
@@ -209,7 +208,6 @@ export default {
     text-align: center;
     color: $primary;
     h3 {
-      font-size: 36px;
       padding-top: 30px;
       font-weight: bold;
     }
@@ -219,7 +217,7 @@ export default {
     }
   }
 }
-.img-3 {
+.banner-img-big {
   background-image: url(../../assets/images/u12-plus-customised_web-banner.jpg);
   background-repeat: no-repeat;
   background-color: #fff;
@@ -229,7 +227,7 @@ export default {
   max-height: 720px;
   margin-top: 58px;
 }
-.img-4 {
+.content-img-end {
   background-image: url(../../assets/images/ipad_pro_hero__phf9t8u0esii_large.jpg);
   background-repeat: no-repeat;
   background-color: #fff;
@@ -237,7 +235,6 @@ export default {
   background-size: 100%;
   height: 520px;
   overflow: hidden;
-  // max-width: 100%;
   .title {
     position: relative;
     top: 100px;
@@ -248,7 +245,6 @@ export default {
     text-align: center;
     color: $primary;
     h3 {
-      font-size: 36px;
       padding-top: 30px;
       font-weight: bold;
     }
@@ -259,30 +255,30 @@ export default {
   }
 }
 
-.shop {
+.bg-fixed-img-first {
   background-image: url(../../assets/images/hero__e85lhpfa8n2i_large.jpg);
-  background-size: cover;
+  // background-size: cover;
   overflow: hidden;
   z-index: -1;
   height: 250px;
   // 固定背景
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center;
+  // background-position: center;
 }
 
-.shop2 {
+.bg-fixed-img-end {
   background-image: url(../../assets/images/galaxy-note10_highlights_acc_b.jpg);
-  background-size: cover;
+  // background-size: cover;
   overflow: hidden;
   z-index: -1;
   height: 250px;
   // 固定背景
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: center;
+  // background-position: center;
 }
-.shop-content {
+.bg-fixed-img-content {
   position: relative;
   top: 50px;
   margin: 0 auto;
@@ -312,7 +308,7 @@ export default {
 @include desktop-top() {
 }
 @include pc-top() {
-  .img-1 {
+  .content-img-center {
     min-height: 420px;
     .title {
       position: relative;
@@ -323,19 +319,11 @@ export default {
       height: 152px;
       text-align: center;
       color: #fff;
-      h3 {
-        font-size: 36px;
-        padding-top: 30px;
-      }
-      p {
-        padding-top: 30px;
-        line-height: 1.5;
-      }
     }
   }
 }
 @include pc() {
-  .img-4 {
+  .content-img-end {
     background-image: url(../../assets/images/ipad_pro_hero__phf9t8u0esii_large.jpg);
     background-repeat: no-repeat;
     background-color: #fff;
@@ -352,7 +340,6 @@ export default {
       text-align: center;
       color: $primary;
       h3 {
-        font-size: 36px;
         padding-top: 30px;
         font-weight: bold;
       }
@@ -362,7 +349,7 @@ export default {
       }
     }
   }
-  .img-1 {
+  .content-img-center {
     .title {
       position: relative;
       top: 100px;
@@ -371,7 +358,7 @@ export default {
   }
 }
 @include pad() {
-  .img-1 {
+  .content-img-center {
     height: 300px;
     min-height: 300px;
     .title {
@@ -393,19 +380,19 @@ export default {
       }
     }
   }
-  .img-3 {
+  .banner-img-big {
     max-height: 360px;
     margin-top: 58px;
   }
-  .shop {
+  .bg-fixed-img-first {
     background-size: 800px;
   }
-  .shop2 {
+  .bg-fixed-img-end {
     background-size: 800px;
   }
 }
 @include m568() {
-  .img-1 {
+  .content-img-center {
     height: 300px;
     min-height: 300px;
     width: 400px;
@@ -428,7 +415,7 @@ export default {
       }
     }
   }
-  .img-4 {
+  .content-img-end {
     overflow: hidden;
     .title {
       position: relative;
@@ -444,18 +431,18 @@ export default {
       }
     }
   }
-  .img-2 {
+  .content-img-first {
     overflow: hidden;
   }
-  .shop {
+  .bg-fixed-img-first {
     background-size: 600px 250px;
   }
-  .shop2 {
+  .bg-fixed-img-end {
     background-size: 600px 250px;
   }
 }
 @include m480() {
-  .img-1 {
+  .content-img-center {
     height: 300px;
     min-height: 300px;
     width: 350px;
@@ -478,7 +465,7 @@ export default {
       }
     }
   }
-  .img-4 {
+  .content-img-end {
     .title {
       position: relative;
       top: 100px;
@@ -493,13 +480,13 @@ export default {
       }
     }
   }
-  .img-3 {
+  .banner-img-big {
     max-height: 200px;
     margin-top: 58px;
   }
 }
 @include iphone5() {
-  .img-1 {
+  .content-img-center {
     width: 300px;
     .title {
       position: relative;
@@ -520,7 +507,7 @@ export default {
       }
     }
   }
-  .img-4 {
+  .content-img-end {
     .title {
       position: relative;
       top: 100px;

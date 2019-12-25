@@ -188,7 +188,6 @@ export default {
   data() {
     return {
       orders: [],
-      isLoading: false,
       pagination: {}, //分頁
       tempOrder: {
         user: {
@@ -197,14 +196,15 @@ export default {
           tel: "",
           address: ""
         }
-      }
+      },
+      isLoading: false,
     };
   },
   methods: {
     getOrders(page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
       const vm = this;
-      vm.isLoading = true; 
+      vm.isLoading = true;
       this.$http.get(api).then(response => {
         vm.isLoading = false;
         vm.orders = response.data.orders; 

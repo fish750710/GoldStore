@@ -125,17 +125,17 @@ export default {
     getOrder(){
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`;            
-      vm.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       vm.$http.get(url).then((response) => {                
       vm.order = response.data.order; 
-      vm.isLoading = false;                    
+      vm.$store.dispatch("updateLoading", false);                  
       });
     },
     // 結帳付款
     payOrder(){
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`;
-      vm.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       vm.$http.post(url).then((response) => {                
         if(response.data.success){
           setTimeout(() => {
@@ -146,8 +146,8 @@ export default {
           }, 5000);
           vm.getOrder(); //重新取得訂單資料(更新畫面)                    
         };
-          vm.$bus.$emit('refreshCart');   
-          vm.isLoading = false;                    
+          vm.$bus.$emit('refreshCart');    
+          vm.$store.dispatch("updateLoading", false);                
       });
     },
     goIndex(){

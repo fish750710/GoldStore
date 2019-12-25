@@ -170,8 +170,8 @@ export default {
   data() {
     return {
       coupons: [],
-      isLoading: false,
       tempCoupons: {},
+      isLoading: false,
       pagination: {} //分頁
     };
   },
@@ -208,6 +208,7 @@ export default {
         api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupons.id}`;
         httpMethod = "put";
       }
+      vm.isLoading = true;
       //將 tempCoupons 的欄位資料放到data物件裡送出
       this.$http[httpMethod](api, { data: vm.tempCoupons }).then(response => {
         // console.log(response.data);
@@ -221,12 +222,14 @@ export default {
           this.$bus.$emit("messsage:push", response.data.message, "danger");
           vm.getCoupons();
         }
+        vm.isLoading = false;
       });
     },
     delCouponModel() {
       //刪除
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupons.id}`;
+      vm.isLoading = true;
       this.$http.delete(api).then(response => {
         if (response.data.success) {
           //刪除成功
@@ -237,6 +240,7 @@ export default {
           //找不到產品
           this.$bus.$emit("messsage:push", response.data.message, "danger");
         }
+        vm.isLoading = false;
       });
     },
     delModel(item) {

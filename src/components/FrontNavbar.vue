@@ -61,7 +61,7 @@
               </a>
             </div>
             <div v-else>
-            <!-- 已登入 -->
+              <!-- 已登入 -->
               <a
                 id="dropdownUserMenu"
                 data-toggle="dropdown"
@@ -75,11 +75,11 @@
               <div class="dropdown">
                 <div class="dropdown-menu" aria-labelledby="dropdownUserMenu" v-if="successStatus">
                   <button class="dropdown-item dropdown-text" type="button" @click="goUserOrders">
-                    <i class="far fa-address-book mr-1 user-list-icon-1"></i>
+                    <i class="far fa-address-book mr-1 user-list-icon-order"></i>
                     <span>查訂單</span>
                   </button>
                   <button class="dropdown-item dropdown-text" type="button" @click="goProducts">
-                    <i class="fas fa-clipboard-list mr-1 user-list-icon-2"></i>
+                    <i class="fas fa-clipboard-list mr-1 user-list-icon-management"></i>
                     <span>管理商品</span>
                   </button>
                   <button class="dropdown-item dropdown-text" type="button" @click="signout">
@@ -198,7 +198,7 @@
                   </td>
                   <td>
                     <button class="btn pt-0 pb-0 pl-1 pr-1" @click="cutqty(item)">
-                      <i class="fas fa-minus" v-if="item.id != status.loadingItem"></i>
+                      <i class="fas fa-minus" v-if="item.id != loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
                     </button>
                     {{ item.qty }}
@@ -206,16 +206,16 @@
                       class="btn pt-0 pb-0 pr-1 pl-1"
                       @click="addqty(item)"
                     >
-                      <i class="fas fa-plus" v-if="item.id != status.loadingItem"></i>
+                      <i class="fas fa-plus" v-if="item.id != loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
                     </button>
-                    <div class="mt-0">{{ item.final_total | currency }} x {{ item.qty }}</div>
+                    <div class="mt-0">{{ item.product.price | currency }} x {{ item.qty }}</div>
                     <button
                       type="button"
                       class="btn btn-outline-danger btn-sm mt-0"
                       @click="removeCartItem(item.id)"
                     >
-                      <i class="fas fa-spinner fa-pulse" v-if="item.id === status.loadingItem"></i>
+                      <i class="fas fa-spinner fa-pulse" v-if="item.id === loadingItem"></i>
                       <i class="far fa-trash-alt" v-else></i>
                     </button>
                   </td>
@@ -356,7 +356,7 @@
                 </button>
 
                 <div class="form-group">
-                  <form class="form-signin" @submit="signin">
+                  <form class="form-signin" @submit.prevent="signin">
                     <div class="d-flex justify-content-between">
                       <h1 class="h5 mb-3 font-weight-normal" v-if="!ischange">會員登入</h1>
                       <h2 class="h5 mb-3 font-weight-normal" v-else>註冊</h2>
@@ -377,28 +377,38 @@
                     <input
                       type="email"
                       id="inputEmail"
+                      name="email"
                       class="form-control mb-2"
                       v-model="user.username"
                       placeholder="電子郵件"
-                      required
+                      v-validate="'required|email'"
+                      :class="{'is-invalid': errors.has('email')}"
                       autofocus
                     />
+                    <span class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</span>
                     <input
                       type="password"
                       id="inputPassword"
+                      name="password"
                       class="form-control mb-2"
                       v-model="user.password"
                       placeholder="密碼"
-                      required
+                      v-validate="'required'"
+                      :class="{'is-invalid': errors.has('password')}"
                     />
+                    <span class="text-danger" v-if="errors.has('password')">密碼必須輸入</span>
                     <input
                       type="password"
                       id="checkPassword"
+                      name="doublecheck"
                       class="form-control mb-2"
                       v-if="ischange"
+                      v-model="user.dbpassword"
                       placeholder="再次確認密碼"
-                      required
+                      v-validate="'required'"
+                      :class="{'is-invalid': errors.has('doublecheck')}"
                     />
+                    <span class="text-danger" v-if="errors.has('doublecheck')">密碼必須輸入</span>
                     <div class="checkbox mb-3 d-flex justify-content-between">
                       <label>
                         <input type="checkbox" value="remember-me" /> 記住我
@@ -417,7 +427,7 @@
                   </form>
                   <button
                     class="btn btn-lg btn-primary btn-block font-weight-bold"
-                    @click="signup()"
+                    @click.prevent="signup(user.password,user.dbpassword)"
                     v-if="ischange"
                   >我要註冊</button>
                   <div v-if="ischange" class="text-danger mt-3">{{ message }}</div>
@@ -461,9 +471,9 @@ export default {
       product: {}, //單筆資料
       ischange: false,
       successStatus: false,
-      status: {
-        loadingItem: ""
-      },
+      // status: {
+      //   loadingItem: ""
+      // },
       cart: {
         carts: {
           length: []
@@ -482,7 +492,8 @@ export default {
       },
       user: {
         username: "",
-        password: ""
+        password: "",
+        dbpassword: ""
       },
       message: "",
       myfavorite: {
@@ -492,98 +503,60 @@ export default {
     };
   },
   methods: {
-    getProduct(id) {
+    //取得購物車內容
+    getCart() {
+      // this.$store.dispatch("getCart");
       const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`;
-      vm.status.loadingItem = id; //點選到的選項 loading動畫
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.get(url).then(response => {
-        vm.product = response.data.product; //將回傳資料存在 product
-        $("#productModal").modal("show"); //開啟 modal
-        vm.status.loadingItem = ""; //開啟後動畫清空
+        vm.cart = response.data.data;
+        vm.$store.dispatch("updateLoading", false);
       });
     },
     //加入購物車
     addtoCart(id, qty = 1) {
-      // id 和 數量 預設=1
+      // this.$store.dispatch("addtoCart", { id, qty });
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.status.loadingItem = id;
+      vm.$store.dispatch("updateLoading", true);
       const cart = {
         product_id: id,
         qty
       };
       this.$http.post(url, { data: cart }).then(response => {
-        // console.log(response);
-        vm.status.loadingItem = "";
-        vm.getCart(); //取得購物車內容
-        $("#productModal").modal("hide"); //關閉 modal
-      });
-    },
-    // 取得購物車內容
-    getCart() {
-      // this.$store.dispatch('getCart');
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // vm.$store.dispatch('updateLoading', true);
-      // vm.isLoading = true;
-      this.$http.get(url).then(response => {
-        // vm.products =  response.data.products; //將回傳資料存在 products
-        vm.cart = response.data.data;
-        // console.log(response);
-        // vm.$store.dispatch('updateLoading', false);
-        // vm.isLoading = false;
-        // vm.pagination = response.data.pagination; //把分頁資料存起來
+        this.$bus.$emit("refreshCart");
+        vm.$store.dispatch("updateLoading", false);
       });
     },
     //刪除購物車內容
     removeCartItem(id) {
-      // this.$store.dispatch('removeCart', id);
+      // this.$store.dispatch("removeCart", id);
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.status.loadingItem = id;
-      // vm.$store.dispatch('updateLoading', true);
-      // vm.isLoading = true;
+      vm.$store.dispatch("updateLoading", true);
       this.$http.delete(url).then(() => {
-        vm.getCart(); //重新取得購物車內容
-        // vm.$store.dispatch('updateLoading', false); //讀取效果關閉
-        vm.status.loadingItem = "";
-        // vm.isLoading = false;
+        vm.getCart();
+        this.$bus.$emit("refreshCart");
+        vm.$store.dispatch("updateLoading", false);
       });
     },
-    //增加優惠卷
-    addCouponCode() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
-      const coupon = {
-        code: vm.coupon_code
-      };
-      vm.$store.dispatch("updateLoading", true);
-      this.$http.post(url, { data: coupon }).then(response => {
-        // console.log(response);
-        vm.coupon_msg = response.data.message;
-        vm.getCart(); //重新取得購物車內容
-        vm.$store.dispatch("updateLoading", false); //讀取效果關閉
-      });
+    // 增加數量
+    addqty(item) {
+      // this.$store.dispatch('addqty', item);
+      item.qty += 1;
+      this.addtoCart(item.product.id, item.qty);
+      this.removeCartItem(item.id);
     },
-    // 新增訂單
-    createOrder() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
-      const order = vm.form;
-      vm.$store.dispatch("updateLoading", true);
-      this.$validator.validate().then(result => {
-        if (result) {
-          this.$http.post(url, { data: order }).then(response => {
-            // vm.getCart();
-            if (response.data.success) {
-              vm.$router.push(`/customer_checkout/${response.data.orderId}`); // $router 轉換頁面
-            }
-            vm.$store.dispatch("updateLoading", false);
-          });
-        } else {
-          console.log("欄位不完整");
-        }
-      });
+    // 減少數量
+    cutqty(item) {
+      item.qty -= 1;
+      if (item.qty === 0) {
+        this.removeCartItem(item.id);
+      } else {
+        this.addtoCart(item.product.id, item.qty);
+        this.removeCartItem(item.id);
+      }
     },
     //open 登入model
     openLogin() {
@@ -596,17 +569,20 @@ export default {
       //對應config/dev.env.js檔案的環境變數
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       const vm = this;
-      this.$http.post(api, vm.user).then(response => {
-        vm.message = response.data;
-        if (response.data.success) {
-          vm.successStatus = true;
-          //登入成功跳轉首頁
-          $("#loginModel").modal("hide"); //關閉
-          this.$bus.$emit("refreshCart"); //重新整理navbar
-          // vm.$router.push('/admin/Products');
-        } else {
-          vm.successStatus = false;
-          vm.$bus.$emit("messsage:push", response.data.message, "danger");
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.$http.post(api, vm.user).then(response => {
+            vm.message = response.data;
+            if (response.data.success) {
+              vm.successStatus = true;
+              //登入成功跳轉首頁
+              $("#loginModel").modal("hide"); //關閉
+              vm.issuccess();
+            } else {
+              vm.successStatus = false;
+              vm.$bus.$emit("messsage:push", response.data.message, "danger");
+            }
+          });
         }
       });
     },
@@ -622,8 +598,16 @@ export default {
       }
     },
     //註冊
-    signup() {
-      this.message = "尚未開放註冊";
+    signup(psw, dbpsw) {
+      this.$validator.validateAll().then(result => {
+        if (psw === dbpsw) {
+          if (result) {
+            this.message = "尚未開放註冊";
+          }
+        } else {
+          this.message = "請確認密碼輸入是否一樣";
+        }
+      });
     },
     //檢查登入狀態
     issuccess() {
@@ -675,24 +659,6 @@ export default {
       localStorage.setItem("favorite", JSON.stringify(this.myfavorite));
       this.$bus.$emit("removefavoritet", this.myfavorite);
     },
-    // 增加數量
-    addqty(item) {
-      item.qty += 1;
-      item.final_total = item.product.price * item.qty;
-      this.addtoCart(item.product.id, item.qty);
-      this.removeCartItem(item.id);
-    },
-    // 減少數量
-    cutqty(item) {
-      item.qty -= 1;
-      item.final_total = item.product.price * item.qty;
-      if (item.final_total === 0) {
-        this.removeCartItem(item.id);
-      } else {
-        this.addtoCart(item.product.id, item.qty);
-        this.removeCartItem(item.id);
-      }
-    },
     // 導頁到管理商品
     goProducts() {
       this.$router.push("/admin/Products").catch(err => {});
@@ -724,9 +690,15 @@ export default {
     }
   },
   computed: {
+    // 讀取 /store/index.js 裡面的屬性
     isLoading() {
-      // 讀取 /store/index.js 裡面的屬性
       return this.$store.state.isLoading;
+    },
+    // cart() {
+    //   return this.$store.state.cart;
+    // },
+    loadingItem() {
+      return this.$store.state.loadingItem;
     }
   },
   created() {
@@ -781,10 +753,10 @@ export default {
   font-size: 13px;
   padding: 0 17px;
 }
-.user-list-icon-1 {
+.user-list-icon-order {
   padding-right: 3px;
 }
-.user-list-icon-2 {
+.user-list-icon-management {
   margin-left: 1px;
   padding-right: 3px;
 }

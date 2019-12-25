@@ -1,7 +1,11 @@
 <template>
   <div>
     <!-- 輪播 -->
-    <div id="carouselExampleIndicators" class="carousel slide my-5 m-banner-rwd" data-ride="carousel">
+    <div
+      id="carouselExampleIndicators"
+      class="carousel slide my-5 m-banner-rwd"
+      data-ride="carousel"
+    >
       <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -72,7 +76,7 @@
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
               :class="[ activeitem =='APPLE' ? 'text-primary':'' ]"
-              @click="badgeSearch('Apple')"
+              @click="badgeSearch('APPLE')"
             >APPLE</a>
           </swiper-slide>
           <swiper-slide class="mr-3 ml-2" style="border: 1px solid #50CBCB;max-width:44%">
@@ -146,7 +150,7 @@
         <div class="col-sm-12 col-md-12 col-lg-10">
           <div class="dropdown my-3 text-right">
             <button
-              class="btn btn-primary dropdown-toggle btn-sm"
+              class="btn btn-primary dropdown-toggle"
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"
@@ -247,6 +251,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import FrontSidebar from "@/components/FrontSidebar.vue";
 import Pagin from "@/components/Pagination.vue"; //分頁
 import Swiper from "swiper";
@@ -281,12 +286,13 @@ export default {
       added: "",
       ProductAll: false,
       newData: "",
-      activeitem: ""
+      activeitem: "",
+      productsOriginal: []
     };
   },
   methods: {
     getProducts(page = 1) {
-      //  this.$store.dispatch('getProducts');
+      //  this.$store.dispatch('getProducts', page);
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
       // vm.$store.dispatch('updateLoading', true);
@@ -308,7 +314,6 @@ export default {
       const vm = this;
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       vm.status.loadingItem = id;
-      // vm.$store.dispatch('updateLoading', true);
       // 一樣商品合併(先抓購物車內容判斷 ID是否一樣)
       this.$http.get(url).then(response => {
         vm.cartItem = response.data.data.carts;
@@ -329,7 +334,6 @@ export default {
               this.$http.post(url, { data: cart }).then(response => {
                 vm.status.loadingItem = "";
                 $("#productModal").modal("hide");
-                // vm.$store.dispatch('updateLoading', false);
                 this.$bus.$emit("refreshCart");
               });
             } else {
@@ -343,7 +347,6 @@ export default {
                 this.$http.post(url, { data: cart }).then(response => {
                   vm.status.loadingItem = "";
                   $("#productModal").modal("hide");
-                  // vm.$store.dispatch('updateLoading', false);
                   this.$bus.$emit("refreshCart");
                 });
               }
@@ -358,33 +361,10 @@ export default {
           this.$http.post(url, { data: cart }).then(response => {
             vm.status.loadingItem = "";
             $("#productModal").modal("hide");
-            // vm.$store.dispatch('updateLoading', false);
             this.$bus.$emit("refreshCart");
           });
         }
         vm.$bus.$emit("messsage:push", "已加入購物車", "success");
-      });
-    },
-
-    // 取得購物車內容
-    getCart() {
-      // this.$store.dispatch('getCart');
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // vm.$store.dispatch('updateLoading', true);
-      this.$http.get(url).then(response => {
-        vm.cart = response.data.data;
-        // vm.$store.dispatch('updateLoading', false);
-      });
-    },
-    removeCartItem(id) {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.$store.state.isLoading = true;
-      this.$http.delete(url).then(() => {
-        vm.getCart();
-        this.$bus.$emit("refreshCart");
-        vm.$store.state.isLoading = false;
       });
     },
     goDetail(id) {
@@ -393,18 +373,19 @@ export default {
     },
     // 篩選
     getCategory() {
+      // this.$store.dispatch('getCategory', str);
+      // this.$store.dispatch('getProductAll', value);
       const vm = this;
       let array = [];
       let value = "";
       //搜尋
       value = vm.$route.params.Str; //搜尋關鍵字
-      //  console.log(value);
       if (value === undefined) {
         const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
         this.$http.get(url).then(response => {
           vm.products = response.data.products;
-          vm.ProductAll = true; //換頁打開
         });
+        vm.ProductAll = true; //換頁打開
       } else {
         array = vm.productsOriginal.filter(e => {
           //關鍵字搜尋標題忽略大小寫
@@ -420,13 +401,12 @@ export default {
     },
     // 撈全部
     getProductAll() {
+      // this.$store.dispatch('getProductAll');
       const vm = this;
-      vm.currentPath = vm.$route;
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
       this.$http.get(api).then(response => {
-        // console.log('getProducts', response.data)
         vm.productsOriginal = response.data.products;
-        this.getCategory();
+        vm.getCategory();
       });
     },
     // 加入我的最愛
@@ -501,6 +481,7 @@ export default {
     },
     badgeSearch(str) {
       this.activeitem = str;
+      // this.$store.dispatch('getCategory', str);
       this.$router.push(`/${str}`).catch(err => {});
       this.$bus.$emit("change");
     },
@@ -545,11 +526,16 @@ export default {
     }
   },
 
-  computed: {},
+  computed: {
+    // vuex getters
+    // ...mapGetters(['products']),
+    // products(){
+    //   return this.$store.state.products;
+    // },
+  },
   mounted() {
     // 從frontsidebar傳來
     this.$bus.$on("change", () => {
-      // console.log('監聽')
       this.getProductAll();
     });
     this.$bus.$on("removefavoritet", () => {
@@ -566,7 +552,7 @@ export default {
     this.getFavoriteLength();
     this.getswiper();
     this.getProducts();
-    this.getCart();
+    // this.getCart();
     if (this.$route.params.Str == undefined) {
       this.getProducts();
     } else {
@@ -698,13 +684,13 @@ export default {
       position: relative;
     }
   }
-  .benner-img1{
+  .benner-img1 {
     height: 350px;
   }
-  .benner-img2{
+  .benner-img2 {
     height: 350px;
   }
-  .benner-img3{
+  .benner-img3 {
     height: 350px;
   }
 }
