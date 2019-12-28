@@ -44,18 +44,19 @@
                     data-th="數量"
                   >
                     <div class="d-flex">
-                      <button class="btn pt-0" @click.prevent="cutqty( item )">
+                      <button class="btn pt-0" @click.prevent="minusQty( item )">
                         <i class="fas fa-minus"></i>
                       </button>
                       <input
                         type="text"
                         name="qty"
                         class="form-control text-center"
-                        @input="inputqty(item)"
-                        v-model="item.qty"
+                        @change="inputQty( item )"
+                        :value="item.qty"
+                   
                         style="width:60px; height:30px"
                       />
-                      <button class="btn pt-0" @click.prevent="addqty( item )">
+                      <button class="btn pt-0" @click.prevent="addQty( item )">
                         <i class="fas fa-plus"></i>
                       </button>
                     </div>
@@ -139,11 +140,11 @@ export default {
   components: {},
   data() {
     return {
-      cart: {
-        carts: {
-          length: []
-        }
-      },
+      // cart: {
+      //   carts: {
+      //     length: []
+      //   }
+      // },
       coupon_code: "",
       coupon_msg: ""
     };
@@ -151,42 +152,42 @@ export default {
   methods: {
     // 取得購物車內容
     getCart() {
-      // this.$store.dispatch('getCart');
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.dispatch("updateLoading", true);
-      this.$http.get(url).then(response => {
-        vm.cart = response.data.data;
-        vm.$store.dispatch("updateLoading", false);
-      });
+      this.$store.dispatch('getCart');
+      // const vm = this;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // vm.$store.dispatch("updateLoading", true);
+      // this.$http.get(url).then(response => {
+      //   vm.cart = response.data.data;
+      //   vm.$store.dispatch("updateLoading", false);
+      // });
     },
     //加入購物車
     addtoCart(id, qty) {
       // id 和 數量 預設=1
-      //  this.$store.dispatch('addtoCart', { id, qty });
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.dispatch("updateLoading", true);
-      const cart = {
-        product_id: id,
-        qty
-      };
-      this.$http.post(url, { data: cart }).then(response => {
-        this.$bus.$emit("refreshCart");
-        vm.$store.dispatch("updateLoading", false);
-      });
+       this.$store.dispatch('addtoCart', { id, qty });
+      // const vm = this;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // vm.$store.dispatch("updateLoading", true);
+      // const cart = {
+      //   product_id: id,
+      //   qty
+      // };
+      // this.$http.post(url, { data: cart }).then(response => {
+      //   this.$bus.$emit("refreshCart");
+      //   vm.$store.dispatch("updateLoading", false);
+      // });
     },
     //刪除購物車內容
     removeCartItem(id) {
-      // this.$store.dispatch('removeCart', id);
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.$store.dispatch("updateLoading", true);
-      this.$http.delete(url).then(() => {
-        vm.getCart();
-        this.$bus.$emit("refreshCart");
-        vm.$store.dispatch("updateLoading", false);
-      });
+      this.$store.dispatch('removeCart', id);
+      // const vm = this;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      // vm.$store.dispatch("updateLoading", true);
+      // this.$http.delete(url).then(() => {
+      //   vm.getCart();
+      //   this.$bus.$emit("refreshCart");
+      //   vm.$store.dispatch("updateLoading", false);
+      // });
     },
     //增加優惠卷
     addCouponCode() {
@@ -203,30 +204,33 @@ export default {
       });
     },
     // 增加數量
-    addqty(item) {
-      // this.$store.dispatch('addqty', item);
-      item.qty += 1;
-      this.removeCartItem(item.id);
-      this.addtoCart(item.product.id, item.qty);
+    addQty(item) {
+      this.$store.dispatch('addQty', item);
+      // item.qty += 1;
+      // this.removeCartItem(item.id);
+      // this.addtoCart(item.product.id, item.qty);
     },
     // 減少數量
-    cutqty(item) {
-      item.qty -= 1;
-      if (item.qty <= 0) {
-        this.removeCartItem(item.id);
-      } else {
-        this.removeCartItem(item.id);
-        this.addtoCart(item.product.id, item.qty);
-      }
+    minusQty(item) {
+      this.$store.dispatch('minusQty', item);
+      // item.qty -= 1;
+      // if (item.qty <= 0) {
+      //   this.removeCartItem(item.id);
+      // } else {
+      //   this.removeCartItem(item.id);
+      //   this.addtoCart(item.product.id, item.qty);
+      // }
     },
     //改變數量
-    inputqty(item) {
-      if (item.final_total === 0) {
-        this.removeCartItem(item.id);
-      } else {
-        this.removeCartItem(item.id);
-        this.addtoCart(item.product.id, item.qty);
-      }
+    inputQty(item) {
+      // console.log(item);
+      this.$store.dispatch('inputQty', item);
+      // if (item.final_total === 0) {
+      //   this.removeCartItem(item.id);
+      // } else {
+      //   this.removeCartItem(item.id);
+      //   this.addtoCart(item.product.id, item.qty);
+      // }
     },
     goDetail(id) {
       this.$router.push(`/detail/${id}`).catch(err => {});
@@ -242,9 +246,21 @@ export default {
     });
   },
   computed: {
-    // cart(){
-    //   return this.$store.state.cart;
-    // },
+    cart(){
+      return this.$store.state.cart;
+    },
+    changeqty:{
+      // get () {
+      //   // return this.$store.state.changeqty;
+      //   return this.$store.state.cart.carts[0].qty;
+      //   // for(let i = 0; this.$store.state.cart.length; i++){
+      //   //   // return this.$store.state.cart.carts[i].qty;
+      //   // }
+      // },
+      // set (value) {
+      //   this.inputQty(value);
+      // }
+    }
   },
   created() {
     this.getCart();

@@ -17,7 +17,9 @@ export default new Vuex.Store({
             carts: [],
         },
         loadingItem: "",
-        finaltotal: 0,
+        addqtynum: 0,
+        minusnum: 0,
+        changeqty:0,
         qty: 0,
         productsOriginal: [],
         apple: [],
@@ -86,13 +88,36 @@ export default new Vuex.Store({
                 // console.log('加入購物車:', response);
             });
         },
-        // addqty(context, item){
-        //     context.commit('FINALTOTAL',item);
-        //     context.dispatch('removeCart', item.id);
-        //     let id = item.product.id;
-        //     let qty = item.qty;
-        //     context.dispatch('addtoCart', {id, qty});
-        // },
+        addQty(context, item){
+            context.commit('ADDQTY', item );
+            context.dispatch('removeCart', item.id );
+            let id = item.product.id;
+            let qty = item.qty;
+            context.dispatch('addtoCart', { id, qty });
+        },
+        minusQty(context, item){
+            let id = item.product.id;
+            let qty = item.qty -1 ;
+            context.commit('MINUSQTY', item);
+            if(item.qty <= 0){
+                context.dispatch('removeCart', item.id);
+            }else{
+                context.dispatch('addtoCart', { id, qty });
+                context.dispatch('removeCart', item.id);
+            }
+        },
+        inputQty(context, item){
+            let id = item.product.id;
+            let qty = item.qty;
+            console.log('action',id, qty);
+            context.commit('CHANGEQTY', qty);
+            // if (item.qty <= 0) {
+            //     context.dispatch('removeCart', item.id);
+            // } else {
+            //     context.dispatch('addtoCart', { id, qty });
+            //     context.dispatch('removeCart', item.id);
+            // }
+        },
 
     },
     // 操作狀態(儲存資料或同步行為)
@@ -124,10 +149,16 @@ export default new Vuex.Store({
                 item => item.category === 'APPLE'
             );
         },
-        // FINALTOTAL(state, payload){
-        //     state.qty += 1;
-        //     state.finaltotal = payload.product.price * payload.qty;
-        // },
+        ADDQTY(state, payload){
+            state.addqtynum = payload.qty += 1 ;
+        },
+        MINUSQTY(state, payload){
+            state.minusnum = payload.qty -= 1;
+        },
+        CHANGEQTY(state, paylond){
+            // console.log('mutations', paylond);
+            state.changeqty = paylond;
+        }
         // PRODUCTSORIGINAL(state, payLoad, value){
         //     console.log( payLoad , value )
         //     let array = [];

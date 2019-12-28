@@ -197,14 +197,14 @@
                     </tbody>
                   </td>
                   <td>
-                    <button class="btn pt-0 pb-0 pl-1 pr-1" @click="cutqty(item)">
+                    <button class="btn pt-0 pb-0 pl-1 pr-1" @click="minusQty(item)">
                       <i class="fas fa-minus" v-if="item.id != loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
                     </button>
                     {{ item.qty }}
                     <button
                       class="btn pt-0 pb-0 pr-1 pl-1"
-                      @click="addqty(item)"
+                      @click="addQty( item )"
                     >
                       <i class="fas fa-plus" v-if="item.id != loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
@@ -474,11 +474,11 @@ export default {
       // status: {
       //   loadingItem: ""
       // },
-      cart: {
-        carts: {
-          length: []
-        }
-      },
+      // cart: {
+      //   carts: {
+      //     length: []
+      //   }
+      // },
       coupon_code: "",
       coupon_msg: "",
       form: {
@@ -505,58 +505,60 @@ export default {
   methods: {
     //取得購物車內容
     getCart() {
-      // this.$store.dispatch("getCart");
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.dispatch("updateLoading", true);
-      this.$http.get(url).then(response => {
-        vm.cart = response.data.data;
-        vm.$store.dispatch("updateLoading", false);
-      });
+      this.$store.dispatch("getCart");
+      // const vm = this;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // vm.$store.dispatch("updateLoading", true);
+      // this.$http.get(url).then(response => {
+      //   vm.cart = response.data.data;
+      //   vm.$store.dispatch("updateLoading", false);
+      // });
     },
     //加入購物車
     addtoCart(id, qty = 1) {
-      // this.$store.dispatch("addtoCart", { id, qty });
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.$store.dispatch("updateLoading", true);
-      const cart = {
-        product_id: id,
-        qty
-      };
-      this.$http.post(url, { data: cart }).then(response => {
-        this.$bus.$emit("refreshCart");
-        vm.$store.dispatch("updateLoading", false);
-      });
+      this.$store.dispatch("addtoCart", { id, qty });
+      // const vm = this;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      // vm.$store.dispatch("updateLoading", true);
+      // const cart = {
+      //   product_id: id,
+      //   qty
+      // };
+      // this.$http.post(url, { data: cart }).then(response => {
+      //   this.$bus.$emit("refreshCart");
+      //   vm.$store.dispatch("updateLoading", false);
+      // });
     },
     //刪除購物車內容
     removeCartItem(id) {
-      // this.$store.dispatch("removeCart", id);
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      vm.$store.dispatch("updateLoading", true);
-      this.$http.delete(url).then(() => {
-        vm.getCart();
-        this.$bus.$emit("refreshCart");
-        vm.$store.dispatch("updateLoading", false);
-      });
+      this.$store.dispatch("removeCart", id);
+      // const vm = this;
+      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
+      // vm.$store.dispatch("updateLoading", true);
+      // this.$http.delete(url).then(() => {
+      //   vm.getCart();
+      //   this.$bus.$emit("refreshCart");
+      //   vm.$store.dispatch("updateLoading", false);
+      // });
     },
     // 增加數量
-    addqty(item) {
-      // this.$store.dispatch('addqty', item);
-      item.qty += 1;
-      this.addtoCart(item.product.id, item.qty);
-      this.removeCartItem(item.id);
+    addQty(item) {
+      this.$store.dispatch('addQty', item);
+      // item.qty += 1;
+      // this.addtoCart(item.product.id, item.qty);
+      // this.removeCartItem(item.id);
     },
     // 減少數量
-    cutqty(item) {
-      item.qty -= 1;
-      if (item.qty === 0) {
-        this.removeCartItem(item.id);
-      } else {
-        this.addtoCart(item.product.id, item.qty);
-        this.removeCartItem(item.id);
-      }
+    minusQty(item) {
+      this.$store.dispatch('minusQty', item);
+      
+      // item.qty -= 1;
+      // if (item.qty === 0) {
+      //   this.removeCartItem(item.id);
+      // } else {
+      //   this.addtoCart(item.product.id, item.qty);
+      //   this.removeCartItem(item.id);
+      // }
     },
     //open 登入model
     openLogin() {
@@ -694,9 +696,9 @@ export default {
     isLoading() {
       return this.$store.state.isLoading;
     },
-    // cart() {
-    //   return this.$store.state.cart;
-    // },
+    cart() {
+      return this.$store.state.cart;
+    },
     loadingItem() {
       return this.$store.state.loadingItem;
     }
