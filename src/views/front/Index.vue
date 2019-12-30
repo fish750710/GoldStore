@@ -223,12 +223,12 @@
                   <button
                     type="button"
                     class="btn btn-primary btn-sm col-12 cart-move"
-                    @click="addtoCart(item.id)"
+                    @click="addtoCartMerge(item.id)"
                     style="border-top-left-radius:0px ; border-top-right-radius:0px "
                   >
                     <i
                       class="fas fa-spinner fa-pulse text-black"
-                      v-if="item.id === status.loadingItem"
+                      v-if="item.id === loadingItem"
                     ></i>
                     <i class="fas fa-cart-plus text-black" v-else></i>
                     <span class="ml-4 text-black">加到購物車</span>
@@ -251,159 +251,105 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import FrontSidebar from "@/components/FrontSidebar.vue";
-import Pagin from "@/components/Pagination.vue"; //分頁
-import Swiper from "swiper";
-import $ from "jquery";
+import { mapGetters, mapActions } from 'vuex'
+import FrontSidebar from '@/components/FrontSidebar.vue'
+import Pagin from '@/components/Pagination.vue' // 分頁
+import Swiper from 'swiper'
+import $ from 'jquery'
 
 export default {
   components: {
-    Pagin, //分頁
+    Pagin, // 分頁
     FrontSidebar
   },
-  data() {
+  data () {
     return {
       products: [],
-      pagination: {}, //分頁
-      product: {}, //單筆資料
-      status: {
-        loadingItem: ""
-      },
-      coupon_code: "",
-      coupon_msg: "",
+      pagination: {}, // 分頁
+      product: {}, // 單筆資料
+      // status: {
+      //   loadingItem: ""
+      // },
+      coupon_code: '',
+      coupon_msg: '',
       form: {
         user: {
-          name: "",
-          email: "",
-          tel: "",
-          address: ""
+          name: '',
+          email: '',
+          tel: '',
+          address: ''
         },
-        message: ""
+        message: ''
       },
       favorites: [],
       favoriteLength: 0,
-      added: "",
+      added: '',
       ProductAll: false,
-      newData: "",
-      activeitem: "",
-    };
+      newData: '',
+      activeitem: ''
+    }
   },
   methods: {
-    getProducts(page = 1) {
+    getProducts (page = 1) {
       //  this.$store.dispatch('getProducts', page);
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`;
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`
       // vm.$store.dispatch('updateLoading', true);
       this.$http.get(url).then(response => {
-        vm.products = response.data.products;
+        vm.products = response.data.products
         // vm.$store.dispatch('updateLoading', false);
         if (vm.$route.params.Str == undefined) {
-          vm.ProductAll = true;
+          vm.ProductAll = true
         } else {
-          vm.ProductAll = false;
+          vm.ProductAll = false
         }
-        vm.pagination = response.data.pagination;
-      });
+        vm.pagination = response.data.pagination
+      })
     },
-    //加入購物車(新增前先判斷購物車是否有重複資料，如有先刪除後新增)
-    addtoCart(id, qty = 1) {
-      // id 和 數量 預設=1
-      //  this.$store.dispatch('addtoCart', { id, qty });
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      vm.status.loadingItem = id;
-      // 一樣商品合併(先抓購物車內容判斷 ID是否一樣)
-      this.$http.get(url).then(response => {
-        vm.cartItem = response.data.data.carts;
-        if (vm.cartItem.length != 0) {
-          let added = 0;
-          for (let i = 0; i < vm.cartItem.length; i++) {
-            if (id == vm.cartItem[i].product_id) {
-              added = 1; //新增
-              //刪除購物車內容
-              const removeurl = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${vm.cartItem[i].id}`;
-              this.$http.delete(removeurl).then(() => {});
-              // 新增
-              let itemQty = vm.cartItem[i].qty; //原購物車商品數量
-              const cart = {
-                product_id: id,
-                qty: qty + itemQty
-              };
-              this.$http.post(url, { data: cart }).then(response => {
-                vm.status.loadingItem = "";
-                $("#productModal").modal("hide");
-                this.$bus.$emit("refreshCart");
-              });
-            } else {
-              // forLoop全部跑完，無重複商品且要新增才新增，
-              if (i == vm.cartItem.length - 1 && added == 0) {
-                // console.log('無重複')
-                const cart = {
-                  product_id: id,
-                  qty
-                };
-                this.$http.post(url, { data: cart }).then(response => {
-                  vm.status.loadingItem = "";
-                  $("#productModal").modal("hide");
-                  this.$bus.$emit("refreshCart");
-                });
-              }
-            }
-          } //forLoop end
-        } else {
-          // 購物車無內容直接新增
-          const cart = {
-            product_id: id,
-            qty
-          };
-          this.$http.post(url, { data: cart }).then(response => {
-            vm.status.loadingItem = "";
-            $("#productModal").modal("hide");
-            this.$bus.$emit("refreshCart");
-          });
-        }
-        vm.$bus.$emit("messsage:push", "已加入購物車", "success");
-      });
+    // 加入購物車(新增前先判斷購物車是否有重複資料，如有先刪除後新增)
+    addtoCartMerge (id, qty = 1) {
+      this.$store.dispatch('addtoCartMerge', { id, qty })
+      $('#productModal').modal('hide')
     },
-    goDetail(id) {
-      this.$router.push(`/detail/${id}`).catch(err => {});
-      this.$bus.$emit("refreshDetail");
+    goDetail (id) {
+      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$bus.$emit('refreshDetail')
     },
     // 篩選
-    getCategory() {
+    getCategory () {
       // this.$store.dispatch('getCategory', str);
       // this.$store.dispatch('getProductAll', value);
-      const vm = this;
-      let array = [];
-      let value = "";
-      value = vm.$route.params.Str; //搜尋關鍵字
-      //撈全部後過濾
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      const vm = this
+      let array = []
+      let value = ''
+      value = vm.$route.params.Str // 搜尋關鍵字
+      // 撈全部後過濾
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
       this.$http.get(url).then(response => {
         if (value === undefined) {
-          vm.products = response.data.products;
-          vm.ProductAll = true; //換頁打開
+          vm.products = response.data.products
+          vm.ProductAll = true // 換頁打開
         } else {
           array = response.data.products.filter(e => {
-            //關鍵字搜尋標題忽略大小寫
+            // 關鍵字搜尋標題忽略大小寫
             return (
               e.brand === value ||
               e.brand.toUpperCase().indexOf(value) !== -1 ||
               e.brand.toLowerCase().indexOf(value) !== -1
-            );
-          });
-          vm.products = Object.assign([], array);
-          vm.ProductAll = false; //換頁關閉
+            )
+          })
+          vm.products = Object.assign([], array)
+          vm.ProductAll = false // 換頁關閉
         }
-      });
+      })
     },
     // 撈全部
-    getProductAll() {
-      this.getCategory();
+    getProductAll () {
+      this.getCategory()
     },
     // 加入我的最愛
-    addFavorite(item) {
+    addFavorite (item) {
+      // this.$store.dispatch('addFavorite', item);
       const obj = {
         id: item.id,
         category: item.category,
@@ -413,41 +359,49 @@ export default {
         imageUrl: item.imageUrl,
         content: item.content,
         spec: item.spec
-      };
-      this.favorites.push(obj);
-      localStorage.setItem("favorite", JSON.stringify(this.favorites));
-      this.getFavoriteLength();
-      this.$bus.$emit("favorite", this.favorites);
-      this.$bus.$emit("like");
+      }
+      this.favorites.push(obj)
+      localStorage.setItem('favorite', JSON.stringify(this.favorites))
+      this.getFavoriteLength()
+      this.$bus.$emit('favorite', this.favorites)
+      // this.$bus.$emit("like");
     },
     // 移除我的最愛
-    removeFavorite(item) {
+    removeFavorite (item) {
+      // console.log(item)
+      // this.$store.dispatch('removefavoritet', item);
       const i = this.favorites.findIndex(el => {
-        const result = el.id === item.id;
-        return result;
-      });
-      this.favorites.splice(i, 1);
-      localStorage.setItem("favorite", JSON.stringify(this.favorites));
-      this.getFavoriteLength();
-      this.$bus.$emit("favorite", this.favorites);
-      this.$bus.$emit("dislike");
+        const result = el.id === item.id
+        return result
+      })
+      this.favorites.splice(i, 1)
+      localStorage.setItem('favorite', JSON.stringify(this.favorites))
+      this.getFavoriteLength()
+      this.$bus.$emit('favorite', this.favorites)
+      // this.$bus.$emit("dislike");
     },
     // 有商品於我的最愛時，icon更換
-    getFilteredFavorite(item) {
+    getFilteredFavorite (item) {
+      // console.log(this.favorites)
+
+      // this.$store.dispatch('getFilteredFavorite', item);
       // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
       return this.favorites.some(el => {
-        const result = item.id === el.id;
-        return result;
-      });
+        const result = item.id === el.id
+        return result
+      })
     },
     // 取得我的最愛產品數量
-    getFavoriteLength() {
-      this.favoriteLength = JSON.parse(localStorage.getItem("favorite")).length;
-      this.$bus.$emit("favorite", this.favoriteLength);
+    getFavoriteLength () {
+      this.favoriteLength = JSON.parse(localStorage.getItem('favorite')).length
+      this.$bus.$emit('favorite', this.favoriteLength)
     },
-    getswiper() {
+    // getfavorite() {
+    //   this.$store.dispatch('getfavorite');
+    // },
+    getswiper () {
       this.$nextTick(() => {
-        var swiper = new Swiper(".swiper-container", {
+        var swiper = new Swiper('.swiper-container', {
           // Default parameters
           slidesPerView: 4,
           spaceBetween: 40,
@@ -469,93 +423,106 @@ export default {
               spaceBetween: 30
             }
           }
-        });
-      });
+        })
+      })
     },
-    badgeSearch(str) {
-      this.activeitem = str;
+    badgeSearch (str) {
+      this.activeitem = str
       // this.$store.dispatch('getCategory', str);
-      this.$router.push(`/${str}`).catch(err => {});
-      this.$bus.$emit("change");
+      this.$router.push(`/${str}`).catch(err => {})
+      this.$bus.$emit('change')
     },
-    //排列價格低到高
-    arrayLtoH(item) {
-      const vm = this;
-      let updateProduct = "";
-      updateProduct = "products";
+    // 排列價格低到高
+    arrayLtoH (item) {
+      const vm = this
+      let updateProduct = ''
+      updateProduct = 'products'
       if (this.$route.params.Str === undefined) {
         return new Promise((resolve, reject) => {
-          const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+          const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
           this.$http.get(url).then(response => {
-            vm.products = response.data.products;
-            vm.ProductAll = false; //換頁關閉
-            if (item === "lowPrice") {
-              return this[updateProduct].sort(function(a, b) {
-                return a.price - b.price;
+            vm.products = response.data.products
+            vm.ProductAll = false // 換頁關閉
+            if (item === 'lowPrice') {
+              return this[updateProduct].sort(function (a, b) {
+                return a.price - b.price
                 // return a[vm.price] < b[vm.price] ? 1 : -1;
-              });
-            } else if (item === "upPrice") {
-              return this[updateProduct].sort(function(a, b) {
-                return b.price - a.price;
+              })
+            } else if (item === 'upPrice') {
+              return this[updateProduct].sort(function (a, b) {
+                return b.price - a.price
                 //  return a[vm.price] > b[vm.price] ? 1 : -1;
-              });
+              })
             }
-          });
-        });
+          })
+        })
       } else {
         // 篩選商品
-        if (item === "lowPrice") {
-          return this[updateProduct].sort(function(a, b) {
-            return a.price - b.price;
+        if (item === 'lowPrice') {
+          return this[updateProduct].sort(function (a, b) {
+            return a.price - b.price
             // return a[vm.price] < b[vm.price] ? 1 : -1;
-          });
-        } else if (item === "upPrice") {
-          return this[updateProduct].sort(function(a, b) {
-            return b.price - a.price;
+          })
+        } else if (item === 'upPrice') {
+          return this[updateProduct].sort(function (a, b) {
+            return b.price - a.price
             //  return a[vm.price] > b[vm.price] ? 1 : -1;
-          });
+          })
         }
       }
     }
   },
 
   computed: {
+    loadingItem () {
+      return this.$store.state.loadingItem
+    }
+    // favoriteId (){
+    //   // let id = this.favorites;
+    //   // console.log(id)
+    //   // let favoriteId = this.$store.state.myfavorite.some(el => {
+    //   //   const result = id === el.id;
+    //   //   return result;
+    //   // });
+    //   // return favoriteId;
+    //   return this.favorites;
+    // },
     // vuex getters
     // ...mapGetters(['products']),
     // products(){
     //   return this.$store.state.products;
     // },
   },
-  mounted() {
+  mounted () {
     // 從frontsidebar傳來
-    this.$bus.$on("change", () => {
-      this.getProductAll();
-    });
-    this.$bus.$on("removefavoritet", () => {
-      this.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
-      this.getFavoriteLength();
-    });
-    this.$bus.$on("refresh", () => {
-      this.getProducts();
-    });
+    this.$bus.$on('change', () => {
+      this.getProductAll()
+    })
+    this.$bus.$on('removefavoritet', () => {
+      this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
+      this.getFavoriteLength()
+    })
+    this.$bus.$on('refresh', () => {
+      this.getProducts()
+    })
   },
-  created() {
-    //先抓 localStorage 判斷商品的我的最愛ICON
-    this.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
-    this.getFavoriteLength();
-    this.getswiper();
-    this.getProducts();
+  created () {
+    // 先抓 localStorage 判斷商品的我的最愛ICON
+    this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
+    this.getFavoriteLength()
+    // this.getfavorite();
+    this.getswiper()
+    this.getProducts()
     // this.getCart();
     if (this.$route.params.Str == undefined) {
-      this.getProducts();
+      this.getProducts()
     } else {
-      this.getProductAll();
+      this.getProductAll()
     }
-    this.$bus.$emit("change");
+    this.$bus.$emit('change')
   }
-};
+}
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/assets/all";

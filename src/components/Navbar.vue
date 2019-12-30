@@ -53,27 +53,27 @@
 // 登出
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
 
-  data() {
+  data () {
     return {
       success: {}
-    };
+    }
   },
   methods: {
-    signout() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/logout`;
+    signout () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/logout`
       this.$http.post(url).then(response => {
         if (response.data.success) {
-          vm.$router.push("/");
+          vm.$router.push('/')
         }
-      });
-    },
+      })
+    }
   },
-  created() {
+  created () {
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

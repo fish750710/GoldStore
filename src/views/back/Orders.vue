@@ -178,65 +178,65 @@
 </template>
 
 <script>
-import $ from "jquery"; 
-import Pagin from "@/components/Pagination.vue";
+import $ from 'jquery'
+import Pagin from '@/components/Pagination.vue'
 
 export default {
   components: {
     Pagin
   },
-  data() {
+  data () {
     return {
       orders: [],
-      pagination: {}, //分頁
+      pagination: {}, // 分頁
       tempOrder: {
         user: {
-          name: "",
-          email: "",
-          tel: "",
-          address: ""
+          name: '',
+          email: '',
+          tel: '',
+          address: ''
         }
       },
-      isLoading: false,
-    };
-  },
-  methods: {
-    getOrders(page = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then(response => {
-        vm.isLoading = false;
-        vm.orders = response.data.orders; 
-        vm.pagination = response.data.pagination; 
-      });
-    },
-    openOrder(item) {
-      this.tempOrder = Object.assign({}, item); //避免物件傳參考特性影響，先將item資料傳送到空物件再給tempOrder用
-      $("#editorder").modal("show"); //顯示
-    },
-    updateOrder() {
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/order/${vm.tempOrder.id}`;
-      //將 tempProduct 的欄位資料放到data物件裡送出
-      this.$http.put(api, { data: vm.tempOrder }).then(response => {
-        if (response.data.success) {
-          $("#editorder").modal("hide"); //關閉
-          this.$bus.$emit("messsage:push", response.data.message, "success");
-          vm.getOrders(); //重新取得畫面資料
-        } else {
-          //失敗
-          $("#editorder").modal("hide"); 
-          this.$bus.$emit("messsage:push", response.data.message, "danger");
-          vm.getOrders();
-        }
-      });
+      isLoading: false
     }
   },
-  created() {
-    this.getOrders();
+  methods: {
+    getOrders (page = 1) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
+      const vm = this
+      vm.isLoading = true
+      this.$http.get(api).then(response => {
+        vm.isLoading = false
+        vm.orders = response.data.orders
+        vm.pagination = response.data.pagination
+      })
+    },
+    openOrder (item) {
+      this.tempOrder = Object.assign({}, item) // 避免物件傳參考特性影響，先將item資料傳送到空物件再給tempOrder用
+      $('#editorder').modal('show') // 顯示
+    },
+    updateOrder () {
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/order/${vm.tempOrder.id}`
+      // 將 tempProduct 的欄位資料放到data物件裡送出
+      this.$http.put(api, { data: vm.tempOrder }).then(response => {
+        if (response.data.success) {
+          $('#editorder').modal('hide') // 關閉
+          this.$bus.$emit('messsage:push', response.data.message, 'success')
+          vm.getOrders() // 重新取得畫面資料
+        } else {
+          // 失敗
+          $('#editorder').modal('hide')
+          this.$bus.$emit('messsage:push', response.data.message, 'danger')
+          vm.getOrders()
+        }
+      })
+    }
+  },
+  created () {
+    this.getOrders()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

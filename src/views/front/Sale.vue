@@ -31,13 +31,13 @@
 <script>
 export default {
   methods: {
-    goIndex() {
+    goIndex () {
       // 購物去按鈕
-      this.$router.push("/").catch(err => {});
-      this.$bus.$emit("refresh");
+      this.$router.push('/').catch(err => {})
+      this.$bus.$emit('refresh')
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

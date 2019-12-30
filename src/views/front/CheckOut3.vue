@@ -5,7 +5,7 @@
       <li class=" mb-0 p-2 " style="list-style-type:none">2-訂單資訊</li>
       <li class=" mb-0 p-2 " :class="[order.is_paid ? '' : 'shop-title-rwd text-danger font-weight-bold' ]" style="list-style-type:none"><p class="mb-1">3-付款方式</p></li>
       <li class=" mb-0 p-2 " :class="[order.is_paid ? 'shop-title-rwd text-danger font-weight-bold' : '' ]" style="list-style-type:none" ><p class="mb-1">4-付款完成</p></li>
-    </ul> 
+    </ul>
     <div class="container">
     <div class=" row justify-content-center my-5">
       <form class="col-md-12" @submit.prevent="payOrder">
@@ -50,7 +50,7 @@
             <tr>
               <th>付款狀態</th>
               <td class="font-weight-bold">
-                <span class="text-primary mr-3 ">{{ paymethod }}</span>                
+                <span class="text-primary mr-3 ">{{ paymethod }}</span>
                 <span v-if="!order.is_paid"  class="text-danger">尚未付款</span>
                 <span v-else class="text-success">付款完成</span>
               </td>
@@ -79,8 +79,8 @@
                     </div>
                     <div class="text-right" v-if="order.is_paid === false">
                       <button class="btn btn-danger font-weight-bold ml-3" >確認付款去</button>
-                    </div>  
-                  </div>               
+                    </div>
+                  </div>
               </td>
             </tr>
           </tbody>
@@ -104,76 +104,76 @@
           </div>
         </div>
       </div>
-    </div> 
+    </div>
   </div>
 </template>
 
 <script>
 import $ from 'jquery'
 export default {
-  data(){
-    return{
-      orderId :'', //取得orderId
+  data () {
+    return {
+      orderId: '', // 取得orderId
       order: {
-        user: {},
+        user: {}
       },
-        paymethod:'',
+      paymethod: ''
     }
   },
-  methods:{
+  methods: {
   // 取得單一筆訂單資料
-    getOrder(){
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`;            
-      vm.$store.dispatch("updateLoading", true);
-      vm.$http.get(url).then((response) => {                
-      vm.order = response.data.order; 
-      vm.$store.dispatch("updateLoading", false);                  
-      });
+    getOrder () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${vm.orderId}`
+      vm.$store.dispatch('updateLoading', true)
+      vm.$http.get(url).then((response) => {
+        vm.order = response.data.order
+        vm.$store.dispatch('updateLoading', false)
+      })
     },
     // 結帳付款
-    payOrder(){
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`;
-      vm.$store.dispatch("updateLoading", true);
-      vm.$http.post(url).then((response) => {                
-        if(response.data.success){
+    payOrder () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${vm.orderId}`
+      vm.$store.dispatch('updateLoading', true)
+      vm.$http.post(url).then((response) => {
+        if (response.data.success) {
           setTimeout(() => {
             $('#isPaid').modal('show')
-          }, 1000);
+          }, 1000)
           setTimeout(() => {
             $('#isPaid').modal('hide')
-          }, 5000);
-          vm.getOrder(); //重新取得訂單資料(更新畫面)                    
+          }, 5000)
+          vm.getOrder() // 重新取得訂單資料(更新畫面)
         };
-          vm.$bus.$emit('refreshCart');    
-          vm.$store.dispatch("updateLoading", false);                
-      });
+        vm.$bus.$emit('refreshCart')
+        vm.$store.dispatch('updateLoading', false)
+      })
     },
-    goIndex(){
-      this.$router.push('/').catch(err => {});
-    },
+    goIndex () {
+      this.$router.push('/').catch(err => {})
+    }
   },
-  created(){
-    this.orderId = this.$route.params.orderId; //取得網址上的ID
-    this.getOrder();
+  created () {
+    this.orderId = this.$route.params.orderId // 取得網址上的ID
+    this.getOrder()
   },
   // 跳離頁面前先檢查
   beforeRouteLeave (to, from, next) {
     // console.log(this.cart.carts)
     // console.log('to', to, 'from', from, 'next', next);
-    if(this.order.is_paid == true){
+    if (this.order.is_paid == true) {
       next()
-    }else{
+    } else {
       const answer = confirm(`您尚未付款完成，\n您確定要離開！`)
-      if (answer) {        
+      if (answer) {
         next()
       } else {
       // 取消
         next(false)
       };
-    };     
-  },
+    };
+  }
 }
 </script>
 

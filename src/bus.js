@@ -1,7 +1,7 @@
 
-import Vue from 'vue';
+import Vue from 'vue'
 
-Vue.prototype.$bus = new Vue(); //掛載在Vue原型下
+Vue.prototype.$bus = new Vue() // 掛載在Vue原型下
 
 // Message
 // vm.$bus.$emit('messsage:push', message, status);

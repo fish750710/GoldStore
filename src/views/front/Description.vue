@@ -91,10 +91,10 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 
 export default {
-  data() {
+  data () {
     return {
       swiperOption: {
         slidesPerView: 1,
@@ -102,49 +102,49 @@ export default {
         loop: true,
         speed: 2000,
         pagination: {
-          el: ".swiper-pagination",
+          el: '.swiper-pagination',
           clickable: true
         },
         navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev'
         },
         autoplay: {
           delay: 4000,
           disableOnInteraction: false
         }
       }
-    };
-  },
-  methods: {
-    goIndex() {
-      // 購物去按鈕
-      this.$router.push("/").catch(err => {});
-      this.$bus.$emit("refresh");
     }
   },
-  created() {
-    $(function() {
-      $(window).scroll(function() {
-        //偵測畫面滾動
-        let windowHeight = $(window).height(); //目前視窗高度
-        let scrollPos = $(window).scrollTop(); //目前滾動到位置
-        //css位移漸出
+  methods: {
+    goIndex () {
+      // 購物去按鈕
+      this.$router.push('/').catch(err => {})
+      this.$bus.$emit('refresh')
+    }
+  },
+  created () {
+    $(function () {
+      $(window).scroll(function () {
+        // 偵測畫面滾動
+        let windowHeight = $(window).height() // 目前視窗高度
+        let scrollPos = $(window).scrollTop() // 目前滾動到位置
+        // css位移漸出
         if ($(window).width() >= 768) {
-          $(".evaluation").each(function() {
-            var thisPos = $(this).offset().top;
+          $('.evaluation').each(function () {
+            var thisPos = $(this).offset().top
             if (windowHeight / 1.3 + scrollPos >= thisPos) {
-              //視窗高度+目前滾動位置 >= evaluation的位置
-              $(this).addClass("evaluation-fadeIn");
+              // 視窗高度+目前滾動位置 >= evaluation的位置
+              $(this).addClass('evaluation-fadeIn')
             }
-          });
+          })
         } else {
-          $(".evaluation").removeClass("evaluation");
+          $('.evaluation').removeClass('evaluation')
         }
-      });
-    });
+      })
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

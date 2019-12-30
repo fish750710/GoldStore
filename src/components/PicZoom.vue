@@ -18,17 +18,17 @@
 
 <script>
 function offset (el) {
-  let top = el.offsetTop;
-  let left = el.offsetLeft;
+  let top = el.offsetTop
+  let left = el.offsetLeft
   if (el.offsetParent) {
-    el = el.offsetParent;
-    top += el.offsetTop;
-    left += el.offsetLeft;
+    el = el.offsetParent
+    top += el.offsetTop
+    left += el.offsetLeft
   };
   return {
     left: left,
     top: top
-  };
+  }
 }
 export default {
   name: 'picZoom',
@@ -46,66 +46,65 @@ export default {
     return {
       zoomVisiable: false,
       maskShow: false
-    };
+    }
   },
   methods: {
     enter () {
-      this.maskShow = true;
+      this.maskShow = true
     },
     out () {
-      this.zoomVisiable = false;
-      this.maskShow = false;
+      this.zoomVisiable = false
+      this.maskShow = false
     },
     move (ev) {
-      this.init();
+      this.init()
       // 鼠标距离屏幕距离
-      let moveX = ev.clientX;
-      let moveY = ev.clientY;
+      let moveX = ev.clientX
+      let moveY = ev.clientY
       // 大盒子距离顶部的距离
-      let offsetLeft = offset(this.oPreviewBox).left;
-      let offsetTop = offset(this.oPreviewBox).top;
-      let left = moveX - offsetLeft - this.houverWidth / 2;
-      let top;
+      let offsetLeft = offset(this.oPreviewBox).left
+      let offsetTop = offset(this.oPreviewBox).top
+      let left = moveX - offsetLeft - this.houverWidth / 2
+      let top
       if (this.scroll > 0) {
-        top = moveY - offsetTop + this.scroll - this.houverHeight / 2;
+        top = moveY - offsetTop + this.scroll - this.houverHeight / 2
       } else {
-        top = moveY - offsetTop - this.houverHeight / 2;
+        top = moveY - offsetTop - this.houverHeight / 2
       }
-      let maxWidth = this.pWidth - this.houverWidth;
-      let maxHeight = this.pWidth - this.houverHeight;
-      left = left < 0 ? 0 : left > maxWidth ? maxWidth : left;
-      top = top < 0 ? 0 : top > maxHeight ? maxHeight : top;
-      let percentX = left / (maxWidth);
-      let percentY = top / (maxHeight);
-      this.oHoverBox.style.left = left + 'px';
-      this.oHoverBox.style.top = top + 'px';
-      this.oBigImg.style.left = percentX * (this.bWidth - this.imgWidth) + 'px';
-      this.oBigImg.style.top = percentY * (this.bHeight - this.imgHeight) + 'px';
-      this.$emit('move', ev);
-      this.zoomVisiable = true;
+      let maxWidth = this.pWidth - this.houverWidth
+      let maxHeight = this.pWidth - this.houverHeight
+      left = left < 0 ? 0 : left > maxWidth ? maxWidth : left
+      top = top < 0 ? 0 : top > maxHeight ? maxHeight : top
+      let percentX = left / (maxWidth)
+      let percentY = top / (maxHeight)
+      this.oHoverBox.style.left = left + 'px'
+      this.oHoverBox.style.top = top + 'px'
+      this.oBigImg.style.left = percentX * (this.bWidth - this.imgWidth) + 'px'
+      this.oBigImg.style.top = percentY * (this.bHeight - this.imgHeight) + 'px'
+      this.$emit('move', ev)
+      this.zoomVisiable = true
     },
     init () {
-      this.oHoverBox = this.$refs.hoverBox;
-      this.oPreviewBox = this.$refs.previewBox;
-      this.oBigImg = this.$refs.bigImg;
-      this.imgBox = this.$refs.zoomBox;
-      this.houverWidth = this.oHoverBox.offsetWidth;
-      this.houverHeight = this.oHoverBox.offsetHeight;
-      this.pWidth = this.oPreviewBox.offsetWidth;
-      this.pHeight = this.oPreviewBox.offsetHeight;
-      this.imgWidth = this.oBigImg.offsetWidth;
-      this.imgHeight = this.oBigImg.offsetHeight;
-      this.bWidth = this.imgBox.offsetWidth;
-      this.bHeight = this.imgBox.offsetHeight;
-      this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
+      this.oHoverBox = this.$refs.hoverBox
+      this.oPreviewBox = this.$refs.previewBox
+      this.oBigImg = this.$refs.bigImg
+      this.imgBox = this.$refs.zoomBox
+      this.houverWidth = this.oHoverBox.offsetWidth
+      this.houverHeight = this.oHoverBox.offsetHeight
+      this.pWidth = this.oPreviewBox.offsetWidth
+      this.pHeight = this.oPreviewBox.offsetHeight
+      this.imgWidth = this.oBigImg.offsetWidth
+      this.imgHeight = this.oBigImg.offsetHeight
+      this.bWidth = this.imgBox.offsetWidth
+      this.bHeight = this.imgBox.offsetHeight
+      this.scroll = document.documentElement.scrollTop || document.body.scrollTop
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/all";
-
 
 @include desktop-top() {
   .pic-zoom {
@@ -154,7 +153,7 @@ export default {
       }
     }
   }
- 
+
 }
 @include pc-top() {
 .pic-zoom {
@@ -203,7 +202,7 @@ export default {
       }
     }
   }
- 
+
 }
 @include pc() {
 .pic-zoom {
@@ -250,7 +249,7 @@ export default {
       }
     }
   }
- 
+
 }
 @include pad() {
   .pic-zoom {
@@ -266,7 +265,7 @@ export default {
       }
     }
     .zoom-box {
-      display: none;      
+      display: none;
     }
   }
 

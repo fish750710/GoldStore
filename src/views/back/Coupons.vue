@@ -160,99 +160,99 @@
 </template>
 
 <script>
-import $ from "jquery";
-import Pagin from "@/components/Pagination.vue";
+import $ from 'jquery'
+import Pagin from '@/components/Pagination.vue'
 
 export default {
   components: {
     Pagin
   },
-  data() {
+  data () {
     return {
       coupons: [],
       tempCoupons: {},
       isLoading: false,
-      pagination: {} //分頁
-    };
+      pagination: {} // 分頁
+    }
   },
   methods: {
-    getCoupons(page = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
-      const vm = this;
-      vm.isLoading = true;
+    getCoupons (page = 1) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`
+      const vm = this
+      vm.isLoading = true
       this.$http.get(api).then(response => {
-        vm.isLoading = false;
-        vm.coupons = response.data.coupons;
-        vm.pagination = response.data.pagination;
-      });
+        vm.isLoading = false
+        vm.coupons = response.data.coupons
+        vm.pagination = response.data.pagination
+      })
     },
 
-    openCouponModel(isNew, item) {
+    openCouponModel (isNew, item) {
       if (isNew) {
-        //如果是新增產品
-        this.tempCoupons = {};
-        this.isNew = true;
+        // 如果是新增產品
+        this.tempCoupons = {}
+        this.isNew = true
       } else {
-        //不是新增產品
-        this.tempCoupons = Object.assign({}, item); //避免物件傳參考特性影響，先將item資料傳送到空物件再給tempProduct用
-        this.isNew = false;
+        // 不是新增產品
+        this.tempCoupons = Object.assign({}, item) // 避免物件傳參考特性影響，先將item資料傳送到空物件再給tempProduct用
+        this.isNew = false
       }
-      $("#couponModal").modal("show");
+      $('#couponModal').modal('show')
     },
-    updateCoupons() {
-      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon`; //https://vue-course-api.hexschool.io/api/hans/products
-      let httpMethod = "post";
-      const vm = this;
+    updateCoupons () {
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon` // https://vue-course-api.hexschool.io/api/hans/products
+      let httpMethod = 'post'
+      const vm = this
       if (!vm.isNew) {
-        //不是新的時候，=修改
-        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupons.id}`;
-        httpMethod = "put";
+        // 不是新的時候，=修改
+        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupons.id}`
+        httpMethod = 'put'
       }
-      vm.isLoading = true;
-      //將 tempCoupons 的欄位資料放到data物件裡送出
+      vm.isLoading = true
+      // 將 tempCoupons 的欄位資料放到data物件裡送出
       this.$http[httpMethod](api, { data: vm.tempCoupons }).then(response => {
         // console.log(response.data);
         if (response.data.success) {
-          $("#couponModal").modal("hide"); //關閉
-          this.$bus.$emit("messsage:push", response.data.message, "success");
-          vm.getCoupons(); //重新取得畫面資料
+          $('#couponModal').modal('hide') // 關閉
+          this.$bus.$emit('messsage:push', response.data.message, 'success')
+          vm.getCoupons() // 重新取得畫面資料
         } else {
           // 新增失敗
-          $("#couponModal").modal("hide");
-          this.$bus.$emit("messsage:push", response.data.message, "danger");
-          vm.getCoupons();
+          $('#couponModal').modal('hide')
+          this.$bus.$emit('messsage:push', response.data.message, 'danger')
+          vm.getCoupons()
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    delCouponModel() {
-      //刪除
-      const vm = this;
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupons.id}`;
-      vm.isLoading = true;
+    delCouponModel () {
+      // 刪除
+      const vm = this
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupon/${vm.tempCoupons.id}`
+      vm.isLoading = true
       this.$http.delete(api).then(response => {
         if (response.data.success) {
-          //刪除成功
-          $("#delCouponsModal").modal("hide");
-          vm.getCoupons();
-          this.$bus.$emit("messsage:push", response.data.message, "success");
+          // 刪除成功
+          $('#delCouponsModal').modal('hide')
+          vm.getCoupons()
+          this.$bus.$emit('messsage:push', response.data.message, 'success')
         } else {
-          //找不到產品
-          this.$bus.$emit("messsage:push", response.data.message, "danger");
+          // 找不到產品
+          this.$bus.$emit('messsage:push', response.data.message, 'danger')
         }
-        vm.isLoading = false;
-      });
+        vm.isLoading = false
+      })
     },
-    delModel(item) {
-      const vm = this;
-      vm.tempCoupons = item; //抓取item資料
-      $("#delCouponsModal").modal("show"); //顯示
+    delModel (item) {
+      const vm = this
+      vm.tempCoupons = item // 抓取item資料
+      $('#delCouponsModal').modal('show') // 顯示
     }
   },
-  created() {
-    this.getCoupons();
+  created () {
+    this.getCoupons()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

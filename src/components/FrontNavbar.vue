@@ -5,7 +5,7 @@
     <!-- 選單以外區域 -->
     <div id="close-menu" class></div>
     <nav class="header navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <div class="col-1 col-sm-1 col-md-1 col-lg-2 col-xl-2 mr-0">
+      <div class="col-1 col-sm-1 col-md-1 col-lg-2 col-xl-2 ml-3 p-0">
         <a href="#" class @click="goIndex">
           <img src="@/assets/images/Logo-3w150.png" alt class="d-logo" />
           <img src="@/assets/images/Logo-64.png" alt class="m-logo" style="width:45px" />
@@ -101,7 +101,7 @@
               <span
                 class="badge badge-pill badge-danger"
                 style
-                v-if="myfavorite.length!= 0"
+                v-if="myfavorite.length != 0"
               >{{ myfavorite.length }}</span>
             </a>
           </li>
@@ -453,22 +453,22 @@
 </template>
 
 <script>
-import Alert from "@/components/AlertMsg.vue";
-import Pagin from "@/components/Pagination.vue"; //分頁
-import $ from "jquery";
-import Search from "@/components/Search";
+import Alert from '@/components/AlertMsg.vue'
+import Pagin from '@/components/Pagination.vue' // 分頁
+import $ from 'jquery'
+import Search from '@/components/Search'
 
 export default {
   components: {
-    Pagin, //分頁
+    Pagin, // 分頁
     Alert,
     Search
   },
-  data() {
+  data () {
     return {
       products: [],
-      pagination: {}, //分頁
-      product: {}, //單筆資料
+      pagination: {}, // 分頁
+      product: {}, // 單筆資料
       ischange: false,
       successStatus: false,
       // status: {
@@ -479,33 +479,33 @@ export default {
       //     length: []
       //   }
       // },
-      coupon_code: "",
-      coupon_msg: "",
+      coupon_code: '',
+      coupon_msg: '',
       form: {
         user: {
-          name: "",
-          email: "",
-          tel: "",
-          address: ""
+          name: '',
+          email: '',
+          tel: '',
+          address: ''
         },
-        message: ""
+        message: ''
       },
       user: {
-        username: "",
-        password: "",
-        dbpassword: ""
+        username: '',
+        password: '',
+        dbpassword: ''
       },
-      message: "",
-      myfavorite: {
-        length: 0
-      },
-      searchValue: ""
-    };
+      message: '',
+      // myfavorite: {
+      //   length: 0
+      // },
+      searchValue: ''
+    }
   },
   methods: {
-    //取得購物車內容
-    getCart() {
-      this.$store.dispatch("getCart");
+    // 取得購物車內容
+    getCart () {
+      this.$store.dispatch('getCart')
       // const vm = this;
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // vm.$store.dispatch("updateLoading", true);
@@ -514,9 +514,9 @@ export default {
       //   vm.$store.dispatch("updateLoading", false);
       // });
     },
-    //加入購物車
-    addtoCart(id, qty = 1) {
-      this.$store.dispatch("addtoCart", { id, qty });
+    // 加入購物車
+    addtoCart (id, qty = 1) {
+      this.$store.dispatch('addtoCart', { id, qty })
       // const vm = this;
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // vm.$store.dispatch("updateLoading", true);
@@ -529,9 +529,9 @@ export default {
       //   vm.$store.dispatch("updateLoading", false);
       // });
     },
-    //刪除購物車內容
-    removeCartItem(id) {
-      this.$store.dispatch("removeCart", id);
+    // 刪除購物車內容
+    removeCartItem (id) {
+      this.$store.dispatch('removeCart', id)
       // const vm = this;
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       // vm.$store.dispatch("updateLoading", true);
@@ -542,16 +542,16 @@ export default {
       // });
     },
     // 增加數量
-    addQty(item) {
-      this.$store.dispatch('addQty', item);
+    addQty (item) {
+      this.$store.dispatch('addQty', item)
       // item.qty += 1;
       // this.addtoCart(item.product.id, item.qty);
       // this.removeCartItem(item.id);
     },
     // 減少數量
-    minusQty(item) {
-      this.$store.dispatch('minusQty', item);
-      
+    minusQty (item) {
+      this.$store.dispatch('minusQty', item)
+
       // item.qty -= 1;
       // if (item.qty === 0) {
       //   this.removeCartItem(item.id);
@@ -560,180 +560,185 @@ export default {
       //   this.removeCartItem(item.id);
       // }
     },
-    //open 登入model
-    openLogin() {
-      this.message = "";
-      this.user.password = "";
-      $("#loginModel").modal("show"); //顯示
+    // open 登入model
+    openLogin () {
+      this.message = ''
+      this.user.password = ''
+      $('#loginModel').modal('show') // 顯示
     },
-    //登入
-    signin() {
-      //對應config/dev.env.js檔案的環境變數
-      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
-      const vm = this;
+    // 登入
+    signin () {
+      // 對應config/dev.env.js檔案的環境變數
+      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`
+      const vm = this
       this.$validator.validateAll().then(result => {
         if (result) {
           this.$http.post(api, vm.user).then(response => {
-            vm.message = response.data;
+            vm.message = response.data
             if (response.data.success) {
-              vm.successStatus = true;
-              //登入成功跳轉首頁
-              $("#loginModel").modal("hide"); //關閉
-              vm.issuccess();
+              vm.successStatus = true
+              // 登入成功跳轉首頁
+              $('#loginModel').modal('hide') // 關閉
+              vm.issuccess()
             } else {
-              vm.successStatus = false;
-              vm.$bus.$emit("messsage:push", response.data.message, "danger");
+              vm.successStatus = false
+              vm.$bus.$emit('messsage:push', response.data.message, 'danger')
             }
-          });
+          })
         }
-      });
+      })
     },
-    //切換登入或註冊畫面
-    changeSign(change) {
+    // 切換登入或註冊畫面
+    changeSign (change) {
       if (change) {
         // 註冊
-        this.ischange = true;
-        this.message = "";
+        this.ischange = true
+        this.message = ''
       } else {
-        this.ischange = false;
-        this.message = "";
+        this.ischange = false
+        this.message = ''
       }
     },
-    //註冊
-    signup(psw, dbpsw) {
+    // 註冊
+    signup (psw, dbpsw) {
       this.$validator.validateAll().then(result => {
         if (psw === dbpsw) {
           if (result) {
-            this.message = "尚未開放註冊";
+            this.message = '尚未開放註冊'
           }
         } else {
-          this.message = "請確認密碼輸入是否一樣";
+          this.message = '請確認密碼輸入是否一樣'
         }
-      });
+      })
     },
-    //檢查登入狀態
-    issuccess() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/user/check`;
+    // 檢查登入狀態
+    issuccess () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/user/check`
       vm.$http.post(url).then(response => {
         if (response.data.success) {
-          //檢查用戶是否仍持續登入狀態
-          vm.successStatus = true;
+          // 檢查用戶是否仍持續登入狀態
+          vm.successStatus = true
         } else {
-          vm.successStatus = false;
+          vm.successStatus = false
         }
-      });
+      })
     },
     // 登出
-    signout() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/logout`;
+    signout () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/logout`
       vm.$http.post(url).then(response => {
         if (response.data.success) {
-          vm.successStatus = false;
-          vm.$bus.$emit("messsage:push", response.data.message, "success");
-          vm.goIndex();
+          vm.successStatus = false
+          vm.$bus.$emit('messsage:push', response.data.message, 'success')
+          vm.goIndex()
         } else {
-          vm.successStatus = true;
+          vm.successStatus = true
         }
-      });
+      })
     },
-    searchProduct() {
-      const str = this.searchValue;
-      this.$router.push(`/search/${this.searchValue}`).catch(err => {});
-      this.$bus.$emit("search");
-      if (str.trim() === "") {
-        this.$bus.$emit("messsage:push", `請輸入商品名稱`, "danger");
+    searchProduct () {
+      const str = this.searchValue
+      this.$router.push(`/search/${this.searchValue}`).catch(err => {})
+      this.$bus.$emit('search')
+      if (str.trim() === '') {
+        this.$bus.$emit('messsage:push', `請輸入商品名稱`, 'danger')
       }
-      this.searchValue = "";
+      this.searchValue = ''
     },
-    getfavorite() {
-      const vm = this;
-      vm.myfavorite = JSON.parse(localStorage.getItem("favorite") || "");
+    getfavorite () {
+      this.$store.dispatch('getfavorite')
+      // this.myfavorite = JSON.parse(localStorage.getItem("favorite") || "");
     },
-    removefavoritet(item) {
+    removefavoritet (id) {
+      this.$store.dispatch('removefavoritet', id)
       // 檢查索引
-      const i = this.myfavorite.findIndex(el => {
-        const result = el.id === item;
-        return result;
-      });
-      this.myfavorite.splice(i, 1);
-      localStorage.setItem("favorite", JSON.stringify(this.myfavorite));
-      this.$bus.$emit("removefavoritet", this.myfavorite);
+      // const i = myfavorite.findIndex(el => {
+      //   console.log('同一個');
+      //   const result = el.id === item;
+      //   return result;
+      // });
+      // this.myfavorite.splice(i, 1);
+      // localStorage.setItem("favorite", JSON.stringify(this.myfavorite));
+      // this.$bus.$emit("removefavoritet", this.myfavorite);
     },
     // 導頁到管理商品
-    goProducts() {
-      this.$router.push("/admin/Products").catch(err => {});
+    goProducts () {
+      this.$router.push('/admin/Products').catch(err => {})
     },
-    goUserOrders() {
-      this.$router.push("/userorders").catch(err => {});
-      this.$bus.$emit("refreshTable");
+    goUserOrders () {
+      this.$router.push('/userorders').catch(err => {})
+      this.$bus.$emit('refreshTable')
     },
-    goCheckOuter() {
-      $("#cartModal").modal("hide");
-      this.$router.push("/checkout").catch(err => {});
+    goCheckOuter () {
+      $('#cartModal').modal('hide')
+      this.$router.push('/checkout').catch(err => {})
     },
-    goIndex() {
+    goIndex () {
       // 購物去按鈕
-      this.$router.push("/").catch(err => {});
-      this.$bus.$emit("refresh");
+      this.$router.push('/').catch(err => {})
+      this.$bus.$emit('refresh')
     },
-    goDetail(id) {
-      $("#favoritetModal").modal("hide");
-      $("#cartModal").modal("hide");
-      this.$router.push(`/detail/${id}`).catch(err => {});
-      this.$bus.$emit("refreshDetail");
+    goDetail (id) {
+      $('#favoritetModal').modal('hide')
+      $('#cartModal').modal('hide')
+      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$bus.$emit('refreshDetail')
     },
-    goDescription() {
-      this.$router.push(`/Description`).catch(err => {});
+    goDescription () {
+      this.$router.push(`/Description`).catch(err => {})
     },
-    goSale() {
-      this.$router.push(`/Sale`).catch(err => {});
+    goSale () {
+      this.$router.push(`/Sale`).catch(err => {})
     }
   },
   computed: {
     // 讀取 /store/index.js 裡面的屬性
-    isLoading() {
-      return this.$store.state.isLoading;
+    isLoading () {
+      return this.$store.state.isLoading
     },
-    cart() {
-      return this.$store.state.cart;
+    cart () {
+      return this.$store.state.cart
     },
-    loadingItem() {
-      return this.$store.state.loadingItem;
+    loadingItem () {
+      return this.$store.state.loadingItem
+    },
+    myfavorite () {
+      return this.$store.state.myfavorite
     }
   },
-  created() {
-    this.getCart();
-    this.issuccess();
-    this.getfavorite();
+  created () {
+    this.getCart()
+    this.issuccess()
+    this.getfavorite()
 
-    $(function() {
-      $(".menuButton > a").click(function(e) {
-        e.preventDefault();
-        $(".menuButton > a").toggleClass("change");
-        $("body").toggleClass("show-menu");
-        $("#close-menu").toggleClass("close-menu");
-      });
-      //選單以外區域點選後關閉選單
-      $("#close-menu").click(function(e) {
-        e.preventDefault();
-        $("body").removeClass("show-menu");
-        $("#close-menu").removeClass("close-menu");
-        $(".menuButton > a").removeClass("change");
-      });
-    });
+    $(function () {
+      $('.menuButton > a').click(function (e) {
+        e.preventDefault()
+        $('.menuButton > a').toggleClass('change')
+        $('body').toggleClass('show-menu')
+        $('#close-menu').toggleClass('close-menu')
+      })
+      // 選單以外區域點選後關閉選單
+      $('#close-menu').click(function (e) {
+        e.preventDefault()
+        $('body').removeClass('show-menu')
+        $('#close-menu').removeClass('close-menu')
+        $('.menuButton > a').removeClass('change')
+      })
+    })
   },
-  mounted() {
+  mounted () {
     // 從frontNavbar傳來
-    this.$bus.$on("refreshCart", () => {
-      this.getCart();
-    });
-    this.$bus.$on("favorite", () => {
-      this.getfavorite();
-    });
+    this.$bus.$on('refreshCart', () => {
+      this.getCart()
+    })
+    this.$bus.$on('favorite', () => {
+      this.getfavorite()
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

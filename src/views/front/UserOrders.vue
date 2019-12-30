@@ -66,47 +66,47 @@
 </template>
 
 <script>
-import $ from "jquery"; //vue 不認識 必須載入jquery
-import Pagin from "@/components/Pagination.vue";
+import $ from 'jquery' // vue 不認識 必須載入jquery
+import Pagin from '@/components/Pagination.vue'
 
 export default {
   components: {
     Pagin
   },
-  data() {
+  data () {
     return {
       orders: [],
       isLoading: false,
       pagination: {}
-    };
-  },
-  methods: {
-    getOrders(page = 1) {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
-      const vm = this;
-      vm.isLoading = true;
-      this.$http.get(api).then(response => {
-        // console.log(response.data);
-        vm.isLoading = false;
-        vm.orders = response.data.orders;
-        vm.pagination = response.data.pagination;
-      });
-    },
-    goPay(id) {
-      //轉付款頁面
-      this.$router.push(`/checkout3/${id}`).catch(err => {});
     }
   },
-  created() {
-    this.getOrders();
+  methods: {
+    getOrders (page = 1) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
+      const vm = this
+      vm.isLoading = true
+      this.$http.get(api).then(response => {
+        // console.log(response.data);
+        vm.isLoading = false
+        vm.orders = response.data.orders
+        vm.pagination = response.data.pagination
+      })
+    },
+    goPay (id) {
+      // 轉付款頁面
+      this.$router.push(`/checkout3/${id}`).catch(err => {})
+    }
   },
-  mounted() {
+  created () {
+    this.getOrders()
+  },
+  mounted () {
     // 從frontNavbar傳來
-    this.$bus.$on("refreshTable", () => {
-      this.getOrders();
-    });
+    this.$bus.$on('refreshTable', () => {
+      this.getOrders()
+    })
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -208,90 +208,89 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 
 export default {
   components: {},
-  data() {
+  data () {
     return {
       form: {
         user: {
-          name: "",
-          email: "",
-          tel: "",
-          address: ""
+          name: '',
+          email: '',
+          tel: '',
+          address: ''
         },
-        message: ""
+        message: ''
       },
-      coupon_code: "",
-      coupon_msg: ""
-    };
+      coupon_code: '',
+      coupon_msg: ''
+    }
   },
   methods: {
     // 新增訂單
-    createOrder() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
-      const order = vm.form;
-      vm.$store.dispatch("updateLoading", true);
+    createOrder () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`
+      const order = vm.form
+      vm.$store.dispatch('updateLoading', true)
 
       vm.$validator.validate().then(result => {
         if (result) {
           vm.$http.post(url, { data: order }).then(response => {
             // console.log('訂單已建立', response);
-            $("#checkorder").modal("hide");
-            vm.$bus.$emit("messsage:push", response.data.message, "success");
+            $('#checkorder').modal('hide')
+            vm.$bus.$emit('messsage:push', response.data.message, 'success')
             // vm.getCart();
             if (response.data.success) {
               // console.log('準備跳轉也面');
-              vm.$router.push(`/checkout3/${response.data.orderId}`); // $router 轉換頁面
+              vm.$router.push(`/checkout3/${response.data.orderId}`) // $router 轉換頁面
             }
-            this.$bus.$emit("refreshCart");
-            vm.$store.dispatch("updateLoading", false);
-          });
+            this.$bus.$emit('refreshCart')
+            vm.$store.dispatch('updateLoading', false)
+          })
         } else {
-          $("#checkorder").modal("hide");
-          vm.$store.dispatch("updateLoading", false);
+          $('#checkorder').modal('hide')
+          vm.$store.dispatch('updateLoading', false)
           // console.log('欄位不完整');
         }
-      });
+      })
     },
     // 取得購物車內容
-    getCart() {
-      this.$store.dispatch('getCart');
+    getCart () {
+      this.$store.dispatch('getCart')
     },
-    goCheckOut() {
-      this.$router.push(`/checkout`).catch(err => {});
+    goCheckOut () {
+      this.$router.push(`/checkout`).catch(err => {})
     }
   },
   computed: {
-    cart(){
-      return this.$store.state.cart;
-    },
+    cart () {
+      return this.$store.state.cart
+    }
   },
-  created() {
-    this.getCart();
+  created () {
+    this.getCart()
   },
   // 跳離頁面前先檢查
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave (to, from, next) {
     // console.log('to', to, 'from', from, 'next', next);
     if (this.cart.carts === 0) {
-      next();
-    } else if (to.name === "CheckOut3") {
-      next();
+      next()
+    } else if (to.name === 'CheckOut3') {
+      next()
     } else {
-      const answer = confirm(`訂單尚未建立，\n您確定要離開！`);
+      const answer = confirm(`訂單尚未建立，\n您確定要離開！`)
       if (answer) {
-        next();
+        next()
       } else {
         // 取消
-        next(false);
+        next(false)
       }
     }
   }
-};
+}
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/assets/all";

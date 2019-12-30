@@ -1,10 +1,10 @@
 <template>
-    <div>       
+    <div>
         <Navbar/>
         <div class="d-flex justify-content-center align-items-center"><alert/> </div>
-                
+
         <div class="container-fluid">
-            <div class="row">   
+            <div class="row">
                 <main role="main" class="col-md ml-sm-auto col-lg px-4">
                     <router-view></router-view>
                 </main>
@@ -14,17 +14,16 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar.vue';
-import Alert from '../components/AlertMsg.vue';
+import Navbar from '../components/Navbar.vue'
+import Alert from '../components/AlertMsg.vue'
 
+export default {
+  components: {
+    Navbar,
+    Alert
 
-export default { 
-    components:{
-        Navbar,
-        Alert,
-        
-    },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>

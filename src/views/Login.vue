@@ -39,31 +39,31 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       user: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
-      message: ""
-    };
+      message: ''
+    }
   },
   methods: {
-    signin() {
-      //對應config/dev.env.js檔案的環境變數
-      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
-      const vm = this;
+    signin () {
+      // 對應config/dev.env.js檔案的環境變數
+      const api = `${process.env.VUE_APP_APIPATH}/admin/signin`
+      const vm = this
       this.$http.post(api, vm.user).then(response => {
         // console.log(response.data);
-        vm.message = response.data;
+        vm.message = response.data
         if (response.data.success) {
-          //登入成功跳轉首頁
-          vm.$router.push("/admin/Products");
+          // 登入成功跳轉首頁
+          vm.$router.push('/admin/Products')
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

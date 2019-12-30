@@ -23,23 +23,23 @@
   </div>
 </template>
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 export default {
-  data() {
+  data () {
     return {
-      searchValue: ""
-    };
+      searchValue: ''
+    }
   },
   methods: {
-    searchProduct() {
-      const str = this.searchValue;
-      this.$router.push(`/search/${this.searchValue}`).catch(err => {});
-      this.$bus.$emit("search");
-      if (str.trim() === "") {
-        this.$bus.$emit("messsage:push", `請輸入商品名稱`, "danger");
+    searchProduct () {
+      const str = this.searchValue
+      this.$router.push(`/search/${this.searchValue}`).catch(err => {})
+      this.$bus.$emit('search')
+      if (str.trim() === '') {
+        this.$bus.$emit('messsage:push', `請輸入商品名稱`, 'danger')
       }
-      this.searchValue = "";
+      this.searchValue = ''
     }
   }
-};
+}
 </script>

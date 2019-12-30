@@ -7,39 +7,39 @@
 </template>
 
 <script>
-import $ from "jquery";
+import $ from 'jquery'
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
   methods: {
-    backtop() {
-      $("html, body").animate({ scrollTop: 0 }, 300);
+    backtop () {
+      $('html, body').animate({ scrollTop: 0 }, 300)
     }
   },
-  created() {
-    $(function() {
-      $(window).scroll(function() {
+  created () {
+    $(function () {
+      $(window).scroll(function () {
         if ($(this).scrollTop() >= $(window).height() / 2.5) {
-          $(".gotop").addClass("scrolltop");
-          $(".gotop").removeClass("topnone");
+          $('.gotop').addClass('scrolltop')
+          $('.gotop').removeClass('topnone')
         } else {
-          $(".gotop").removeClass("scrolltop");
-          $(".gotop").addClass("topnone");
+          $('.gotop').removeClass('scrolltop')
+          $('.gotop').addClass('topnone')
         }
         if (
           $(this).scrollTop() >=
-          $("body").height() - $(window).height() - 150
+          $('body').height() - $(window).height() - 150
         ) {
           // console.log('footer')
-          $(".gotop").addClass("topbottom");
+          $('.gotop').addClass('topbottom')
         } else {
-          $(".gotop").removeClass("topbottom");
+          $('.gotop').removeClass('topbottom')
         }
-      });
-    });
+      })
+    })
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .topnone {

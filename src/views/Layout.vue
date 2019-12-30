@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import FrontNavbar from "@/components/FrontNavbar.vue";
-import Top from "@/components/Top.vue";
-import FrontFooter from "@/components/FrontFooter.vue";
+import FrontNavbar from '@/components/FrontNavbar.vue'
+import Top from '@/components/Top.vue'
+import FrontFooter from '@/components/FrontFooter.vue'
 
 export default {
   components: {
@@ -18,7 +18,7 @@ export default {
     Top,
     FrontFooter
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

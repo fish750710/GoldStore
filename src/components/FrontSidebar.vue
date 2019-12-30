@@ -13,7 +13,7 @@
               <span :class="[ activeitem =='小米' ? 'text-primary':'' ]">小米</span></a></li>
           </ul>
         </div>
-      </div>  
+      </div>
     </div>
 </template>
 
@@ -22,24 +22,23 @@
 export default {
   data () {
     return {
-      activeitem:"",
+      activeitem: ''
     }
   },
-  methods:{
+  methods: {
     badgeSearch (str) {
-        this.activeitem = str; 
-        // this.$store.dispatch('getCategory', str);
-        this.$router.push(`/${str}`).catch(err=>{});
-        this.$bus.$emit('change');   
-        // 更新畫面方法
-        // location.reload()  
-        // this.$router.go(0)
-    },   
-  }, 
-  
+      this.activeitem = str
+      // this.$store.dispatch('getCategory', str);
+      this.$router.push(`/${str}`).catch(err => {})
+      this.$bus.$emit('change')
+      // 更新畫面方法
+      // location.reload()
+      // this.$router.go(0)
+    }
+  }
+
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/assets/all";
@@ -50,20 +49,20 @@ export default {
   list-style-type:none;
   .menuSidebar{
     text-decoration: none;
-    color: $dark;    
+    color: $dark;
     font-weight: bold;
     font-size:20px;
     width: 80px;
   }
   a:hover{
     color: $primary;
-    position: relative; 
+    position: relative;
   }
 }
 @include pc() {
   .m-sidebar-none{
     display: none;
-  } 
+  }
 }
 @include pad() {
   .m-sidebar-none{

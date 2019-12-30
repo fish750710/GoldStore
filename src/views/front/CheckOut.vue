@@ -53,7 +53,7 @@
                         class="form-control text-center"
                         @change="inputQty( item )"
                         :value="item.qty"
-                   
+
                         style="width:60px; height:30px"
                       />
                       <button class="btn pt-0" @click.prevent="addQty( item )">
@@ -138,21 +138,21 @@
 <script>
 export default {
   components: {},
-  data() {
+  data () {
     return {
       // cart: {
       //   carts: {
       //     length: []
       //   }
       // },
-      coupon_code: "",
-      coupon_msg: ""
-    };
+      coupon_code: '',
+      coupon_msg: ''
+    }
   },
   methods: {
     // 取得購物車內容
-    getCart() {
-      this.$store.dispatch('getCart');
+    getCart () {
+      this.$store.dispatch('getCart')
       // const vm = this;
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // vm.$store.dispatch("updateLoading", true);
@@ -161,10 +161,10 @@ export default {
       //   vm.$store.dispatch("updateLoading", false);
       // });
     },
-    //加入購物車
-    addtoCart(id, qty) {
+    // 加入購物車
+    addtoCart (id, qty) {
       // id 和 數量 預設=1
-       this.$store.dispatch('addtoCart', { id, qty });
+      this.$store.dispatch('addtoCart', { id, qty })
       // const vm = this;
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
       // vm.$store.dispatch("updateLoading", true);
@@ -177,9 +177,9 @@ export default {
       //   vm.$store.dispatch("updateLoading", false);
       // });
     },
-    //刪除購物車內容
-    removeCartItem(id) {
-      this.$store.dispatch('removeCart', id);
+    // 刪除購物車內容
+    removeCartItem (id) {
+      this.$store.dispatch('removeCart', id)
       // const vm = this;
       // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
       // vm.$store.dispatch("updateLoading", true);
@@ -189,30 +189,30 @@ export default {
       //   vm.$store.dispatch("updateLoading", false);
       // });
     },
-    //增加優惠卷
-    addCouponCode() {
-      const vm = this;
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+    // 增加優惠卷
+    addCouponCode () {
+      const vm = this
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`
       const coupon = {
         code: vm.coupon_code
-      };
-      vm.$store.dispatch("updateLoading", true);
+      }
+      vm.$store.dispatch('updateLoading', true)
       this.$http.post(url, { data: coupon }).then(response => {
-        vm.coupon_msg = response.data.message;
-        vm.getCart();
-        vm.$store.dispatch("updateLoading", false);
-      });
+        vm.coupon_msg = response.data.message
+        vm.getCart()
+        vm.$store.dispatch('updateLoading', false)
+      })
     },
     // 增加數量
-    addQty(item) {
-      this.$store.dispatch('addQty', item);
+    addQty (item) {
+      this.$store.dispatch('addQty', item)
       // item.qty += 1;
       // this.removeCartItem(item.id);
       // this.addtoCart(item.product.id, item.qty);
     },
     // 減少數量
-    minusQty(item) {
-      this.$store.dispatch('minusQty', item);
+    minusQty (item) {
+      this.$store.dispatch('minusQty', item)
       // item.qty -= 1;
       // if (item.qty <= 0) {
       //   this.removeCartItem(item.id);
@@ -221,10 +221,10 @@ export default {
       //   this.addtoCart(item.product.id, item.qty);
       // }
     },
-    //改變數量
-    inputQty(item) {
+    // 改變數量
+    inputQty (item) {
       // console.log(item);
-      this.$store.dispatch('inputQty', item);
+      this.$store.dispatch('inputQty', item)
       // if (item.final_total === 0) {
       //   this.removeCartItem(item.id);
       // } else {
@@ -232,24 +232,24 @@ export default {
       //   this.addtoCart(item.product.id, item.qty);
       // }
     },
-    goDetail(id) {
-      this.$router.push(`/detail/${id}`).catch(err => {});
-      this.$bus.$emit("refreshDetail");
+    goDetail (id) {
+      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$bus.$emit('refreshDetail')
     },
-    goIndex() {
-      this.$router.push("/").catch(err => {});
+    goIndex () {
+      this.$router.push('/').catch(err => {})
     }
   },
-  mounted() {
-    this.$bus.$on("refreshCheckOut", () => {
-      this.getCart();
-    });
+  mounted () {
+    this.$bus.$on('refreshCheckOut', () => {
+      this.getCart()
+    })
   },
   computed: {
-    cart(){
-      return this.$store.state.cart;
+    cart () {
+      return this.$store.state.cart
     },
-    changeqty:{
+    changeqty: {
       // get () {
       //   // return this.$store.state.changeqty;
       //   return this.$store.state.cart.carts[0].qty;
@@ -262,12 +262,11 @@ export default {
       // }
     }
   },
-  created() {
-    this.getCart();
+  created () {
+    this.getCart()
   }
-};
+}
 </script>
-
 
 <style lang="scss" scoped>
 @import "@/assets/all";
