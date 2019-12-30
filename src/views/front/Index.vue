@@ -254,7 +254,7 @@
 // import { mapGetters, mapActions } from 'vuex'
 import FrontSidebar from '@/components/FrontSidebar.vue'
 import Pagin from '@/components/Pagination.vue' // 分頁
-// import Swiper from 'swiper'
+import Swiper from 'swiper'
 import $ from 'jquery'
 
 export default {
@@ -399,34 +399,35 @@ export default {
     // getfavorite() {
     //   this.$store.dispatch('getfavorite');
     // },
-    // getswiper () {
-    //   this.$nextTick(() => {
-    //     // eslint-disable-next-line no-unused-vars
-    //     var swiper = new Swiper('.swiper-container', {
-    //       // Default parameters
-    //       slidesPerView: 4,
-    //       spaceBetween: 40,
-    //       // Responsive breakpoints
-    //       breakpoints: {
-    //         // when window width is <= 320px
-    //         320: {
-    //           slidesPerView: 2,
-    //           spaceBetween: 10
-    //         },
-    //         // when window width is <= 480px
-    //         480: {
-    //           slidesPerView: 2,
-    //           spaceBetween: 20
-    //         },
-    //         // when window width is <= 640px
-    //         640: {
-    //           slidesPerView: 3,
-    //           spaceBetween: 30
-    //         }
-    //       }
-    //     })
-    //   })
-    // },
+    // rwd 品牌選單
+    getswiper () {
+      this.$nextTick(() => {
+        // eslint-disable-next-line no-unused-vars
+        var swiper = new Swiper('.swiper-container', {
+          // Default parameters
+          slidesPerView: 4,
+          spaceBetween: 40,
+          // Responsive breakpoints
+          breakpoints: {
+            // when window width is <= 320px
+            320: {
+              slidesPerView: 2,
+              spaceBetween: 10
+            },
+            // when window width is <= 480px
+            480: {
+              slidesPerView: 2,
+              spaceBetween: 20
+            },
+            // when window width is <= 640px
+            640: {
+              slidesPerView: 3,
+              spaceBetween: 30
+            }
+          }
+        })
+      })
+    },
     badgeSearch (str) {
       this.activeitem = str
       // this.$store.dispatch('getCategory', str);
@@ -512,7 +513,7 @@ export default {
     this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
     this.getFavoriteLength()
     // this.getfavorite();
-    // this.getswiper()
+    this.getswiper()
     this.getProducts()
     // this.getCart();
     if (this.$route.params.Str === undefined) {
