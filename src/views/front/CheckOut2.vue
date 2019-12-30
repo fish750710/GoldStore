@@ -261,7 +261,7 @@ export default {
       this.$store.dispatch('getCart')
     },
     goCheckOut () {
-      this.$router.push(`/checkout`).catch(err => {})
+      this.$router.push(`/checkout`).catch(err => (err))
     }
   },
   computed: {

@@ -3,8 +3,8 @@
     <div class="alert alert-dismissible "
       :class="'alert-' + item.status" style="z-index:9999"
       v-for="(item, i) in messages" :key="i">
-      <i class="fas fa-heart" v-if="item.message=='加入收藏'"></i>
-      <i class="fas fa-heart-broken" v-else-if="item.message=='取消收藏'"></i>
+      <i class="fas fa-heart" v-if="item.message ==='加入收藏'"></i>
+      <i class="fas fa-heart-broken" v-else-if="item.message === '取消收藏'"></i>
       {{ item.message }}
       <button type="button" class="close" @click="removeMessage(i)" aria-label="Close">
         <span aria-hidden="true">&times;</span>

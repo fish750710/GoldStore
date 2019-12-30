@@ -5,14 +5,14 @@
     <!-- 選單以外區域 -->
     <div id="close-menu" class></div>
     <nav class="header navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <div class="col-1 col-sm-1 col-md-1 col-lg-2 col-xl-2 ml-3 p-0">
+      <div class="col-1 col-sm-1 col-md-1 col-lg-2 col-xl-2 ml-2 p-0">
         <a href="#" class @click="goIndex">
           <img src="@/assets/images/Logo-3w150.png" alt class="d-logo" />
           <img src="@/assets/images/Logo-64.png" alt class="m-logo" style="width:45px" />
         </a>
       </div>
       <div
-        class="row col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 mb-2 mt-2 justify-content-end text-center"
+        class="row col-8 col-sm-9 col-md-9 col-lg-10 col-xl-10 mb-2 mt-2 ml-0 mr-0 pl-0 pr-2 justify-content-end text-center "
       >
         <ul class="d-menu nav">
           <li class="nav-item mt-2 menu-ul col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 p-0 m-0">
@@ -122,7 +122,7 @@
           </li>
         </ul>
       </div>
-      <div class="menuButton">
+      <div class=" menuButton">
         <a href="#">
           <span></span>
         </a>
@@ -222,7 +222,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="text-center h4 align-self-center" v-if="cart.carts == ''">
+            <div class="text-center h4 align-self-center" v-if="cart.carts === ''">
               空無一物
               <div>
                 <button
@@ -321,7 +321,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="text-center h4 align-self-center" v-if="myfavorite.length == ''">
+            <div class="text-center h4 align-self-center" v-if="myfavorite.length === ''">
               空無一物
               <div>
                 <button
@@ -454,13 +454,13 @@
 
 <script>
 import Alert from '@/components/AlertMsg.vue'
-import Pagin from '@/components/Pagination.vue' // 分頁
+// import Pagin from '@/components/Pagination.vue' // 分頁
 import $ from 'jquery'
 import Search from '@/components/Search'
 
 export default {
   components: {
-    Pagin, // 分頁
+    // Pagin, // 分頁
     Alert,
     Search
   },
@@ -640,7 +640,7 @@ export default {
     },
     searchProduct () {
       const str = this.searchValue
-      this.$router.push(`/search/${this.searchValue}`).catch(err => {})
+      this.$router.push(`/search/${this.searchValue}`).catch(err => (err))
       this.$bus.$emit('search')
       if (str.trim() === '') {
         this.$bus.$emit('messsage:push', `請輸入商品名稱`, 'danger')
@@ -665,32 +665,32 @@ export default {
     },
     // 導頁到管理商品
     goProducts () {
-      this.$router.push('/admin/Products').catch(err => {})
+      this.$router.push('/admin/Products').catch(err => (err))
     },
     goUserOrders () {
-      this.$router.push('/userorders').catch(err => {})
+      this.$router.push('/userorders').catch(err => (err))
       this.$bus.$emit('refreshTable')
     },
     goCheckOuter () {
       $('#cartModal').modal('hide')
-      this.$router.push('/checkout').catch(err => {})
+      this.$router.push('/checkout').catch(err => (err))
     },
     goIndex () {
       // 購物去按鈕
-      this.$router.push('/').catch(err => {})
+      this.$router.push('/').catch(err => (err))
       this.$bus.$emit('refresh')
     },
     goDetail (id) {
       $('#favoritetModal').modal('hide')
       $('#cartModal').modal('hide')
-      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$router.push(`/detail/${id}`).catch(err => (err))
       this.$bus.$emit('refreshDetail')
     },
     goDescription () {
-      this.$router.push(`/Description`).catch(err => {})
+      this.$router.push(`/Description`).catch(err => (err))
     },
     goSale () {
-      this.$router.push(`/Sale`).catch(err => {})
+      this.$router.push(`/Sale`).catch(err => (err))
     }
   },
   computed: {

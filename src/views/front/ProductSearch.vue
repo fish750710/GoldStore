@@ -2,7 +2,7 @@
   <div>
     <div class="h4 my-5 pt-5 text-info d-flex justify-content-center">
       <span class>搜尋結果：</span>
-      <span v-if="products.length == 0">很抱歉，找不到您想要的商品</span>
+      <span v-if="products.length === 0">很抱歉，找不到您想要的商品</span>
     </div>
     <div class="mt-4">
       <div class="row col-lg-12">
@@ -128,7 +128,7 @@ export default {
       this.getCategory()
     },
     goDetail (id) {
-      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$router.push(`/detail/${id}`).catch(err => (err))
     },
     // 加入我的最愛
     addFavorite (item) {

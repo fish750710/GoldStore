@@ -66,6 +66,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import $ from 'jquery' // vue 不認識 必須載入jquery
 import Pagin from '@/components/Pagination.vue'
 
@@ -94,7 +95,7 @@ export default {
     },
     goPay (id) {
       // 轉付款頁面
-      this.$router.push(`/checkout3/${id}`).catch(err => {})
+      this.$router.push(`/checkout3/${id}`).catch(err => (err))
     }
   },
   created () {

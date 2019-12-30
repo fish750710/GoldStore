@@ -23,6 +23,7 @@
   </div>
 </template>
 <script>
+// eslint-disable-next-line no-unused-vars
 import $ from 'jquery'
 export default {
   data () {
@@ -33,7 +34,7 @@ export default {
   methods: {
     searchProduct () {
       const str = this.searchValue
-      this.$router.push(`/search/${this.searchValue}`).catch(err => {})
+      this.$router.push(`/search/${this.searchValue}`).catch(err => (err))
       this.$bus.$emit('search')
       if (str.trim() === '') {
         this.$bus.$emit('messsage:push', `請輸入商品名稱`, 'danger')

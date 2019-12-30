@@ -39,7 +39,7 @@
           <div class="text-left text-l">購買數量</div>
           <div class="h6 text-right" v-if="product.stock > 5">庫存：{{ product.stock }} 件</div>
           <div class="h6 text-right text-danger" v-if="product.stock < 5">只剩最後 {{ product.stock }} 件</div>
-          <div class="h6 text-right text-danger" v-if="product.stock == 0">補貨中</div>
+          <div class="h6 text-right text-danger" v-if="product.stock === 0">補貨中</div>
           <select name class="form-control mt-3" v-model="quantity" v-if="product.stock != 0">
             <option
               :value="num"
@@ -218,25 +218,43 @@ export default {
     // },
     badgeSearch (e) {
       let str = e.target.firstChild.nodeValue
-      this.$router.push(`/search/${str}`).catch(err => {})
+      this.$router.push(`/search/${str}`).catch(err => (err))
     },
     goCheckOuter (id, quantity) {
       this.addtoCartMerge(id, quantity)
-      this.$router.push('/checkout').catch(err => {})
+      this.$router.push('/checkout').catch(err => (err))
       this.$bus.$emit('refreshCheckOut')
     },
     goDetail (id) {
-      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$router.push(`/detail/${id}`).catch(err => (err))
       this.$bus.$emit('refreshDetail')
     },
     getswiper () {
       this.$nextTick(() => {
         setTimeout(() => {
-          new Swiper('.swiper-container', {
+          // eslint-disable-next-line no-unused-vars
+          var swiper = new Swiper('.swiper-container', {
             slidesPerView: 4,
             spaceBetween: 40,
             loop: true,
             speed: 2000,
+            breakpoints: {
+              // when window width is <= 320px
+              320: {
+                slidesPerView: 2,
+                spaceBetween: 10
+              },
+              // when window width is <= 480px
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 20
+              },
+              // when window width is <= 640px
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 30
+              }
+            },
             autoplay: {
               delay: 4000,
               disableOnInteraction: false
@@ -251,8 +269,8 @@ export default {
     filterdata () {
       const vm = this
       return (vm.filteritem = vm.products.filter((item, i) => {
-        if (vm.product.title != item.title) {
-          return item.category == vm.product.category
+        if (vm.product.title !== item.title) {
+          return item.category === vm.product.category
         }
       }))
     },

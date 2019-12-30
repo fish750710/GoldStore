@@ -119,7 +119,7 @@
           </div>
         </div>
       </div>
-      <div class="text-center h4 align-self-center" v-if="cart.carts == ''">
+      <div class="text-center h4 align-self-center" v-if="cart.carts === ''">
         空無一物
         <div>
           <button
@@ -233,11 +233,11 @@ export default {
       // }
     },
     goDetail (id) {
-      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$router.push(`/detail/${id}`).catch(err => (err))
       this.$bus.$emit('refreshDetail')
     },
     goIndex () {
-      this.$router.push('/').catch(err => {})
+      this.$router.push('/').catch(err => (err))
     }
   },
   mounted () {

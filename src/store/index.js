@@ -140,10 +140,10 @@ export default new Vuex.Store({
       axios.get(url).then(response => {
         let cartItem = response.data.data.carts
         // console.log('item', cartItem);
-        if (cartItem.length != 0) {
+        if (cartItem.length !== 0) {
           let added = 0
           for (let i = 0; i < cartItem.length; i++) {
-            if (id == cartItem[i].product_id) {
+            if (id === cartItem[i].product_id) {
               // console.log('重複商品要合併', cartItem[i]);
               added = 1 // 新增
               // 刪除購物車內容
@@ -162,7 +162,7 @@ export default new Vuex.Store({
               })
             } else {
               // forLoop全部跑完，無重複商品且要新增才新增，
-              if (i == cartItem.length - 1 && added == 0) {
+              if (i === cartItem.length - 1 && added === 0) {
                 const cart = {
                   product_id: id,
                   qty
@@ -232,7 +232,7 @@ export default new Vuex.Store({
       // console.log(item);
       let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
       // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
-      let result = myfavorite.some(el => {
+      myfavorite.some(el => {
         const result = item.id === el.id
         return result
       })

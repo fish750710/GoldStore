@@ -58,17 +58,17 @@
             <tr>
               <th>付款方式</th>
               <td colspan="2">
-                  <div class="form-check form-check-inline " :class="[ paymethod=='貨到付款' ?'text-primary' : '']" >
+                  <div class="form-check form-check-inline " :class="[ paymethod==='貨到付款' ?'text-primary' : '']" >
                     <input class="form-check-input"  type="radio" name="inlineRadioOptions" id="cash" value="貨到付款" v-model="paymethod" required>
                     <label class="form-check-label" for="cash" data-toggle="tooltip" data-placement="bottom" title="目前貨到付款只提供平日配送。">
                       貨到付款<i class="fas fa-shipping-fast ml-2 mr-3"></i></label>
                   </div>
-                  <div class="form-check form-check-inline"  :class="[ paymethod=='線上刷卡' ?'text-primary' : '']" >
+                  <div class="form-check form-check-inline"  :class="[ paymethod==='線上刷卡' ?'text-primary' : '']" >
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="creditcard" value="線上刷卡" v-model="paymethod" required>
                     <label class="form-check-label" for="creditcard" data-toggle="tooltip" data-placement="bottom" title="歡迎使用信用卡刷卡，優惠期間免刷卡手續費。">
                       線上刷卡<i class="far fa-credit-card ml-2 mr-3"></i></label>
                   </div>
-                  <div class="form-check form-check-inline"  :class="[ paymethod=='超商取貨' ?'text-primary' : '']" >
+                  <div class="form-check form-check-inline"  :class="[ paymethod==='超商取貨' ?'text-primary' : '']" >
                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="storepickup" value="超商取貨" disabled v-model="paymethod" required>
                     <label class="form-check-label" for="storepickup">
                       超商取貨 (尚未開放) <i class="fas fa-store ml-2 mr-3"></i></label>
@@ -151,7 +151,7 @@ export default {
       })
     },
     goIndex () {
-      this.$router.push('/').catch(err => {})
+      this.$router.push('/').catch(err => (err))
     }
   },
   created () {
@@ -162,7 +162,7 @@ export default {
   beforeRouteLeave (to, from, next) {
     // console.log(this.cart.carts)
     // console.log('to', to, 'from', from, 'next', next);
-    if (this.order.is_paid == true) {
+    if (this.order.is_paid === true) {
       next()
     } else {
       const answer = confirm(`您尚未付款完成，\n您確定要離開！`)
@@ -188,14 +188,14 @@ export default {
     img{
       width: 100px;
     }
-	}
+  }
 }
 @include pc-top() {
   .table-rwd td {
     img{
       width: 100px;
     }
-	}
+  }
 }
 @include pc() {
   .table-price-rwd{
@@ -211,7 +211,7 @@ export default {
     img{
       width: 100px;
     }
-	}
+  }
 }
 @include pad() {
   .table-rwd{
@@ -240,15 +240,15 @@ export default {
     img{
       width: 100px;
     }
-	}
-	.table-rwd td:before {
+  }
+  .table-rwd td:before {
     /*最重要的就是這串*/
     content: attr(data-th) " : ";
     /*最重要的就是這串*/
     display: inline-block;
     text-transform: uppercase;
     font-weight: bold;
-	  margin-right: 10px;
+    margin-right: 10px;
     color: #D20B2A;
   }
   /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/

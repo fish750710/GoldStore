@@ -119,7 +119,7 @@ export default {
   methods: {
     goIndex () {
       // 購物去按鈕
-      this.$router.push('/').catch(err => {})
+      this.$router.push('/').catch(err => (err))
       this.$bus.$emit('refresh')
     }
   },

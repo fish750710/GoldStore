@@ -75,7 +75,7 @@
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem =='APPLE' ? 'text-primary':'' ]"
+              :class="[ activeitem ==='APPLE' ? 'text-primary':'' ]"
               @click="badgeSearch('APPLE')"
             >APPLE</a>
           </swiper-slide>
@@ -83,7 +83,7 @@
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem =='ASUS' ? 'text-primary':'' ]"
+              :class="[ activeitem ==='ASUS' ? 'text-primary':'' ]"
               @click="badgeSearch('ASUS')"
             >ASUS</a>
           </swiper-slide>
@@ -91,7 +91,7 @@
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem =='HTC' ? 'text-primary':'' ]"
+              :class="[ activeitem ==='HTC' ? 'text-primary':'' ]"
               @click="badgeSearch('HTC')"
             >HTC</a>
           </swiper-slide>
@@ -102,7 +102,7 @@
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem =='小米' ? 'text-primary':'' ]"
+              :class="[ activeitem ==='小米' ? 'text-primary':'' ]"
               @click="badgeSearch('小米')"
             >小米</a>
           </swiper-slide>
@@ -114,7 +114,7 @@
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem =='三星' ? 'text-primary':'' ]"
+              :class="[ activeitem ==='三星' ? 'text-primary':'' ]"
               @click="badgeSearch('三星')"
             >
               <i class="fas fa-robot pr-2 pt-1"></i>三星
@@ -127,7 +127,7 @@
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem =='NOKIA' ? 'text-primary':'' ]"
+              :class="[ activeitem ==='NOKIA' ? 'text-primary':'' ]"
               @click="badgeSearch('NOKIA')"
             >
               <i class="fas fa-robot pr-2 pt-1"></i>NOKIA
@@ -140,7 +140,7 @@
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem =='MOTO' ? 'text-primary':'' ]"
+              :class="[ activeitem ==='MOTO' ? 'text-primary':'' ]"
               @click="badgeSearch('MOTO')"
             >
               <i class="fas fa-robot pr-2 pt-1"></i>MOTO
@@ -251,10 +251,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+// import { mapGetters, mapActions } from 'vuex'
 import FrontSidebar from '@/components/FrontSidebar.vue'
 import Pagin from '@/components/Pagination.vue' // 分頁
-import Swiper from 'swiper'
+// import Swiper from 'swiper'
 import $ from 'jquery'
 
 export default {
@@ -298,7 +298,7 @@ export default {
       this.$http.get(url).then(response => {
         vm.products = response.data.products
         // vm.$store.dispatch('updateLoading', false);
-        if (vm.$route.params.Str == undefined) {
+        if (vm.$route.params.Str === undefined) {
           vm.ProductAll = true
         } else {
           vm.ProductAll = false
@@ -312,7 +312,7 @@ export default {
       $('#productModal').modal('hide')
     },
     goDetail (id) {
-      this.$router.push(`/detail/${id}`).catch(err => {})
+      this.$router.push(`/detail/${id}`).catch(err => (err))
       this.$bus.$emit('refreshDetail')
     },
     // 篩選
@@ -399,37 +399,38 @@ export default {
     // getfavorite() {
     //   this.$store.dispatch('getfavorite');
     // },
-    getswiper () {
-      this.$nextTick(() => {
-        var swiper = new Swiper('.swiper-container', {
-          // Default parameters
-          slidesPerView: 4,
-          spaceBetween: 40,
-          // Responsive breakpoints
-          breakpoints: {
-            // when window width is <= 320px
-            320: {
-              slidesPerView: 2,
-              spaceBetween: 10
-            },
-            // when window width is <= 480px
-            480: {
-              slidesPerView: 2,
-              spaceBetween: 20
-            },
-            // when window width is <= 640px
-            640: {
-              slidesPerView: 3,
-              spaceBetween: 30
-            }
-          }
-        })
-      })
-    },
+    // getswiper () {
+    //   this.$nextTick(() => {
+    //     // eslint-disable-next-line no-unused-vars
+    //     var swiper = new Swiper('.swiper-container', {
+    //       // Default parameters
+    //       slidesPerView: 4,
+    //       spaceBetween: 40,
+    //       // Responsive breakpoints
+    //       breakpoints: {
+    //         // when window width is <= 320px
+    //         320: {
+    //           slidesPerView: 2,
+    //           spaceBetween: 10
+    //         },
+    //         // when window width is <= 480px
+    //         480: {
+    //           slidesPerView: 2,
+    //           spaceBetween: 20
+    //         },
+    //         // when window width is <= 640px
+    //         640: {
+    //           slidesPerView: 3,
+    //           spaceBetween: 30
+    //         }
+    //       }
+    //     })
+    //   })
+    // },
     badgeSearch (str) {
       this.activeitem = str
       // this.$store.dispatch('getCategory', str);
-      this.$router.push(`/${str}`).catch(err => {})
+      this.$router.push(`/${str}`).catch(err => (err))
       this.$bus.$emit('change')
     },
     // 排列價格低到高
@@ -511,10 +512,10 @@ export default {
     this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
     this.getFavoriteLength()
     // this.getfavorite();
-    this.getswiper()
+    // this.getswiper()
     this.getProducts()
     // this.getCart();
-    if (this.$route.params.Str == undefined) {
+    if (this.$route.params.Str === undefined) {
       this.getProducts()
     } else {
       this.getProductAll()

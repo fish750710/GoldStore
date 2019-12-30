@@ -4,13 +4,13 @@
         <div class=" col-md-2 d-none d-md-block " >
           <ul class="h6 menu-ul">
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('APPLE')">
-              <span :class="[ activeitem =='APPLE' ? 'text-primary':'' ]">APPLE</span></a></li>
+              <span :class="[ activeitem ==='APPLE' ? 'text-primary':'' ]">APPLE</span></a></li>
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('ASUS')">
-              <span :class="[ activeitem =='ASUS' ? 'text-primary':'' ]">ASUS</span></a></li>
+              <span :class="[ activeitem ==='ASUS' ? 'text-primary':'' ]">ASUS</span></a></li>
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('HTC')">
-              <span :class="[ activeitem =='HTC' ? 'text-primary':'' ]">HTC</span></a></li>
+              <span :class="[ activeitem ==='HTC' ? 'text-primary':'' ]">HTC</span></a></li>
             <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('小米')">
-              <span :class="[ activeitem =='小米' ? 'text-primary':'' ]">小米</span></a></li>
+              <span :class="[ activeitem ==='小米' ? 'text-primary':'' ]">小米</span></a></li>
           </ul>
         </div>
       </div>
@@ -29,7 +29,7 @@ export default {
     badgeSearch (str) {
       this.activeitem = str
       // this.$store.dispatch('getCategory', str);
-      this.$router.push(`/${str}`).catch(err => {})
+      this.$router.push(`/${str}`).catch(err => (err))
       this.$bus.$emit('change')
       // 更新畫面方法
       // location.reload()
