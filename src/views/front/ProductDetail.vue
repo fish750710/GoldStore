@@ -146,7 +146,7 @@ export default {
     getProduct (id) {
       const vm = this
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/product/${id}`
-      // vm.status.loadingItem = id;
+      vm.$store.dispatch('updateLoading', true)
       vm.$http.get(url).then(response => {
         vm.product = response.data.product
         // vm.status.loadingItem = "";
@@ -155,6 +155,8 @@ export default {
       vm.$http.get(api).then(response => {
         // 猜你喜歡
         vm.products = response.data.products
+        vm.getswiper()
+        vm.$store.dispatch('updateLoading', false)
       })
     },
     // 加入購物車(新增前先判斷購物車是否有重複資料，如有先刪除後新增)
@@ -227,7 +229,7 @@ export default {
     },
     goDetail (id) {
       this.$router.push(`/detail/${id}`).catch(err => (err))
-      this.$bus.$emit('refreshDetail')
+      this.$bus.$emit('refreshDetail', id)
     },
     getswiper () {
       this.$nextTick(() => {
@@ -236,7 +238,7 @@ export default {
           var swiper = new Swiper('.swiper-container', {
             slidesPerView: 4,
             spaceBetween: 40,
-            loop: true,
+            loop: false, // true 會有重複渲染問題
             speed: 2000,
             breakpoints: {
               // when window width is <= 320px
@@ -269,8 +271,8 @@ export default {
     filterdata () {
       const vm = this
       return (vm.filteritem = vm.products.filter((item, i) => {
-        if (vm.product.title !== item.title) {
-          return item.category === vm.product.category
+        if (item.category === vm.product.category) {
+          return vm.product.id !== item.id
         }
       }))
     },
@@ -297,11 +299,11 @@ export default {
     const vm = this
     vm.productId = vm.$route.params.productId
     vm.getProduct(vm.productId)
-    vm.getswiper()
+    // vm.getswiper()
     // 購物車和收藏更新畫面
-    vm.$bus.$on('refreshDetail', () => {
+    vm.$bus.$on('refreshDetail', (id) => {
       // vm.productId = vm.$route.params.productId;
-      vm.getProduct(vm.productId)
+      vm.getProduct(id)
     })
     // 先抓 localStorage 判斷商品的我的最愛ICON
     // vm.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
