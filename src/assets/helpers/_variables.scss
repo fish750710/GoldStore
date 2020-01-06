@@ -80,14 +80,14 @@ $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $theme-colors: map-merge(
   (
-    "primary":    #50CBCB,//$purple,//$primary, 自訂義改色
+    "primary":    #f9cd25,//$purple,//$primary, 自訂義改色
     "secondary":  #CED3D3,
     "success":    $success,
     "info":       #AAAAAA,
     "warning":    $warning,
     "danger":     $danger,
     "light":      $light,
-    "dark":       #5E5E5E,
+    "dark":       #212121,//#5E5E5E,
     "black":      $black,
   ),
   $theme-colors

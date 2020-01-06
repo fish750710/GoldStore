@@ -16,7 +16,7 @@
           <a href="#" @click="goDetail('-LuQFEYmntflhE3g3af6')" class="d-block">
             <div class="benner-img1">
               <div class="title carousel-caption d-none d-md-block">
-                <h5>全新macbook air</h5>
+                <h2>全新macbook air</h2>
                 <p>絢麗多彩的 Retina 顯示器採用「原彩」顯示技術， 帶來更真實自然的觀看體驗。 • 功能多元的觸控列，提供你更多高效的工作方式</p>
               </div>
             </div>
@@ -26,7 +26,7 @@
           <a href="#" @click="goDetail('-LuQ9Z8JhBgR4O1L2Gb5')" class="d-block">
             <div class="benner-img2">
               <div class="title carousel-caption d-none d-md-block">
-                <h5>新上市 iphone11 PRO</h5>
+                <h2>新上市 iphone11 PRO</h2>
                 <p>• 5.8 吋超 Retina XDR OLED 顯示器</p>
                 <p>• 防潑抗水與防塵功能 (在最深達 4 公尺水中最長可達 30 分鐘，IP68)</p>
                 <p>• 三相機系統，具備 1200 萬像素超廣角、廣角與望遠相機；夜間模式、人像模式與 4K 影片拍攝功能 (最高可達 60 fps)</p>
@@ -38,7 +38,7 @@
           <a href="#" @click="goDetail('-LuQIo2AsSzBCxvJKok_')" class="d-block">
             <div class="benner-img3"></div>
             <div class="title carousel-caption d-none d-md-block">
-              <h5>HTC u19e</h5>
+              <h2>HTC u19e</h2>
               <p>6吋 18:9 全屏大螢幕</p>
               <p>雙主鏡頭相機1600+500萬畫素</p>
               <p>1300萬華素前鏡頭</p>
@@ -71,77 +71,77 @@
           <FrontSidebar class="sticky-top"></FrontSidebar>
         </div>
         <swiper class="m-menu-Sidebar mt-5 pb-2 menu-ul">
-          <swiper-slide class="mr-3 ml-2" style="border: 1px solid #50CBCB;max-width:44%">
+          <swiper-slide class="mr-3 ml-2" style="border: 1px solid black;max-width:44%">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem ==='APPLE' ? 'text-primary':'' ]"
-              @click="badgeSearch('APPLE')"
+              :class="[ activeitem ==='APPLE' ? 'text-white bg-dark':'' ]"
+              @click.prevent="badgeSearch('APPLE')"
             >APPLE</a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2" style="border: 1px solid #50CBCB;max-width:44%">
+          <swiper-slide class="mr-3 ml-2" style="border: 1px solid black;max-width:44%">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem ==='ASUS' ? 'text-primary':'' ]"
-              @click="badgeSearch('ASUS')"
+              :class="[ activeitem ==='ASUS' ? 'text-white bg-dark':'' ]"
+              @click.prevent="badgeSearch('ASUS')"
             >ASUS</a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2" style="border: 1px solid #50CBCB;max-width:44%">
+          <swiper-slide class="mr-3 ml-2" style="border: 1px solid black;max-width:44%">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem ==='HTC' ? 'text-primary':'' ]"
-              @click="badgeSearch('HTC')"
+              :class="[ activeitem ==='HTC' ? 'text-white bg-dark':'' ]"
+              @click.prevent="badgeSearch('HTC')"
             >HTC</a>
           </swiper-slide>
           <swiper-slide
             class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid #50CBCB;max-width:44%"
+            style="border: 1px solid black;max-width:44%"
           >
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem ==='小米' ? 'text-primary':'' ]"
-              @click="badgeSearch('小米')"
+              :class="[ activeitem ==='小米' ? 'text-white bg-dark':'' ]"
+              @click.prevent="badgeSearch('小米')"
             >小米</a>
           </swiper-slide>
 
           <swiper-slide
             class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid #50CBCB;max-width:44%"
+            style="border: 1px solid black;max-width:44%"
           >
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem ==='三星' ? 'text-primary':'' ]"
-              @click="badgeSearch('三星')"
+              :class="[ activeitem ==='三星' ? 'text-white bg-dark':'' ]"
+              @click.prevent="badgeSearch('三星')"
             >
               <i class="fas fa-robot pr-2 pt-1"></i>三星
             </a>
           </swiper-slide>
           <swiper-slide
             class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid #50CBCB;max-width:44%"
+            style="border: 1px solid black;max-width:44%"
           >
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem ==='NOKIA' ? 'text-primary':'' ]"
-              @click="badgeSearch('NOKIA')"
+              :class="[ activeitem ==='NOKIA' ? 'text-white bg-dark':'' ]"
+              @click.prevent="badgeSearch('NOKIA')"
             >
               <i class="fas fa-robot pr-2 pt-1"></i>NOKIA
             </a>
           </swiper-slide>
           <swiper-slide
             class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid #50CBCB;max-width:44%"
+            style="border: 1px solid black;max-width:44%"
           >
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
-              :class="[ activeitem ==='MOTO' ? 'text-primary':'' ]"
-              @click="badgeSearch('MOTO')"
+              :class="[ activeitem ==='MOTO' ? 'text-white bg-dark':'' ]"
+              @click.prevent="badgeSearch('MOTO')"
             >
               <i class="fas fa-robot pr-2 pt-1"></i>MOTO
             </a>
@@ -150,7 +150,7 @@
         <div class="col-sm-12 col-md-12 col-lg-10">
           <div class="dropdown my-3 text-right">
             <button
-              class="btn btn-primary dropdown-toggle"
+              class="btn btn-outline-dark dropdown-toggle"
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"
@@ -179,20 +179,22 @@
                       :style="{backgroundImage: `url(${item.imageUrl})`}"
                     ></div>
                   </a>
-                  <a href="#">
-                    <i
-                      class="fas fa-heart text-danger position-absolute"
-                      v-if="getFilteredFavorite(item)"
-                      @click.prevent="removeFavorite(item)"
-                      style="top:20px;right:20px; font-size:20px"
-                    ></i>
-                    <i
-                      class="far fa-heart text-danger position-absolute"
-                      v-else
-                      @click.prevent="addFavorite(item)"
-                      style="top:20px;right:20px; font-size:20px"
-                    ></i>
-                  </a>
+                  <div >
+                    <a href="#" v-if="item.is_favorite">
+                      <i
+                        class="fas fa-heart text-danger position-absolute"
+                        @click.prevent="removeFavorite(item)"
+                        style="top:20px;right:20px; font-size:20px"
+                      ></i>
+                    </a>
+                    <a href="#" v-else>
+                      <i
+                        class="far fa-heart text-danger position-absolute"
+                        @click.prevent="addFavorite(item)"
+                        style="top:20px;right:20px; font-size:20px"
+                      ></i>
+                    </a>
+                  </div>
                   <div class="card-body pt-2 pb-2" style="min-height:130px">
                     <h5 class="h6 card-title mb-1" style="min-height:58px">
                       <a
@@ -204,10 +206,10 @@
                     <div class="d-flex justify-content-between" style="height:35px">
                       <p class="card-text text-info font-weight-bold">{{ item.content }}</p>
                       <div>
-                        <span
+                        <!-- <span
                           class="badge badge-secondary float-right ml-2 mb-1"
-                        >{{ item.category }}</span>
-                        <span class="badge badge-success float-right ml-2">{{ item.spec }}</span>
+                        >{{ item.category }}</span> -->
+                        <!-- <span class="badge badge-success float-right ml-2">{{ item.spec }}</span> -->
                       </div>
                     </div>
 
@@ -222,9 +224,10 @@
                   </div>
                   <button
                     type="button"
-                    class="btn btn-primary btn-sm col-12 cart-move"
+                    class="btn btn-primary btn-sm col-12 cart-move p-2"
                     @click="addtoCartMerge(item.id)"
-                    style="border-top-left-radius:0px ; border-top-right-radius:0px "
+                    style="border-top-left-radius:0px ; border-top-right-radius:0px"
+                    :disabled="item.id ===loadingItem"
                   >
                     <i
                       class="fas fa-spinner fa-pulse text-black"
@@ -236,13 +239,7 @@
                 </div>
               </div>
             </div>
-            <!-- 分頁 -->
-            <Pagin
-              @postPage="getProducts"
-              :getpagin="pagination"
-              v-if="ProductAll"
-              class="d-flex justify-content-center"
-            ></Pagin>
+            <Pagin @postPage="getProducts" :getpagin="pagination" class="d-flex justify-content-center"></Pagin>
           </div>
         </div>
       </div>
@@ -251,7 +248,7 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex' //, mapActions
 import FrontSidebar from '@/components/FrontSidebar.vue'
 import Pagin from '@/components/Pagination.vue' // 分頁
 import Swiper from 'swiper'
@@ -264,47 +261,31 @@ export default {
   },
   data () {
     return {
-      products: [],
-      pagination: {}, // 分頁
-      product: {}, // 單筆資料
-      // status: {
-      //   loadingItem: ""
+      // products: [],
+      // pagination: {}, // 分頁
+      // product: {}, // 單筆資料
+      // coupon_code: '',
+      // coupon_msg: '',
+      // form: {
+      //   user: {
+      //     name: '',
+      //     email: '',
+      //     tel: '',
+      //     address: ''
+      //   },
+      //   message: ''
       // },
-      coupon_code: '',
-      coupon_msg: '',
-      form: {
-        user: {
-          name: '',
-          email: '',
-          tel: '',
-          address: ''
-        },
-        message: ''
-      },
-      favorites: [],
-      favoriteLength: 0,
-      added: '',
-      ProductAll: false,
-      newData: '',
-      activeitem: ''
+      // favorites: [],
+      // favoriteLength: 0,
+      // added: '',
+      // ProductAll: true,
+      // newData: '',
+      // activeitem: ''
     }
   },
   methods: {
     getProducts (page = 1) {
-      //  this.$store.dispatch('getProducts', page);
-      const vm = this
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`
-      // vm.$store.dispatch('updateLoading', true);
-      this.$http.get(url).then(response => {
-        vm.products = response.data.products
-        // vm.$store.dispatch('updateLoading', false);
-        if (vm.$route.params.Str === undefined) {
-          vm.ProductAll = true
-        } else {
-          vm.ProductAll = false
-        }
-        vm.pagination = response.data.pagination
-      })
+      this.$store.dispatch('getProducts', page)
     },
     // 加入購物車(新增前先判斷購物車是否有重複資料，如有先刪除後新增)
     addtoCartMerge (id, qty = 1) {
@@ -316,86 +297,64 @@ export default {
       this.$bus.$emit('refreshDetail')
     },
     // 篩選
-    getCategory () {
-      // this.$store.dispatch('getCategory', str);
-      // this.$store.dispatch('getProductAll', value);
-      const vm = this
-      let array = []
-      let value = ''
-      value = vm.$route.params.Str // 搜尋關鍵字
-      // 撈全部後過濾
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
-      this.$http.get(url).then(response => {
-        if (value === undefined) {
-          vm.products = response.data.products
-          vm.ProductAll = true // 換頁打開
-        } else {
-          array = response.data.products.filter(e => {
-            // 關鍵字搜尋標題忽略大小寫
-            return (
-              e.brand === value ||
-              e.brand.toUpperCase().indexOf(value) !== -1 ||
-              e.brand.toLowerCase().indexOf(value) !== -1
-            )
-          })
-          vm.products = Object.assign([], array)
-          vm.ProductAll = false // 換頁關閉
-        }
-      })
+    getCategory (page) {
+      this.$store.dispatch('getProducts', page)
+      // let value = this.$route.params.Str // 搜尋關鍵字
+      // const key = ''
+      // this.$store.dispatch('getCategory', { value, key })
     },
     // 撈全部
-    getProductAll () {
-      this.getCategory()
-    },
+    // getProductAll () {
+    //   this.getCategory()
+    // },
     // 加入我的最愛
     addFavorite (item) {
-      // this.$store.dispatch('addFavorite', item);
-      const obj = {
-        id: item.id,
-        category: item.category,
-        title: item.title,
-        price: item.price,
-        unit: item.unit,
-        imageUrl: item.imageUrl,
-        content: item.content,
-        spec: item.spec
-      }
-      this.favorites.push(obj)
-      localStorage.setItem('favorite', JSON.stringify(this.favorites))
-      this.getFavoriteLength()
-      this.$bus.$emit('favorite', this.favorites)
+      this.$store.dispatch('addFavorite', item)
+      // const obj = {
+      //   id: item.id,
+      //   category: item.category,
+      //   title: item.title,
+      //   price: item.price,
+      //   unit: item.unit,
+      //   imageUrl: item.imageUrl,
+      //   content: item.content,
+      //   spec: item.spec
+      // }
+      // this.favorites.push(obj)
+      // localStorage.setItem('favorite', JSON.stringify(this.favorites))
+      // this.getFavoriteLength()
+      // this.$bus.$emit('favorite', this.favorites)
       // this.$bus.$emit("like");
     },
     // 移除我的最愛
     removeFavorite (item) {
       // console.log(item)
-      // this.$store.dispatch('removefavoritet', item);
-      const i = this.favorites.findIndex(el => {
-        const result = el.id === item.id
-        return result
-      })
-      this.favorites.splice(i, 1)
-      localStorage.setItem('favorite', JSON.stringify(this.favorites))
-      this.getFavoriteLength()
-      this.$bus.$emit('favorite', this.favorites)
+      this.$store.dispatch('removefavorite', item)
+      // const i = this.favorites.findIndex(el => {
+      //   const result = el.id === item.id
+      //   return result
+      // })
+      // this.favorites.splice(i, 1)
+      // localStorage.setItem('favorite', JSON.stringify(this.favorites))
+      // this.getFavoriteLength()
+      // this.$bus.$emit('favorite', this.favorites)
       // this.$bus.$emit("dislike");
     },
     // 有商品於我的最愛時，icon更換
-    getFilteredFavorite (item) {
+    getFilteredFavorite () {
       // console.log(this.favorites)
-
-      // this.$store.dispatch('getFilteredFavorite', item);
+      // this.$store.dispatch('getFilteredFavorite', item)
       // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
-      return this.favorites.some(el => {
-        const result = item.id === el.id
-        return result
-      })
+      // return this.favorites.some(el => {
+      //   const result = item.id === el.id
+      //   return result
+      // })
     },
     // 取得我的最愛產品數量
-    getFavoriteLength () {
-      this.favoriteLength = JSON.parse(localStorage.getItem('favorite')).length
-      this.$bus.$emit('favorite', this.favoriteLength)
-    },
+    // getFavoriteLength () {
+    //   this.favoriteLength = JSON.parse(localStorage.getItem('favorite')) || []
+    //   this.$bus.$emit('favorite', this.favoriteLength)
+    // },
     // getfavorite() {
     //   this.$store.dispatch('getfavorite');
     // },
@@ -429,97 +388,43 @@ export default {
       })
     },
     badgeSearch (str) {
-      this.activeitem = str
-      // this.$store.dispatch('getCategory', str);
       this.$router.push(`/${str}`).catch(err => (err))
-      this.$bus.$emit('change')
+      this.getCategory()
     },
     // 排列價格低到高
     arrayLtoH (item) {
-      const vm = this
-      let updateProduct = ''
-      updateProduct = 'products'
-      if (this.$route.params.Str === undefined) {
-        return new Promise((resolve, reject) => {
-          const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
-          this.$http.get(url).then(response => {
-            vm.products = response.data.products
-            vm.ProductAll = false // 換頁關閉
-            if (item === 'lowPrice') {
-              return this[updateProduct].sort(function (a, b) {
-                return a.price - b.price
-                // return a[vm.price] < b[vm.price] ? 1 : -1;
-              })
-            } else if (item === 'upPrice') {
-              return this[updateProduct].sort(function (a, b) {
-                return b.price - a.price
-                //  return a[vm.price] > b[vm.price] ? 1 : -1;
-              })
-            }
-          })
-        })
-      } else {
-        // 篩選商品
-        if (item === 'lowPrice') {
-          return this[updateProduct].sort(function (a, b) {
-            return a.price - b.price
-            // return a[vm.price] < b[vm.price] ? 1 : -1;
-          })
-        } else if (item === 'upPrice') {
-          return this[updateProduct].sort(function (a, b) {
-            return b.price - a.price
-            //  return a[vm.price] > b[vm.price] ? 1 : -1;
-          })
-        }
-      }
+      this.$store.dispatch('arrayLtoH', item)
     }
   },
-
   computed: {
-    loadingItem () {
-      return this.$store.state.loadingItem
-    }
-    // favoriteId (){
-    //   // let id = this.favorites;
-    //   // console.log(id)
-    //   // let favoriteId = this.$store.state.myfavorite.some(el => {
-    //   //   const result = id === el.id;
-    //   //   return result;
-    //   // });
-    //   // return favoriteId;
-    //   return this.favorites;
-    // },
     // vuex getters
-    // ...mapGetters(['products']),
-    // products(){
-    //   return this.$store.state.products;
-    // },
+    ...mapGetters(['products', 'myfavorite', 'pagination', 'loadingItem', 'activeitem'])
   },
   mounted () {
     // 從frontsidebar傳來
-    this.$bus.$on('change', () => {
-      this.getProductAll()
-    })
-    this.$bus.$on('removefavoritet', () => {
-      this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
-      this.getFavoriteLength()
-    })
+    // this.$bus.$on('search', () => {
+    //   this.getCategory()
+    // })
+    // this.$bus.$on('removefavoritet', () => {
+    //   this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
+    //   this.getFavoriteLength()
+    // })
     this.$bus.$on('refresh', () => {
       this.getProducts()
     })
   },
   created () {
     // 先抓 localStorage 判斷商品的我的最愛ICON
-    this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
-    this.getFavoriteLength()
+    // this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
+    // this.getFavoriteLength()
     // this.getfavorite();
     this.getswiper()
-    this.getProducts()
+    // this.getProducts()
     // this.getCart();
     if (this.$route.params.Str === undefined) {
       this.getProducts()
     } else {
-      this.getProductAll()
+      this.getCategory()
     }
     this.$bus.$emit('change')
   }
@@ -529,8 +434,11 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/all";
 
-.item-hover > div:hover {
+.item-hover > div {
   box-shadow: 5px 5px 10px rgba(227, 219, 208, 0.5);
+}
+.item-hover > div:hover {
+  box-shadow: 10px 10px 10px rgba(227, 219, 208, 0.5);
 }
 .cart-move {
   width: 100%;

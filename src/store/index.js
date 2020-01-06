@@ -2,12 +2,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   // 嚴謹模式
   strict: true,
+  router,
   state: {
     isLoading: false,
     products: [],
@@ -18,14 +20,18 @@ export default new Vuex.Store({
     loadingItem: '',
     addqtynum: 0,
     minusnum: 0,
-    changeqty: 0,
     qty: 0,
-    productsOriginal: [],
+    // productsOriginal: [],
     // favorites: [] ,
-    myfavorite: {
-      length: 0
-    },
-    favoriteId: ''
+    // myfavorite: {
+    //   length: 0
+    // },
+    myfavorite: [],
+    favoriteId: '',
+    filterlove: [],
+    pagination: {},
+    activeitem: ''
+    // filterarray: []
     // apple: [],
     // cartItem: [],
   },
@@ -35,41 +41,112 @@ export default new Vuex.Store({
       context.commit('LOADING', status)
     },
     getProducts (context, page) {
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`
+      context.commit('ACTIVEITEM', '')
+      let searchValue = router.currentRoute.params.searchStr
+      let searchkey = router.currentRoute.params.Str
+      let search = router.currentRoute.name
+      let url
+      if (search === 'Search' || searchkey !== undefined) {
+        url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
+      } else {
+        url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products?page=${page}`
+      }
       context.commit('LOADING', true)
       axios.get(url).then(response => {
         context.commit('PRODUCTS', response.data.products)
-        context.commit('LOADING', false)
-
-        // // 在 products 加入 is_favorite
-        // context.products.forEach((productItem, index) => {
-        //     console.log('foreach', productItem, index)
-        //     context.rootState.favoriteModules.favorites.forEach((favItem) => {
-        //         if (productItem.id === favItem.id) {
-        //             context.commit('UPDATEPRODUCTS', { index, isFavorite: true });
-        //         }
-        //     });
-        // });
-
-        // if (vm.$route.params.Str == undefined) {
-        //     vm.ProductAll = true;
-        // } else {
-        //     vm.ProductAll = false;
-        // }
-        // console.log('取得產品列表:', response);
+        // 在 products 加入 is_favorite
+        if (context.rootState.myfavorite.length !== 0) {
+          context.state.products.forEach((productItem, index) => {
+            context.rootState.myfavorite.forEach((favItem) => {
+              if (productItem.id === favItem.id) {
+                // console.log(productItem.id, favItem.id, index)
+                context.commit('UPDATEPRODUCTS', { index, isFavorite: true })
+              }
+            })
+          })
+        }
         context.commit('PAGINATION', response.data.pagination)
-      })
-    },
-    getCategory (context, value) {
-      // console.log(value)
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
-      axios.get(api).then(response => {
-        // console.log('getProducts', response.data)
-        if (value === 'APPLE') {
-          context.commit('APPLE', response.data.products)
+        context.commit('LOADING', false)
+        if (search === 'Search' || searchkey !== undefined) {
+          let array = []
+          array = response.data.products.filter(e => {
+            if (searchValue !== undefined) {
+              // 搜尋
+              return (
+                e.title === searchValue ||
+                e.title.indexOf(searchValue) !== -1 ||
+                e.title.toUpperCase().indexOf(searchValue) !== -1 ||
+                e.title.toLowerCase().indexOf(searchValue) !== -1
+              )
+            } else {
+              context.commit('ACTIVEITEM', searchkey)
+              // 品牌類別
+              return (
+                e.brand === searchkey ||
+                e.brand.toUpperCase().indexOf(searchkey) !== -1 ||
+                e.brand.toLowerCase().indexOf(searchkey) !== -1
+              )
+            }
+          })
+          let filterdata = Object.assign([], array)
+          context.commit('FILTER', filterdata)
         }
       })
     },
+    // getCategory (context, products) {
+    //   // let array = []
+    //   // let searchValue = router.currentRoute.params.searchStr
+    //   // let searchkey = router.currentRoute.params.Str
+    //   // console.log('searchkey', searchkey, 'searchValue', searchValue)
+    //   // console.log(products)
+    //   // // console.log('搜尋', searchValue)
+    //   // // console.log('品牌類別', searchkey)
+    //   // array = products.filter(e => {
+    //   //   if (searchValue !== undefined) {
+    //   //     // 搜尋
+    //   //     return (
+    //   //       e.title === searchValue ||
+    //   //       e.title.indexOf(searchValue) !== -1 ||
+    //   //       e.title.toUpperCase().indexOf(searchValue) !== -1 ||
+    //   //       e.title.toLowerCase().indexOf(searchValue) !== -1
+    //   //     )
+    //   //   } else {
+    //   //     return (
+    //   //       e.title === searchkey ||
+    //   //       e.title.indexOf(searchkey) !== -1 ||
+    //   //       e.title.toUpperCase().indexOf(searchkey) !== -1 ||
+    //   //       e.title.toLowerCase().indexOf(searchkey) !== -1
+    //   //     )
+    //   //   }
+    //   // })
+    //   // // context.commit('PAGINATION', '')
+    //   // let filterdata = Object.assign([], array)
+    //   // context.commit('FILTER', filterdata)
+    //   // let array = []
+    //   // if (value !== '') {
+    //   //   console.log(value, page)
+    //   //   const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
+    //   //   axios.get(api).then(response => {
+    //   //     array = response.data.products.filter(e => {
+    //   //       return (
+    //   //         e.title === value ||
+    //   //         e.title.indexOf(value) !== -1 ||
+    //   //         e.title.toUpperCase().indexOf(value) !== -1 ||
+    //   //         e.title.toLowerCase().indexOf(value) !== -1
+    //   //       )
+    //   //     })
+    //   //     let filterdata = Object.assign([], array)
+    //   //     context.commit('FILTER', filterdata)
+    //   //   })
+    //   // } else {
+    //   //   // return (
+    //   //   //   // // 關鍵字搜尋標題忽略大小寫
+    //   //   //   // e.brand === value ||
+    //   //   //   // e.brand.toUpperCase().indexOf(value) !== -1 ||
+    //   //   //   // e.brand.toLowerCase().indexOf(value) !== -1
+    //   //   // )
+    //   // }
+    // },
     getCart (context) {
       context.commit('LOADING', true)
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
@@ -90,25 +167,26 @@ export default new Vuex.Store({
       })
     },
     addtoCart (context, { id, qty }) {
-      // console.log(context, id, qty);
+      // console.log(context, id, qty)
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`
       context.commit('LOADINGITEM', id)
       const cart = {
         product_id: id,
         qty
       }
+      console.log(cart)
       axios.post(url, { data: cart }).then(response => {
         context.dispatch('getCart')
         context.commit('LOADINGITEM', '')
-        // console.log('加入購物車:', response);
+        console.log('加入購物車:', response)
       })
     },
     addQty (context, item) {
       context.commit('ADDQTY', item)
-      context.dispatch('removeCart', item.id)
       let id = item.product.id
       let qty = item.qty
       context.dispatch('addtoCart', { id, qty })
+      context.dispatch('removeCart', item.id)
     },
     minusQty (context, item) {
       let id = item.product.id
@@ -121,11 +199,10 @@ export default new Vuex.Store({
         context.dispatch('removeCart', item.id)
       }
     },
-    inputQty (context, item) {
-      let id = item.product.id
-      let qty = item.qty
+    inputQty (context, { id, qty }) {
       console.log('action', id, qty)
-      context.commit('CHANGEQTY', qty)
+      context.dispatch('addtoCart', { id, qty })
+      context.dispatch('removeCart', id)
       // if (item.qty <= 0) {
       //     context.dispatch('removeCart', item.id);
       // } else {
@@ -187,6 +264,15 @@ export default new Vuex.Store({
         }
       })
     },
+    arrayLtoH (context, item) {
+      context.commit('ARRAYLTOH', item)
+    },
+    getfavorite (context) {
+      let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
+      // console.log('localStorage', myfavorite)
+      context.dispatch('getProducts')
+      context.commit('MYFAVORITES', myfavorite)
+    },
     addFavorite (context, item) {
       const obj = {
         id: item.id,
@@ -198,44 +284,51 @@ export default new Vuex.Store({
         content: item.content,
         spec: item.spec
       }
-      // console.log(obj);
-
-      context.dispatch('getfavorite')
+      // console.log('新增', item.id)
       context.commit('ADDFAVORITES', obj)
+      context.dispatch('getfavorite')
       // favorites.push(obj);
       // localStorage.setItem("favorite", JSON.stringify(favorites));
-
       // this.getFavoriteLength();
       // this.$bus.$emit("favorite", this.favorites);
       // this.$bus.$emit("like");
     },
-    getfavorite (context) {
-      let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
-      // console.log(myfavorite);
-      context.commit('MYFAVORITES', myfavorite)
-    },
-    removefavoritet (context, item) {
-      let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
-      // 檢查索引
-      const i = myfavorite.findIndex(el => {
-        const result = el.id === item.id
-        return result
-      })
-      context.commit('REMOVEFAVORITES', i, item.id)
+    removefavorite (context, item) {
+      // let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
+      // // 檢查索引
+      // const i = myfavorite.findIndex(el => {
+      //   const result = el.id === item.id
+      //   return result
+      // })
       // console.log(i)
-      // myfavorite.splice(i, 1);
-      // localStorage.setItem("favorite", JSON.stringify(myfavorite));
+      // context.commit('REMOVEFAVORITES', i, item.id)
+      // // console.log(i)
+      // // myfavorite.splice(i, 1);
+      // // localStorage.setItem("favorite", JSON.stringify(myfavorite));
+      // context.dispatch('getfavorite')
+      // console.log('delall', delall)
+      // if (delall) {
+      //   console.log('remove')
+      //   localStorage.removeItem('favorite')
+      // } else {
+      //   context.commit('REMOVEFAVORITES', item)
+      //   localStorage.setItem('favorite', JSON.stringify(context.state.myfavorite))
+      // }
+      // console.log('刪除', item.id)
+      context.commit('REMOVEFAVORITES', item)
+      localStorage.setItem('favorite', JSON.stringify(context.state.myfavorite))
       context.dispatch('getfavorite')
-      // this.$bus.$emit("removefavoritet", this.myfavorite);
+      // context.dispatch('getProducts')
     },
-    getFilteredFavorite (context, item) {
+    getFilteredFavorite (context, myfavorite) {
       // console.log(item);
-      let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
+      // let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
       // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
-      myfavorite.some(el => {
-        const result = item.id === el.id
-        return result
-      })
+      // const loveed = myfavorite.some(el => {
+      //   const result = myfavorite.id === el.id
+      //   return result
+      // })
+      // context.commit('FILTERLOVE', loveed)
       // console.log(result);
     }
 
@@ -245,29 +338,23 @@ export default new Vuex.Store({
     LOADING (state, status) {
       state.isLoading = status
     },
+    ACTIVEITEM (state, payload) {
+      state.activeitem = payload
+    },
     PRODUCTS (state, payload) {
       state.products = payload
     },
     PAGINATION (state, payload) {
       state.pagination = payload
     },
-    // CATEGORIES(state, payload){
-    //     const categories = new Set();
-    //     payload.forEach((item) => {
-    //         categories.add(item.category);
-    //     });
-    //     state.categories = Array.from(categories);
-    // },
     CART (state, payload) {
       state.cart = payload
     },
     LOADINGITEM (state, payload) {
       state.loadingItem = payload
     },
-    APPLE (state, payload) {
-      state.apple = payload.filter(
-        item => item.category === 'APPLE'
-      )
+    FILTER (state, payload) {
+      state.products = payload
     },
     ADDQTY (state, payload) {
       state.addqtynum = payload.qty += 1
@@ -275,25 +362,55 @@ export default new Vuex.Store({
     MINUSQTY (state, payload) {
       state.minusnum = payload.qty -= 1
     },
-    CHANGEQTY (state, paylond) {
-      // console.log('mutations', paylond);
-      state.changeqty = paylond
-    },
     ADDFAVORITES (state, obj) {
       state.myfavorite.push(obj)
-      localStorage.setItem('favorite', JSON.stringify(state.myfavorite))
-    },
-    REMOVEFAVORITES (state, i, id) {
-      state.myfavorite.splice(i, 1)
       state.myfavorite = localStorage.setItem('favorite', JSON.stringify(state.myfavorite))
-      state.favoriteId = id
+      // console.log(state.myfavorite)
+      // if (state.myfavorite.length === 0) {
+      //   state.myfavorite.push(obj)
+      //   state.myfavorite = localStorage.setItem('favorite', JSON.stringify(state.myfavorite))
+      // } else {
+      //   state.myfavorite.forEach((item) => {
+      //     if (item.id !== obj.id) {
+      //       state.myfavorite.push(obj)
+      //       state.myfavorite = localStorage.setItem('favorite', JSON.stringify(state.myfavorite))
+      //     }
+      //   })
+      // }
+    },
+    REMOVEFAVORITES (state, favorite) {
+      // console.log('state', state.myfavorite, 'favorite', favorite.id)
+      state.myfavorite.forEach((item, index) => {
+        // console.log('item.id', item.id, 'favorite.id', favorite.id, 'index', index)
+        if (item.id === favorite.id) {
+          state.myfavorite.splice(index, 1)
+        }
+      })
     },
     MYFAVORITES (state, obj) {
+      // console.log('MYFAVORITES', obj)
       state.myfavorite = obj
+    },
+    ARRAYLTOH (state, item) {
+      if (item === 'lowPrice') {
+        return state.products.sort(function (a, b) {
+          return a.price - b.price
+          // return a[vm.price] < b[vm.price] ? 1 : -1;
+        })
+      } else if (item === 'upPrice') {
+        return state.products.sort(function (a, b) {
+          return b.price - a.price
+          //  return a[vm.price] > b[vm.price] ? 1 : -1;
+        })
+      }
+      // state.products
+    },
+    FILTERLOVE (state, item) {
+      state.filterlove = item
+    },
+    UPDATEPRODUCTS (state, { index, isFavorite }) {
+      Vue.set(state.products[index], 'is_favorite', isFavorite)
     }
-    // CARTITEM(state, payload){
-    //     state.cartItem = payload;
-    // },
     // PRODUCTSORIGINAL(state, payLoad, value){
     //     console.log( payLoad , value )
     //     let array = [];
@@ -311,11 +428,15 @@ export default new Vuex.Store({
   },
   // 如computed
   getters: {
-    products (state) {
-      return state.products
-    }
-    // favorites(state){
-    //     return state.favorites;
-    // },
+    isLoading: state => state.isLoading,
+    products: state => state.products,
+    myfavorite: state => state.myfavorite,
+    pagination: state => state.pagination,
+    loadingItem: state => state.loadingItem,
+    cart: state => state.cart,
+    activeitem: state => state.activeitem
+    // products (state) {
+    //   return state.products
+    // }
   }
 })

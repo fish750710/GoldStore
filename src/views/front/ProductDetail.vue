@@ -76,25 +76,25 @@
         </div>
       </div>
       <!-- swiper -->
-      <div class="h5 text-center swiper-like-rwd">
+      <div class="h5 text-center swiper-like-rwd ">
         <i class="fas fa-heart text-danger mr-2"></i>猜你喜歡
       </div>
-      <div class="swiper-container swiper-like-rwd" v-if="filterdata.length > 0">
+      <div class="swiper-container swiper-like-rwd swiper-bg" v-if="filterdata.length > 0">
         <div class="swiper-wrapper py-5">
           <div class="swiper-slide" v-for="item in filterdata" :key="item.id">
-            <div class="card border-0 bg-transparent" v-if="item.is_enabled">
-              <a href="#" @click.prevent="goDetail(item.id)" class="text-center">
-                <img class="card-img-top" alt="..." :src="item.imageUrl" style="max-width:200px" />
+            <div class="card border-0 bg-transparent card-shadow ml-2" v-if="item.is_enabled" >
+              <a href="#" @click.prevent="goDetail(item.id)" class="text-center card-bg">
+                <img class="card-img-top" alt="..." :src="item.imageUrl" style="max-width:200px;height: 200px;" />
               </a>
-              <div class="card-body px-0">
-                <div class="m-0">
+              <div class="card-body px-0 card-bg pb-1">
+                <div class="m-0 p-1" style="height:60px">
                   <a
                     href="#"
                     class="h6 text-black text-decoration-none"
                     @click.prevent="goDetail(item.id)"
                   >{{ item.title }}</a>
                 </div>
-                <div class="d-flex justify-content-between mt-2">
+                <div class="d-flex justify-content-between mt-2 p-1">
                   <del
                     class="h7 text-muted"
                     v-if="item.origin_price > 0"
@@ -131,12 +131,8 @@ export default {
       },
       productId: '',
       productIdS: '',
-      // status: {
-      //   loadingItem: ""
-      // },
       quantity: 1,
-      // favorites: [],
-      favoriteLength: 0,
+      // favoriteLength: 0,
       smallImg: '', // 小圖
       bigImg: '', // 大圖
       products: []
@@ -149,7 +145,6 @@ export default {
       vm.$store.dispatch('updateLoading', true)
       vm.$http.get(url).then(response => {
         vm.product = response.data.product
-        // vm.status.loadingItem = "";
       })
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
       vm.$http.get(api).then(response => {
@@ -168,56 +163,18 @@ export default {
     // 加入我的最愛
     addFavorite (item) {
       this.$store.dispatch('addFavorite', item)
-      // const obj = {
-      //   id: item.id,
-      //   category: item.category,
-      //   title: item.title,
-      //   price: item.price,
-      //   unit: item.unit,
-      //   imageUrl: item.imageUrl,
-      //   content: item.content,
-      //   spec: item.spec
-      // };
-      // this.favorites.push(obj);
-      // localStorage.setItem("favorite", JSON.stringify(this.favorites));
-      // this.getFavoriteLength();
-      // this.$bus.$emit("favorite", this.favorites);
-      // this.$bus.$emit("like");
     },
     // 移除我的最愛
     removeFavorite (item) {
-      // console.log(item)
-      this.$store.dispatch('removefavoritet', item)
-      // const i = this.favorites.findIndex(el => {
-      //   const result = el.id === item.id;
-      //   return result;
-      // });
-      // this.favorites.splice(i, 1);
-      // localStorage.setItem("favorite", JSON.stringify(this.favorites));
-      // this.getFavoriteLength();
-      // this.$bus.$emit("favorite", this.favorites);
-      // this.getFilteredFavorite(item);
-      // this.$bus.$emit("dislike");
+      this.$store.dispatch('removefavorite', item)
     },
     // 有商品於我的最愛時，icon更換
     getFilteredFavorite (item) {
       this.$store.dispatch('getFilteredFavorite', item)
-      // // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
-      // return this.favorites.some(el => {
-      //   const result = item.id === el.id;
-      //   return result;
-      // });
-      // this.getProduct(item.id);
     },
     getfavorite () {
       this.$store.dispatch('getfavorite')
-      // this.myfavorite = JSON.parse(localStorage.getItem("favorite") || "");
     },
-    // 取得我的最愛產品數量
-    // getFavoriteLength() {
-    //   this.favoriteLength = JSON.parse(localStorage.getItem("favorite")).length;
-    //   this.$bus.$emit("favorite", this.favoriteLength);
-    // },
     badgeSearch (e) {
       let str = e.target.firstChild.nodeValue
       this.$router.push(`/search/${str}`).catch(err => (err))
@@ -270,11 +227,11 @@ export default {
   computed: {
     filterdata () {
       const vm = this
-      return (vm.filteritem = vm.products.filter((item, i) => {
+      return vm.products.filter((item, i) => {
         if (item.category === vm.product.category) {
           return vm.product.id !== item.id
         }
-      }))
+      })
     },
     loadingItem () {
       return this.$store.state.loadingItem
@@ -289,25 +246,15 @@ export default {
     }
   },
   mounted () {
-    // const vm = this;
-    // vm.$bus.$on("removefavoritet", () => {
-    //   vm.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
-    //   vm.getFavoriteLength();
-    // });
   },
   created () {
     const vm = this
     vm.productId = vm.$route.params.productId
     vm.getProduct(vm.productId)
-    // vm.getswiper()
     // 購物車和收藏更新畫面
     vm.$bus.$on('refreshDetail', (id) => {
-      // vm.productId = vm.$route.params.productId;
       vm.getProduct(id)
     })
-    // 先抓 localStorage 判斷商品的我的最愛ICON
-    // vm.favorites = JSON.parse(localStorage.getItem("favorite")) || [];
-    // vm.getFavoriteLength();
     vm.getfavorite()
   }
 }
@@ -315,6 +262,17 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/all";
+
+.swiper-bg > div{
+  background: rgba(0,0,0,.01);
+  border: 1px $primary dotted;
+}
+.card-shadow{
+  box-shadow: 5px 5px 5px rgba(227, 219, 208, 0.7);
+  .card-bg{
+    background: #fff;
+  }
+}
 
 @include desktop-top() {
 }

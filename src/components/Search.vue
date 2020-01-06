@@ -4,8 +4,8 @@
       <input
         type="search"
         class="form-control input-width d-inline"
-        placeholder="Search"
-        aria-label="Search"
+        placeholder="搜尋.."
+        aria-label="搜尋"
         v-model="searchValue"
         @keyup.enter="searchProduct"
       />

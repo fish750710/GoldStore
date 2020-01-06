@@ -1,18 +1,21 @@
 <template>
   <div>
-    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5">
-      <li class="mb-0 p-2" style="list-style-type:none">1-購物資訊</li>
-      <li class="mb-0 p-2 text-danger font-weight-bold shop-title-rwd" style="list-style-type:none">
-        <p class="mb-1">2-訂單資訊</p>
+    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5" style="list-style-type:none">
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">1 購物資訊</li>
+      <li><i class="fas fa-angle-double-right mr-1"></i></li>
+      <li class="mb-0 p-2 text-white font-weight-bold shop-title-rwd bg-dark rounded" style="border:1px white dashed;">
+        <p class="mb-0" >2 訂單資訊</p>
       </li>
-      <li class="mb-0 p-2" style="list-style-type:none">3-完成訂購</li>
-      <li class="mb-0 p-2" style="list-style-type:none">4-付款完成</li>
+      <li><i class="fas fa-angle-double-right animated infinite slideOutRight mr-3 pr-3"></i></li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">3 完成訂購</li>
+      <li><i class="fas fa-angle-double-right mr-1 text-info"></i></li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">4 付款完成</li>
     </ul>
     <!-- 購物資訊 -->
     <div class="container">
       <div class="row justify-content-center my-5">
         <div class="accordion col-md-12" id="accordionExample">
-          <div class="card">
+          <div class="card" style="border: 1px solid #ddd;">
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
                 <button
@@ -156,7 +159,7 @@
           ></textarea>
         </div>
         <div class="d-flex justify-content-between">
-          <button class="btn btn-primary text-black" @click="goCheckOut">
+          <button class="btn btn-secondary" @click.prevent="goCheckOut">
             <i class="fas fa-backspace pl-3">
               <span class="pl-2 h6 font-weight-bold">上一步</span>
             </i>
@@ -192,7 +195,7 @@
               </div>
               <div class="modal-body h5 text-danger font-weight-bold">請再次確認商品訂單無誤，謝謝</div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary text-black" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                 <button
                   type="button"
                   class="btn btn-danger font-weight-bold"

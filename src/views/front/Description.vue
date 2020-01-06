@@ -9,7 +9,7 @@
               <h3>隨心所欲，怎麼擺都好看。</h3>
               <p>設計大師，時尚潮流。</p>
               <button
-                class="btn btn-primary btn-radius animated infinite bounceIn text-black"
+                class="btn btn-primary animated infinite bounceIn text-black"
                 style="animation-duration: 2s"
                 @click="goIndex"
               >購買</button>
@@ -19,14 +19,14 @@
         <div class="bg-fixed-img-first mt-5">
           <div class="text-center pt-4 bg-fixed-img-content">
             <h3>款式最多的watch</h3>
-            <button class="btn btn-primary btn-radius mt-2" @click="goIndex">立馬拜金去</button>
+            <button class="btn btn-primary mt-2" @click="goIndex">立馬拜金去</button>
           </div>
         </div>
         <div class="content-img-center my-5">
           <div class="title">
             <h3>1,000 萬首歌，免額外付費試聽 1 個月。</h3>
             <p>高音質音樂，一聽就上癮。</p>
-            <button class="btn btn-primary btn-radius" @click="goIndex">
+            <button class="btn btn-primary" @click="goIndex">
               現在試聽
             </button>
           </div>
@@ -37,7 +37,7 @@
             <img class="img-swiper" src="@/assets/images/monitor-u3419w-pdp-responsive-03.jpg" alt />
             <div class="swiper-title">
               <h5>超大視角，看電影、工作，一次OK</h5>
-              <button class="btn btn-primary btn-radius" @click="goIndex">了解更多</button>
+              <button class="btn btn-primary" @click="goIndex">了解更多</button>
             </div>
           </div>
           <div class="swiper-slide swiper-list">
@@ -48,7 +48,7 @@
             />
             <div class="swiper-title">
               <h5>玩GAME必敗品，無延遲，色彩飽和</h5>
-              <button class="btn btn-primary btn-radius" @click="goIndex">了解更多</button>
+              <button class="btn btn-primary" @click="goIndex">了解更多</button>
             </div>
           </div>
           <div class="swiper-slide swiper-list">
@@ -59,7 +59,7 @@
             />
             <div class="swiper-title">
               <h5>來電顯示，自動偵測</h5>
-              <button class="btn btn-primary btn-radius" @click="goIndex">了解更多</button>
+              <button class="btn btn-primary" @click="goIndex">了解更多</button>
             </div>
           </div>
           <div class="swiper-pagination" slot="pagination"></div>
@@ -69,7 +69,7 @@
         <div class="bg-fixed-img-end mt-5">
           <div class="text-center pt-4 bg-fixed-img-content">
             <h3>最專業的3C網站</h3>
-            <button class="btn btn-primary btn-radius mt-2" @click="goIndex">立馬拜金去</button>
+            <button class="btn btn-primary mt-2" @click="goIndex">立馬拜金去</button>
           </div>
         </div>
         <div class="evaluation">
@@ -78,7 +78,7 @@
               <h3>薄如紙，輕如羽毛，旗艦規格。</h3>
               <p>激發你的創意，無限手套在手，想怎畫就怎畫。</p>
               <button
-                class="btn btn-primary btn-radius animated infinite bounceIn text-black"
+                class="btn btn-primary animated infinite bounceIn text-black"
                 style="animation-duration: 2s"
                 @click="goIndex"
               >購買</button>
@@ -206,7 +206,7 @@ export default {
     width: 260px;
     height: 152px;
     text-align: center;
-    color: $primary;
+    color: $dark;
     h3 {
       padding-top: 30px;
       font-weight: bold;
@@ -243,7 +243,7 @@ export default {
     width: 260px;
     height: 152px;
     text-align: center;
-    color: $primary;
+    // color: $primary;
     h3 {
       padding-top: 30px;
       font-weight: bold;
@@ -299,10 +299,6 @@ export default {
     top: 150px;
     right: 0px;
   }
-}
-
-.btn-radius {
-  border-radius: 15px 15px;
 }
 
 @include desktop-top() {

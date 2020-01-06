@@ -26,10 +26,10 @@
           </li>
         </ul>
         <ul class="nav">
-          <li class="nav-item d-search">
+          <li class="nav-item d-search mr-3 ml-3">
             <Search class="pt-1"></Search>
           </li>
-          <li class="nav-item m-search mt-1">
+          <li class="nav-item m-search mt-1 icon-rwd-margin">
             <div class="dropdown">
               <a
                 href="#"
@@ -45,15 +45,15 @@
                 <input
                   type="search"
                   class="form-control input-width d-inline"
-                  placeholder="Search"
-                  aria-label="Search"
+                  placeholder="搜尋.."
+                  aria-label="搜尋"
                   v-model="searchValue"
                   @keyup.enter="searchProduct"
                 />
               </div>
             </div>
           </li>
-          <li class="nav-item">
+          <li class="nav-item icon-rwd-margin">
             <!-- 未登入 -->
             <div v-if="!successStatus">
               <a href="#" class="nav-link text-light menu-top" @click="openLogin">
@@ -90,7 +90,7 @@
               </div>
             </div>
           </li>
-          <li class="nav-item">
+          <li class="nav-item icon-rwd-margin">
             <a
               href="#"
               class="nav-link text-light menu-top"
@@ -105,7 +105,7 @@
               >{{ myfavorite.length }}</span>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item icon-rwd-margin">
             <a
               href="#"
               class="nav-link text-light menu-top"
@@ -197,7 +197,7 @@
                     </tbody>
                   </td>
                   <td>
-                    <button class="btn pt-0 pb-0 pl-1 pr-1" @click="minusQty(item)">
+                    <button class="btn pt-0 pb-0 pl-1 pr-1" @click="minusQty(item)" :disabled="item.id ===loadingItem">
                       <i class="fas fa-minus" v-if="item.id != loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
                     </button>
@@ -205,6 +205,7 @@
                     <button
                       class="btn pt-0 pb-0 pr-1 pl-1"
                       @click="addQty( item )"
+                      :disabled="item.id ===loadingItem"
                     >
                       <i class="fas fa-plus" v-if="item.id != loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
@@ -214,6 +215,7 @@
                       type="button"
                       class="btn btn-outline-danger btn-sm mt-0"
                       @click="removeCartItem(item.id)"
+                      :disabled="item.id ===loadingItem"
                     >
                       <i class="fas fa-spinner fa-pulse" v-if="item.id === loadingItem"></i>
                       <i class="far fa-trash-alt" v-else></i>
@@ -313,7 +315,7 @@
                     <button
                       type="button"
                       class="btn btn-outline-danger btn-sm mt-2"
-                      @click="removefavoritet(item.id)"
+                      @click="removefavoritet(item)"
                     >
                       <i class="fas fa-heart"></i>
                     </button>
@@ -453,6 +455,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex' //, mapActions
 import Alert from '@/components/AlertMsg.vue'
 // import Pagin from '@/components/Pagination.vue' // 分頁
 import $ from 'jquery'
@@ -639,10 +642,10 @@ export default {
       })
     },
     searchProduct () {
-      const str = this.searchValue
+      // const str = this.searchValue
       this.$router.push(`/search/${this.searchValue}`).catch(err => (err))
       this.$bus.$emit('search')
-      if (str.trim() === '') {
+      if (this.searchValue.trim() === '') {
         this.$bus.$emit('messsage:push', `請輸入商品名稱`, 'danger')
       }
       this.searchValue = ''
@@ -651,8 +654,8 @@ export default {
       this.$store.dispatch('getfavorite')
       // this.myfavorite = JSON.parse(localStorage.getItem("favorite") || "");
     },
-    removefavoritet (id) {
-      this.$store.dispatch('removefavoritet', id)
+    removefavoritet (item) {
+      this.$store.dispatch('removefavorite', item)
       // 檢查索引
       // const i = myfavorite.findIndex(el => {
       //   console.log('同一個');
@@ -694,19 +697,20 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isLoading', 'cart', 'loadingItem', 'myfavorite'])
     // 讀取 /store/index.js 裡面的屬性
-    isLoading () {
-      return this.$store.state.isLoading
-    },
-    cart () {
-      return this.$store.state.cart
-    },
-    loadingItem () {
-      return this.$store.state.loadingItem
-    },
-    myfavorite () {
-      return this.$store.state.myfavorite
-    }
+    // isLoading () {
+    //   return this.$store.state.isLoading
+    // },
+    // cart () {
+    //   return this.$store.state.cart
+    // },
+    // loadingItem () {
+    //   return this.$store.state.loadingItem
+    // },
+    // myfavorite () {
+    //   return this.$store.state.myfavorite
+    // }
   },
   created () {
     this.getCart()
@@ -734,15 +738,19 @@ export default {
     this.$bus.$on('refreshCart', () => {
       this.getCart()
     })
-    this.$bus.$on('favorite', () => {
-      this.getfavorite()
-    })
+    // this.$bus.$on('favorite', () => {
+    //   this.getfavorite()
+    // })
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "@/assets/all";
+
+.icon-rwd-margin{
+  margin-right: 10px;
+}
 
 .fb-btn {
   background: #3b5998;
@@ -1056,6 +1064,11 @@ export default {
       -webkit-transform: rotate(45deg);
       transform: rotate(45deg);
     }
+  }
+}
+@include iphone5() {
+  .icon-rwd-margin{
+    margin-right: 0px;
   }
 }
 </style>

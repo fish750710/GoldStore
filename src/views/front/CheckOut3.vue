@@ -1,10 +1,15 @@
 <template>
   <div>
-    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5">
-      <li class=" mb-0 p-2 " style="list-style-type:none">1-購物資訊</li>
-      <li class=" mb-0 p-2 " style="list-style-type:none">2-訂單資訊</li>
-      <li class=" mb-0 p-2 " :class="[order.is_paid ? '' : 'shop-title-rwd text-danger font-weight-bold' ]" style="list-style-type:none"><p class="mb-1">3-付款方式</p></li>
-      <li class=" mb-0 p-2 " :class="[order.is_paid ? 'shop-title-rwd text-danger font-weight-bold' : '' ]" style="list-style-type:none" ><p class="mb-1">4-付款完成</p></li>
+    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5" style="list-style-type:none">
+      <li class=" mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">1 購物資訊</li>
+      <li><i class="fas fa-angle-double-right mr-1 "></i></li>
+      <li class=" mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">2 訂單資訊</li>
+      <li><i class="fas fa-angle-double-right mr-1 "></i></li>
+      <li class=" mb-0 p-2 mr-1 rounded" :class="[order.is_paid ? '' : 'shop-title-rwd text-white font-weight-bold bg-dark border-white' ]" style="border:1px black dashed;"><p class="mb-0">3 付款方式</p></li>
+      <li><i class="fas fa-angle-double-right animated infinite slideOutRight mr-3 pr-3 " v-if="!order.is_paid">
+        </i><i class="fas fa-angle-double-right mr-1" v-else ></i>
+      </li>
+      <li class=" mb-0 p-2 rounded " :class="[order.is_paid ? 'shop-title-rwd text-white font-weight-bold bg-dark border-white' : '' ]" style="border:1px black dashed;"><p class="mb-0">4 付款完成</p></li>
     </ul>
     <div class="container">
     <div class=" row justify-content-center my-5">
@@ -59,12 +64,12 @@
               <th>付款方式</th>
               <td colspan="2">
                   <div class="form-check form-check-inline " :class="[ paymethod==='貨到付款' ?'text-primary' : '']" >
-                    <input class="form-check-input"  type="radio" name="inlineRadioOptions" id="cash" value="貨到付款" v-model="paymethod" required>
+                    <input class="form-check-input"  type="radio" name="inlineRadioOptions" id="cash" value="貨到付款" v-model="paymethod" :disabled="order.is_paid" required>
                     <label class="form-check-label" for="cash" data-toggle="tooltip" data-placement="bottom" title="目前貨到付款只提供平日配送。">
                       貨到付款<i class="fas fa-shipping-fast ml-2 mr-3"></i></label>
                   </div>
                   <div class="form-check form-check-inline"  :class="[ paymethod==='線上刷卡' ?'text-primary' : '']" >
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="creditcard" value="線上刷卡" v-model="paymethod" required>
+                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="creditcard" value="線上刷卡" v-model="paymethod" :disabled="order.is_paid" required>
                     <label class="form-check-label" for="creditcard" data-toggle="tooltip" data-placement="bottom" title="歡迎使用信用卡刷卡，優惠期間免刷卡手續費。">
                       線上刷卡<i class="far fa-credit-card ml-2 mr-3"></i></label>
                   </div>
@@ -75,7 +80,7 @@
                   </div>
                   <div class="d-flex justify-content-end mt-5 btn-rwd">
                     <div class="text-right" >
-                      <button class="btn btn-primary font-weight-bold text-black" @click="goIndex">再去逛逛</button>
+                      <button class="btn btn-secondary font-weight-bold " @click.prevent="goIndex">再去逛逛</button>
                     </div>
                     <div class="text-right" v-if="order.is_paid === false">
                       <button class="btn btn-danger font-weight-bold ml-3" >確認付款去</button>
@@ -158,15 +163,15 @@ export default {
     this.orderId = this.$route.params.orderId // 取得網址上的ID
     this.getOrder()
   },
-  // 跳離頁面前先檢查
+  // 跳離頁面前先檢查 (導航守衛)
   beforeRouteLeave (to, from, next) {
-    // console.log(this.cart.carts)
-    // console.log('to', to, 'from', from, 'next', next);
+    // console.log('to', to, 'from', from, 'next', next)
     if (this.order.is_paid === true) {
       next()
     } else {
       const answer = confirm(`您尚未付款完成，\n您確定要離開！`)
       if (answer) {
+        console.log(answer)
         next()
       } else {
       // 取消

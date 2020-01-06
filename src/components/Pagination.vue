@@ -7,7 +7,7 @@
             class="page-link text-black"
             href="#"
             @click="getPage(getpagin.current_page - 1)"
-          >Previous</a>
+          >上一頁</a>
         </li>
         <li
           class="page-item"
@@ -18,7 +18,7 @@
           <a class="page-link text-black" href="#" @click="getPage(page)">{{page}}</a>
         </li>
         <li class="page-item" :class="{'disabled': !getpagin.has_next}">
-          <a class="page-link text-black" href="#" @click="getPage(getpagin.current_page + 1)">Next</a>
+          <a class="page-link text-black" href="#" @click="getPage(getpagin.current_page + 1)">下一頁</a>
         </li>
       </ul>
     </nav>
@@ -31,6 +31,12 @@ export default {
   props: ['getpagin'],
   data () {
     return {}
+  },
+  computed: {
+    // eslint-disable-next-line vue/no-dupe-keys
+    // pagination () {
+    //   return this.$store.state.pagination
+    // }
   },
   methods: {
     getPage (page = 1) {

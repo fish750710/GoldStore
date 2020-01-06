@@ -18,20 +18,22 @@
                 :style="{backgroundImage: `url(${item.imageUrl})`}"
               ></div>
             </a>
-            <a href="#">
-              <i
-                class="fas fa-heart text-danger position-absolute"
-                v-if="getFilteredFavorite(item)"
-                @click.prevent="removeFavorite(item)"
-                style="top:20px;right:20px; font-size:20px"
-              ></i>
-              <i
-                class="far fa-heart text-danger position-absolute"
-                v-else
-                @click.prevent="addFavorite(item)"
-                style="top:20px;right:20px; font-size:20px"
-              ></i>
-            </a>
+            <div >
+              <a href="#" v-if="item.is_favorite">
+                 <i
+                  class="fas fa-heart text-danger position-absolute"
+                  @click.prevent="removeFavorite(item)"
+                  style="top:20px;right:20px; font-size:20px"
+                ></i>
+              </a>
+              <a href="#" v-else>
+                <i
+                  class="far fa-heart text-danger position-absolute"
+                  @click.prevent="addFavorite(item)"
+                  style="top:20px;right:20px; font-size:20px"
+                ></i>
+              </a>
+            </div>
             <div class="card-body pt-2 pb-2" style="min-height:130px">
               <h5 class="h6 card-title mb-1" style="min-height:58px">
                 <a
@@ -43,8 +45,8 @@
               <div class="d-flex justify-content-between" style="height:25px">
                 <p class="card-text text-info font-weight-bold">{{ item.content }}</p>
                 <div>
-                  <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
-                  <span class="badge badge-success float-right ml-2">{{ item.spec }}</span>
+                  <!-- <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
+                  <span class="badge badge-success float-right ml-2">{{ item.spec }}</span> -->
                 </div>
               </div>
               <div class="d-flex justify-content-between align-items-baseline">
@@ -58,6 +60,7 @@
               class="btn btn-primary btn-sm col-12 cart-move"
               @click="addtoCartMerge(item.id)"
               style="border-top-left-radius:0px ; border-top-right-radius:0px "
+              :disabled="item.id ===loadingItem"
             >
               <i class="fas fa-spinner fa-pulse text-black" v-if="item.id === loadingItem"></i>
               <i class="fas fa-cart-plus text-black" v-else></i>
@@ -72,19 +75,12 @@
 
 <script>
 import $ from 'jquery'
+import { mapGetters } from 'vuex' //, mapActions
 
 export default {
   components: {},
   data () {
     return {
-      productsOriginal: [],
-      products: [],
-      product: {}, // 單筆資料
-      // status: {
-      //   loadingItem: ""
-      // },
-      favorites: [],
-      favoriteLength: 0
     }
   },
   methods: {
@@ -93,114 +89,44 @@ export default {
       this.$store.dispatch('addtoCartMerge', { id, qty })
       $('#productModal').modal('hide')
     },
-    getCategory () {
-      const vm = this
-      let array = []
-      let value = ''
-      vm.currentPath = vm.$route
-      value = vm.$route.params.searchStr // 搜尋關鍵字
-      vm.$store.dispatch('updateLoading', true)
-      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`
-      this.$http.get(url).then(response => {
-        if (vm.currentPath.name !== 'Search') {
-          value = vm.currentPath.params.productCategory
-          array = response.data.products.filter(e => {
-            return e.category === value && e.is_enabled === 1
-          })
-        } else {
-          // 搜尋
-          array = response.data.products.filter(e => {
-            // 關鍵字搜尋標題忽略大小寫
-            return (
-              e.title === value ||
-              e.title.indexOf(value) !== -1 ||
-              e.title.toUpperCase().indexOf(value) !== -1 ||
-              e.title.toLowerCase().indexOf(value) !== -1
-            )
-          })
-        }
-        vm.products = Object.assign([], array)
-        vm.$store.dispatch('updateLoading', false)
-      })
-    },
-    // 撈全部
-    getProductAll () {
-      this.getCategory()
+    getCategory (page) {
+      // 取商品資料
+      this.$store.dispatch('getProducts', page)
     },
     goDetail (id) {
       this.$router.push(`/detail/${id}`).catch(err => (err))
     },
     // 加入我的最愛
     addFavorite (item) {
-      const obj = {
-        id: item.id,
-        category: item.category,
-        title: item.title,
-        price: item.price,
-        unit: item.unit,
-        imageUrl: item.imageUrl,
-        content: item.content,
-        spec: item.spec
-      }
-      this.favorites.push(obj)
-      localStorage.setItem('favorite', JSON.stringify(this.favorites))
-      this.getFavoriteLength()
-      this.$bus.$emit('favorite', this.favorites)
-      this.$bus.$emit('like')
+      this.$store.dispatch('addFavorite', item)
     },
     // 移除我的最愛
     removeFavorite (item) {
-      const i = this.favorites.findIndex(el => {
-        const result = el.id === item.id
-        return result
-      })
-      this.favorites.splice(i, 1)
-      localStorage.setItem('favorite', JSON.stringify(this.favorites))
-      this.getFavoriteLength()
-      this.$bus.$emit('favorite', this.favorites)
-      this.$bus.$emit('dislike')
-    },
-    // 有商品於我的最愛時，icon更換
-    getFilteredFavorite (item) {
-      // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
-      return this.favorites.some(el => {
-        const result = item.id === el.id
-        return result
-      })
-    },
-    // 取得我的最愛產品數量
-    getFavoriteLength () {
-      this.favoriteLength = JSON.parse(localStorage.getItem('favorite')).length
-      this.$bus.$emit('favorite', this.favoriteLength)
+      this.$store.dispatch('removefavorite', item)
     }
   },
 
   computed: {
-    loadingItem () {
-      return this.$store.state.loadingItem
-    }
+    // loadingItem () {
+    //   return this.$store.state.loadingItem
+    // },
+    ...mapGetters(['products', 'myfavorite', 'loadingItem'])
   },
   mounted () {
-    // 從frontsidebar傳來
+    // 從frontNavbar傳來
     this.$bus.$on('search', () => {
       // console.log('監聽')
-      this.getProductAll()
+      this.getCategory()
     })
     // 從frontsidebar傳來
-    this.$bus.$on('change', () => {
-      // console.log('監聽')
-      this.getProductAll()
-    })
-    this.$bus.$on('removefavoritet', () => {
-      this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
-      this.getFavoriteLength()
-    })
+    // this.$bus.$on('search', () => {
+    //   // console.log('監聽')
+    //   this.getCategory()
+    // })
   },
   created () {
     // 先抓 localStorage 判斷商品的我的最愛ICON
-    this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
-    this.getFavoriteLength()
-    this.getProductAll()
+    this.getCategory()
   }
 }
 </script>

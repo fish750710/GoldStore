@@ -1,16 +1,16 @@
 <template>
     <div>
-      <div class="row pt-1 m-sidebar-none" >
-        <div class=" col-md-2 d-none d-md-block " >
+      <div class="row pt-1 m-sidebar-none">
+        <div class="d-none d-md-block ">
           <ul class="h6 menu-ul">
-            <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('APPLE')">
-              <span :class="[ activeitem ==='APPLE' ? 'text-primary':'' ]">APPLE</span></a></li>
-            <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('ASUS')">
-              <span :class="[ activeitem ==='ASUS' ? 'text-primary':'' ]">ASUS</span></a></li>
-            <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('HTC')">
-              <span :class="[ activeitem ==='HTC' ? 'text-primary':'' ]">HTC</span></a></li>
-            <li class="my-2 pb-2"><a href="#" class="menuSidebar pb-1 d-flex justify-content-start" @click.prevent="badgeSearch('小米')">
-              <span :class="[ activeitem ==='小米' ? 'text-primary':'' ]">小米</span></a></li>
+            <li class="my-2 "><a href="#" class="menuSidebar p-2 d-flex justify-content-start" :class="[ activeitem ==='APPLE' ? ['text-white','bg-dark'] :'' ]" @click.prevent="badgeSearch('APPLE')" >
+              <span >APPLE</span></a></li>
+            <li class="my-2 "><a href="#" class="menuSidebar p-2 d-flex justify-content-start" :class="[ activeitem ==='ASUS' ? ['text-white','bg-dark'] :'' ]" @click.prevent="badgeSearch('ASUS')" >
+              <span >ASUS</span></a></li>
+            <li class="my-2 "><a href="#" class="menuSidebar p-2 d-flex justify-content-start" :class="[ activeitem ==='HTC' ? ['text-white','bg-dark'] :'' ]" @click.prevent="badgeSearch('HTC')" >
+              <span >HTC</span></a></li>
+            <li class="my-2 "><a href="#" class="menuSidebar p-2 d-flex justify-content-start" :class="[ activeitem ==='小米' ? ['text-white','bg-dark'] :'' ]" @click.prevent="badgeSearch('小米')" >
+              <span >小米</span></a></li>
           </ul>
         </div>
       </div>
@@ -22,21 +22,25 @@
 export default {
   data () {
     return {
-      activeitem: ''
     }
   },
   methods: {
     badgeSearch (str) {
-      this.activeitem = str
-      // this.$store.dispatch('getCategory', str);
       this.$router.push(`/${str}`).catch(err => (err))
-      this.$bus.$emit('change')
+      this.getCategory()
       // 更新畫面方法
       // location.reload()
       // this.$router.go(0)
+    },
+    getCategory (page) {
+      this.$store.dispatch('getProducts', page)
+    }
+  },
+  computed: {
+    activeitem () {
+      return this.$store.state.activeitem
     }
   }
-
 }
 </script>
 
@@ -46,17 +50,27 @@ export default {
   color: $primary;
 }
 .menu-ul{
+  padding: 5px 25px;
   list-style-type:none;
   .menuSidebar{
     text-decoration: none;
     color: $dark;
     font-weight: bold;
     font-size:20px;
-    width: 80px;
+    width: 90px;
   }
-  a:hover{
-    color: $primary;
-    position: relative;
+  a{
+    border:1px $info solid;
+    border-radius:5px;
+    transition: all 0.3s;
+    box-shadow: 5px 5px 5px rgba(227, 219, 208, 0.5);
+    &:hover{
+      color: $primary;
+      position: relative;
+      border:1px $primary solid;
+      transition: all 0.3s;
+      transform: translate(5px, 0);
+    }
   }
 }
 @include pc() {

@@ -1,12 +1,15 @@
 <template>
   <div>
-    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5">
-      <li class="mb-0 p-2 text-danger font-weight-bold shop-title-rwd" style="list-style-type:none">
-        <p class="mb-1">1-購物資訊</p>
+    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5" style="list-style-type:none;">
+      <li class="mb-0 p-2 text-white font-weight-bold shop-title-rwd bg-dark rounded" style="border:1px white dashed;">
+        <p class="mb-0">1 購物資訊</p>
       </li>
-      <li class="mb-0 p-2" style="list-style-type:none">2-訂單資訊</li>
-      <li class="mb-0 p-2" style="list-style-type:none">3-完成訂購</li>
-      <li class="mb-0 p-2" style="list-style-type:none">4-付款完成</li>
+      <li><i class="fas fa-angle-double-right animated infinite slideOutRight mr-3 pr-3"></i></li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed; ">2 訂單資訊</li>
+      <li><i class="fas fa-angle-double-right mr-1 text-info"></i></li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed; ">3 完成訂購</li>
+      <li><i class="fas fa-angle-double-right mr-1 text-info"></i></li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed; ">4 付款完成</li>
     </ul>
     <!-- 購物車內容 -->
     <div class="container">
@@ -44,18 +47,26 @@
                     data-th="數量"
                   >
                     <div class="d-flex">
-                      <button class="btn pt-0" @click.prevent="minusQty( item )">
+                      <button class="btn pt-0" @click.prevent="minusQty( item )" >
                         <i class="fas fa-minus"></i>
                       </button>
                       <input
-                        type="text"
+                        type="tel"
                         name="qty"
                         class="form-control text-center"
-                        @change="inputQty( item )"
+                        @change="inputQty(item.id)"
+                        v-on:change="inputQtyVal"
                         :value="item.qty"
-
                         style="width:60px; height:30px"
                       />
+                      <!-- <input
+                        type="tel"
+                        name="qty"
+                        class="form-control text-center"
+                        @change="inputQty( item.qty )"
+                        :value="item.qty"
+                        style="width:60px; height:30px"
+                      /> -->
                       <button class="btn pt-0" @click.prevent="addQty( item )">
                         <i class="fas fa-plus"></i>
                       </button>
@@ -102,10 +113,10 @@
             <div class="ml-3 text-warning h5">{{ coupon_msg }}</div>
           </div>
           <div class="d-flex justify-content-between btn-rwd">
-            <button type="button" class="btn btn-primary">
-              <router-link class="nav-link pt-0 pb-0 text-black" to="/">
-                <i class="fas fa-backspace pl-3">
-                  <span class="pl-2 h6 font-weight-bold">繼續購物</span>
+            <button type="button" class="btn btn-secondary">
+              <router-link class="nav-link pt-0 pb-0" to="/">
+                <i class="fas fa-backspace pl-3 text-dark">
+                  <span class="pl-2 h6 font-weight-bold ">繼續購物</span>
                 </i>
               </router-link>
             </button>
@@ -146,7 +157,8 @@ export default {
       //   }
       // },
       coupon_code: '',
-      coupon_msg: ''
+      coupon_msg: '',
+      inputId: ''
     }
   },
   methods: {
@@ -222,15 +234,16 @@ export default {
       // }
     },
     // 改變數量
-    inputQty (item) {
-      // console.log(item);
-      this.$store.dispatch('inputQty', item)
-      // if (item.final_total === 0) {
-      //   this.removeCartItem(item.id);
-      // } else {
-      //   this.removeCartItem(item.id);
-      //   this.addtoCart(item.product.id, item.qty);
-      // }
+    inputQty (id) {
+      this.inputId = id
+      // console.log(item.id, this.targetValue)
+      // this.$store.dispatch('inputQty', item)
+    },
+    inputQtyVal (e) {
+      let id = this.inputId
+      let qty = parseInt(e.target.value)
+      // console.log(id, qty)
+      this.$store.dispatch('inputQty', { id, qty })
     },
     goDetail (id) {
       this.$router.push(`/detail/${id}`).catch(err => (err))
@@ -248,18 +261,6 @@ export default {
   computed: {
     cart () {
       return this.$store.state.cart
-    },
-    changeqty: {
-      // get () {
-      //   // return this.$store.state.changeqty;
-      //   return this.$store.state.cart.carts[0].qty;
-      //   // for(let i = 0; this.$store.state.cart.length; i++){
-      //   //   // return this.$store.state.cart.carts[i].qty;
-      //   // }
-      // },
-      // set (value) {
-      //   this.inputQty(value);
-      // }
     }
   },
   created () {
