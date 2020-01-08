@@ -45,8 +45,6 @@
               <div class="d-flex justify-content-between" style="height:25px">
                 <p class="card-text text-info font-weight-bold">{{ item.content }}</p>
                 <div>
-                  <!-- <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
-                  <span class="badge badge-success float-right ml-2">{{ item.spec }}</span> -->
                 </div>
               </div>
               <div class="d-flex justify-content-between align-items-baseline">
@@ -107,25 +105,15 @@ export default {
   },
 
   computed: {
-    // loadingItem () {
-    //   return this.$store.state.loadingItem
-    // },
     ...mapGetters(['products', 'myfavorite', 'loadingItem'])
   },
   mounted () {
     // 從frontNavbar傳來
     this.$bus.$on('search', () => {
-      // console.log('監聽')
       this.getCategory()
     })
-    // 從frontsidebar傳來
-    // this.$bus.$on('search', () => {
-    //   // console.log('監聽')
-    //   this.getCategory()
-    // })
   },
   created () {
-    // 先抓 localStorage 判斷商品的我的最愛ICON
     this.getCategory()
   }
 }

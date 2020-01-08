@@ -132,7 +132,6 @@ export default {
       productId: '',
       productIdS: '',
       quantity: 1,
-      // favoriteLength: 0,
       smallImg: '', // 小圖
       bigImg: '', // 大圖
       products: []
@@ -223,7 +222,6 @@ export default {
       })
     }
   },
-
   computed: {
     filterdata () {
       const vm = this
@@ -238,7 +236,7 @@ export default {
     },
     favoriteId () {
       let id = this.$route.params.productId
-      let favoriteId = this.$store.state.myfavorite.some(el => {
+      let favoriteId = this.$store.state.favoriteModules.myfavorite.some(el => {
         const result = id === el.id
         return result
       })
@@ -265,7 +263,7 @@ export default {
 
 .swiper-bg > div{
   background: rgba(0,0,0,.01);
-  border: 1px $primary dotted;
+  border: 1px $info dotted;
 }
 .card-shadow{
   box-shadow: 5px 5px 5px rgba(227, 219, 208, 0.7);

@@ -224,7 +224,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="text-center h4 align-self-center" v-if="cart.carts === ''">
+            <div class="text-center h4 align-self-center" v-else>
               空無一物
               <div>
                 <button
@@ -323,12 +323,12 @@
                 </tr>
               </tbody>
             </table>
-            <div class="text-center h4 align-self-center" v-if="myfavorite.length === ''">
+            <div class="text-center h4 align-self-center" v-else>
               空無一物
               <div>
                 <button
                   type="button"
-                  class="btn btn-outline-info mt-3"
+                  class="btn btn-outline-danger mt-3"
                   data-dismiss="modal"
                   aria-label="Close"
                   @click="goIndex"
@@ -455,9 +455,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex' //, mapActions
+import { mapGetters, mapActions } from 'vuex'
 import Alert from '@/components/AlertMsg.vue'
-// import Pagin from '@/components/Pagination.vue' // 分頁
 import $ from 'jquery'
 import Search from '@/components/Search'
 
@@ -469,19 +468,8 @@ export default {
   },
   data () {
     return {
-      products: [],
-      pagination: {}, // 分頁
-      product: {}, // 單筆資料
       ischange: false,
       successStatus: false,
-      // status: {
-      //   loadingItem: ""
-      // },
-      // cart: {
-      //   carts: {
-      //     length: []
-      //   }
-      // },
       coupon_code: '',
       coupon_msg: '',
       form: {
@@ -499,69 +487,26 @@ export default {
         dbpassword: ''
       },
       message: '',
-      // myfavorite: {
-      //   length: 0
-      // },
       searchValue: ''
     }
   },
   methods: {
-    // 取得購物車內容
-    getCart () {
-      this.$store.dispatch('getCart')
-      // const vm = this;
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // vm.$store.dispatch("updateLoading", true);
-      // this.$http.get(url).then(response => {
-      //   vm.cart = response.data.data;
-      //   vm.$store.dispatch("updateLoading", false);
-      // });
-    },
+    ...mapActions(['getCart']), // 取得購物車內容
     // 加入購物車
     addtoCart (id, qty = 1) {
       this.$store.dispatch('addtoCart', { id, qty })
-      // const vm = this;
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // vm.$store.dispatch("updateLoading", true);
-      // const cart = {
-      //   product_id: id,
-      //   qty
-      // };
-      // this.$http.post(url, { data: cart }).then(response => {
-      //   this.$bus.$emit("refreshCart");
-      //   vm.$store.dispatch("updateLoading", false);
-      // });
     },
     // 刪除購物車內容
     removeCartItem (id) {
       this.$store.dispatch('removeCart', id)
-      // const vm = this;
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      // vm.$store.dispatch("updateLoading", true);
-      // this.$http.delete(url).then(() => {
-      //   vm.getCart();
-      //   this.$bus.$emit("refreshCart");
-      //   vm.$store.dispatch("updateLoading", false);
-      // });
     },
     // 增加數量
     addQty (item) {
       this.$store.dispatch('addQty', item)
-      // item.qty += 1;
-      // this.addtoCart(item.product.id, item.qty);
-      // this.removeCartItem(item.id);
     },
     // 減少數量
     minusQty (item) {
       this.$store.dispatch('minusQty', item)
-
-      // item.qty -= 1;
-      // if (item.qty === 0) {
-      //   this.removeCartItem(item.id);
-      // } else {
-      //   this.addtoCart(item.product.id, item.qty);
-      //   this.removeCartItem(item.id);
-      // }
     },
     // open 登入model
     openLogin () {
@@ -642,7 +587,6 @@ export default {
       })
     },
     searchProduct () {
-      // const str = this.searchValue
       this.$router.push(`/search/${this.searchValue}`).catch(err => (err))
       this.$bus.$emit('search')
       if (this.searchValue.trim() === '') {
@@ -652,19 +596,9 @@ export default {
     },
     getfavorite () {
       this.$store.dispatch('getfavorite')
-      // this.myfavorite = JSON.parse(localStorage.getItem("favorite") || "");
     },
     removefavoritet (item) {
       this.$store.dispatch('removefavorite', item)
-      // 檢查索引
-      // const i = myfavorite.findIndex(el => {
-      //   console.log('同一個');
-      //   const result = el.id === item;
-      //   return result;
-      // });
-      // this.myfavorite.splice(i, 1);
-      // localStorage.setItem("favorite", JSON.stringify(this.myfavorite));
-      // this.$bus.$emit("removefavoritet", this.myfavorite);
     },
     // 導頁到管理商品
     goProducts () {
@@ -698,19 +632,6 @@ export default {
   },
   computed: {
     ...mapGetters(['isLoading', 'cart', 'loadingItem', 'myfavorite'])
-    // 讀取 /store/index.js 裡面的屬性
-    // isLoading () {
-    //   return this.$store.state.isLoading
-    // },
-    // cart () {
-    //   return this.$store.state.cart
-    // },
-    // loadingItem () {
-    //   return this.$store.state.loadingItem
-    // },
-    // myfavorite () {
-    //   return this.$store.state.myfavorite
-    // }
   },
   created () {
     this.getCart()
@@ -738,9 +659,6 @@ export default {
     this.$bus.$on('refreshCart', () => {
       this.getCart()
     })
-    // this.$bus.$on('favorite', () => {
-    //   this.getfavorite()
-    // })
   }
 }
 </script>

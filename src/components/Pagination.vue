@@ -32,18 +32,10 @@ export default {
   data () {
     return {}
   },
-  computed: {
-    // eslint-disable-next-line vue/no-dupe-keys
-    // pagination () {
-    //   return this.$store.state.pagination
-    // }
-  },
   methods: {
     getPage (page = 1) {
       // page 如未帶入數值，初始值=1
       // 防呆,避免傳入O或當前頁數大於總頁數
-      // if(page === 0 || page > this.getpagin.total_pages)
-      // { return }
       // 觸發 postPage 從 Products.vue @postPage="getProducts"
       this.$emit('postPage', page)
     }

@@ -212,6 +212,7 @@
 
 <script>
 import $ from 'jquery'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   components: {},
@@ -231,6 +232,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getCart']), // 取得購物車內容
     // 新增訂單
     createOrder () {
       const vm = this
@@ -259,18 +261,12 @@ export default {
         }
       })
     },
-    // 取得購物車內容
-    getCart () {
-      this.$store.dispatch('getCart')
-    },
     goCheckOut () {
       this.$router.push(`/checkout`).catch(err => (err))
     }
   },
   computed: {
-    cart () {
-      return this.$store.state.cart
-    }
+    ...mapGetters(['cart'])
   },
   created () {
     this.getCart()

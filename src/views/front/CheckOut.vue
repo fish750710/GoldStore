@@ -30,7 +30,6 @@
                       <img :src="item.product.imageUrl" class="p-1 border" />
                     </a>
                   </td>
-
                   <td class="align-middle" data-th="商品">
                     <a
                       href="#"
@@ -53,20 +52,11 @@
                       <input
                         type="tel"
                         name="qty"
-                        class="form-control text-center"
-                        @change="inputQty(item.id)"
-                        v-on:change="inputQtyVal"
+                        class="form-control text-center qty"
+                        @blur="inputQty(item)"
                         :value="item.qty"
                         style="width:60px; height:30px"
                       />
-                      <!-- <input
-                        type="tel"
-                        name="qty"
-                        class="form-control text-center"
-                        @change="inputQty( item.qty )"
-                        :value="item.qty"
-                        style="width:60px; height:30px"
-                      /> -->
                       <button class="btn pt-0" @click.prevent="addQty( item )">
                         <i class="fas fa-plus"></i>
                       </button>
@@ -130,7 +120,7 @@
           </div>
         </div>
       </div>
-      <div class="text-center h4 align-self-center" v-if="cart.carts === ''">
+      <div class="text-center h4 align-self-center" v-else style="height:200px">
         空無一物
         <div>
           <button
@@ -147,59 +137,25 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import $ from 'jquery'
 export default {
   components: {},
   data () {
     return {
-      // cart: {
-      //   carts: {
-      //     length: []
-      //   }
-      // },
       coupon_code: '',
-      coupon_msg: '',
-      inputId: ''
+      coupon_msg: ''
     }
   },
   methods: {
-    // 取得購物車內容
-    getCart () {
-      this.$store.dispatch('getCart')
-      // const vm = this;
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // vm.$store.dispatch("updateLoading", true);
-      // this.$http.get(url).then(response => {
-      //   vm.cart = response.data.data;
-      //   vm.$store.dispatch("updateLoading", false);
-      // });
-    },
+    ...mapActions(['getCart']), // 取得購物車內容
     // 加入購物車
     addtoCart (id, qty) {
-      // id 和 數量 預設=1
       this.$store.dispatch('addtoCart', { id, qty })
-      // const vm = this;
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
-      // vm.$store.dispatch("updateLoading", true);
-      // const cart = {
-      //   product_id: id,
-      //   qty
-      // };
-      // this.$http.post(url, { data: cart }).then(response => {
-      //   this.$bus.$emit("refreshCart");
-      //   vm.$store.dispatch("updateLoading", false);
-      // });
     },
     // 刪除購物車內容
     removeCartItem (id) {
       this.$store.dispatch('removeCart', id)
-      // const vm = this;
-      // const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${id}`;
-      // vm.$store.dispatch("updateLoading", true);
-      // this.$http.delete(url).then(() => {
-      //   vm.getCart();
-      //   this.$bus.$emit("refreshCart");
-      //   vm.$store.dispatch("updateLoading", false);
-      // });
     },
     // 增加優惠卷
     addCouponCode () {
@@ -218,32 +174,15 @@ export default {
     // 增加數量
     addQty (item) {
       this.$store.dispatch('addQty', item)
-      // item.qty += 1;
-      // this.removeCartItem(item.id);
-      // this.addtoCart(item.product.id, item.qty);
     },
     // 減少數量
     minusQty (item) {
       this.$store.dispatch('minusQty', item)
-      // item.qty -= 1;
-      // if (item.qty <= 0) {
-      //   this.removeCartItem(item.id);
-      // } else {
-      //   this.removeCartItem(item.id);
-      //   this.addtoCart(item.product.id, item.qty);
-      // }
     },
     // 改變數量
-    inputQty (id) {
-      this.inputId = id
-      // console.log(item.id, this.targetValue)
-      // this.$store.dispatch('inputQty', item)
-    },
-    inputQtyVal (e) {
-      let id = this.inputId
-      let qty = parseInt(e.target.value)
-      // console.log(id, qty)
-      this.$store.dispatch('inputQty', { id, qty })
+    inputQty (item) {
+      let qty = parseInt($('input.qty').val())
+      this.$store.dispatch('inputQty', { item, qty })
     },
     goDetail (id) {
       this.$router.push(`/detail/${id}`).catch(err => (err))
@@ -259,9 +198,7 @@ export default {
     })
   },
   computed: {
-    cart () {
-      return this.$store.state.cart
-    }
+    ...mapGetters(['cart'])
   },
   created () {
     this.getCart()

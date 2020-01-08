@@ -171,7 +171,6 @@ export default {
     } else {
       const answer = confirm(`您尚未付款完成，\n您確定要離開！`)
       if (answer) {
-        console.log(answer)
         next()
       } else {
       // 取消

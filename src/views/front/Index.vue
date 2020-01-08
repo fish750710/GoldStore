@@ -206,10 +206,6 @@
                     <div class="d-flex justify-content-between" style="height:35px">
                       <p class="card-text text-info font-weight-bold">{{ item.content }}</p>
                       <div>
-                        <!-- <span
-                          class="badge badge-secondary float-right ml-2 mb-1"
-                        >{{ item.category }}</span> -->
-                        <!-- <span class="badge badge-success float-right ml-2">{{ item.spec }}</span> -->
                       </div>
                     </div>
 
@@ -261,26 +257,6 @@ export default {
   },
   data () {
     return {
-      // products: [],
-      // pagination: {}, // 分頁
-      // product: {}, // 單筆資料
-      // coupon_code: '',
-      // coupon_msg: '',
-      // form: {
-      //   user: {
-      //     name: '',
-      //     email: '',
-      //     tel: '',
-      //     address: ''
-      //   },
-      //   message: ''
-      // },
-      // favorites: [],
-      // favoriteLength: 0,
-      // added: '',
-      // ProductAll: true,
-      // newData: '',
-      // activeitem: ''
     }
   },
   methods: {
@@ -299,65 +275,15 @@ export default {
     // 篩選
     getCategory (page) {
       this.$store.dispatch('getProducts', page)
-      // let value = this.$route.params.Str // 搜尋關鍵字
-      // const key = ''
-      // this.$store.dispatch('getCategory', { value, key })
     },
-    // 撈全部
-    // getProductAll () {
-    //   this.getCategory()
-    // },
     // 加入我的最愛
     addFavorite (item) {
       this.$store.dispatch('addFavorite', item)
-      // const obj = {
-      //   id: item.id,
-      //   category: item.category,
-      //   title: item.title,
-      //   price: item.price,
-      //   unit: item.unit,
-      //   imageUrl: item.imageUrl,
-      //   content: item.content,
-      //   spec: item.spec
-      // }
-      // this.favorites.push(obj)
-      // localStorage.setItem('favorite', JSON.stringify(this.favorites))
-      // this.getFavoriteLength()
-      // this.$bus.$emit('favorite', this.favorites)
-      // this.$bus.$emit("like");
     },
     // 移除我的最愛
     removeFavorite (item) {
-      // console.log(item)
       this.$store.dispatch('removefavorite', item)
-      // const i = this.favorites.findIndex(el => {
-      //   const result = el.id === item.id
-      //   return result
-      // })
-      // this.favorites.splice(i, 1)
-      // localStorage.setItem('favorite', JSON.stringify(this.favorites))
-      // this.getFavoriteLength()
-      // this.$bus.$emit('favorite', this.favorites)
-      // this.$bus.$emit("dislike");
     },
-    // 有商品於我的最愛時，icon更換
-    getFilteredFavorite () {
-      // console.log(this.favorites)
-      // this.$store.dispatch('getFilteredFavorite', item)
-      // 將撈出來的favorites和畫面上item比對，ID一樣回傳 true
-      // return this.favorites.some(el => {
-      //   const result = item.id === el.id
-      //   return result
-      // })
-    },
-    // 取得我的最愛產品數量
-    // getFavoriteLength () {
-    //   this.favoriteLength = JSON.parse(localStorage.getItem('favorite')) || []
-    //   this.$bus.$emit('favorite', this.favoriteLength)
-    // },
-    // getfavorite() {
-    //   this.$store.dispatch('getfavorite');
-    // },
     // rwd 品牌選單
     getswiper () {
       this.$nextTick(() => {
@@ -401,26 +327,12 @@ export default {
     ...mapGetters(['products', 'myfavorite', 'pagination', 'loadingItem', 'activeitem'])
   },
   mounted () {
-    // 從frontsidebar傳來
-    // this.$bus.$on('search', () => {
-    //   this.getCategory()
-    // })
-    // this.$bus.$on('removefavoritet', () => {
-    //   this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
-    //   this.getFavoriteLength()
-    // })
     this.$bus.$on('refresh', () => {
       this.getProducts()
     })
   },
   created () {
-    // 先抓 localStorage 判斷商品的我的最愛ICON
-    // this.favorites = JSON.parse(localStorage.getItem('favorite')) || []
-    // this.getFavoriteLength()
-    // this.getfavorite();
     this.getswiper()
-    // this.getProducts()
-    // this.getCart();
     if (this.$route.params.Str === undefined) {
       this.getProducts()
     } else {
