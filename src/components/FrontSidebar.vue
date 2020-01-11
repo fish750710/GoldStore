@@ -18,7 +18,7 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -37,9 +37,8 @@ export default {
     }
   },
   computed: {
-    activeitem () {
-      return this.$store.state.activeitem
-    }
+    // vuex getters
+    ...mapGetters(['activeitem'])
   }
 }
 </script>

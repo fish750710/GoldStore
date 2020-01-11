@@ -71,7 +71,7 @@
           <FrontSidebar class="sticky-top"></FrontSidebar>
         </div>
         <swiper class="m-menu-Sidebar mt-5 pb-2 menu-ul">
-          <swiper-slide class="mr-3 ml-2" style="border: 1px solid black;max-width:44%">
+          <swiper-slide class="mr-3 ml-2 sidebar-set">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
@@ -79,7 +79,7 @@
               @click.prevent="badgeSearch('APPLE')"
             >APPLE</a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2" style="border: 1px solid black;max-width:44%">
+          <swiper-slide class="mr-3 ml-2 sidebar-set" >
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
@@ -87,7 +87,7 @@
               @click.prevent="badgeSearch('ASUS')"
             >ASUS</a>
           </swiper-slide>
-          <swiper-slide class="mr-3 ml-2" style="border: 1px solid black;max-width:44%">
+          <swiper-slide class="mr-3 ml-2 sidebar-set" >
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
@@ -96,9 +96,7 @@
             >HTC</a>
           </swiper-slide>
           <swiper-slide
-            class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid black;max-width:44%"
-          >
+            class="mr-3 ml-2 d-flex sidebar-set">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
@@ -106,45 +104,31 @@
               @click.prevent="badgeSearch('小米')"
             >小米</a>
           </swiper-slide>
-
           <swiper-slide
-            class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid black;max-width:44%"
-          >
+            class="mr-3 ml-2 d-flex sidebar-set">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
               :class="[ activeitem ==='三星' ? 'text-white bg-dark':'' ]"
               @click.prevent="badgeSearch('三星')"
-            >
-              <i class="fas fa-robot pr-2 pt-1"></i>三星
-            </a>
+            >三星</a>
           </swiper-slide>
           <swiper-slide
-            class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid black;max-width:44%"
-          >
+            class="mr-3 ml-2 d-flex sidebar-set">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
               :class="[ activeitem ==='NOKIA' ? 'text-white bg-dark':'' ]"
               @click.prevent="badgeSearch('NOKIA')"
-            >
-              <i class="fas fa-robot pr-2 pt-1"></i>NOKIA
-            </a>
+            >NOKIA</a>
           </swiper-slide>
-          <swiper-slide
-            class="mr-3 ml-2 d-flex justify-content-center"
-            style="border: 1px solid black;max-width:44%"
-          >
+          <swiper-slide class="mr-3 ml-2 d-flex sidebar-set">
             <a
               href="#"
               class="menuSidebar w-100 d-flex justify-content-center"
               :class="[ activeitem ==='MOTO' ? 'text-white bg-dark':'' ]"
               @click.prevent="badgeSearch('MOTO')"
-            >
-              <i class="fas fa-robot pr-2 pt-1"></i>MOTO
-            </a>
+            >MOTO</a>
           </swiper-slide>
         </swiper>
         <div class="col-sm-12 col-md-12 col-lg-10">
@@ -247,7 +231,6 @@
 import { mapGetters } from 'vuex' //, mapActions
 import FrontSidebar from '@/components/FrontSidebar.vue'
 import Pagin from '@/components/Pagination.vue' // 分頁
-import Swiper from 'swiper'
 import $ from 'jquery'
 
 export default {
@@ -284,35 +267,6 @@ export default {
     removeFavorite (item) {
       this.$store.dispatch('removefavorite', item)
     },
-    // rwd 品牌選單
-    getswiper () {
-      this.$nextTick(() => {
-        // eslint-disable-next-line no-unused-vars
-        var swiper = new Swiper('.swiper-container', {
-          // Default parameters
-          slidesPerView: 4,
-          spaceBetween: 40,
-          // Responsive breakpoints
-          breakpoints: {
-            // when window width is <= 320px
-            320: {
-              slidesPerView: 2,
-              spaceBetween: 10
-            },
-            // when window width is <= 480px
-            480: {
-              slidesPerView: 2,
-              spaceBetween: 20
-            },
-            // when window width is <= 640px
-            640: {
-              slidesPerView: 3,
-              spaceBetween: 30
-            }
-          }
-        })
-      })
-    },
     badgeSearch (str) {
       this.$router.push(`/${str}`).catch(err => (err))
       this.getCategory()
@@ -332,7 +286,6 @@ export default {
     })
   },
   created () {
-    this.getswiper()
     if (this.$route.params.Str === undefined) {
       this.getProducts()
     } else {
@@ -417,6 +370,10 @@ export default {
     bottom: 80px;
   }
 }
+.sidebar-set{
+  border: 1px solid black;
+  max-width:15%;
+}
 
 @keyframes ad_width {
   from {
@@ -480,9 +437,18 @@ export default {
   .m-banner-rwd {
     display: none;
   }
+  .sidebar-set{
+    max-width:25%;
+  }
 }
 @include m480() {
+  .sidebar-set{
+    max-width:30%;
+  }
 }
 @include iphone5() {
+  .sidebar-set{
+    max-width:35%;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5" style="list-style-type:none;">
+    <ul class="d-flex justify-content-center align-items-center mt-5 pt-5 pl-1 pr-1" style="list-style-type:none;">
       <li class="mb-0 p-2 text-white font-weight-bold shop-title-rwd bg-dark rounded" style="border:1px white dashed;">
         <p class="mb-0">1 購物資訊</p>
       </li>

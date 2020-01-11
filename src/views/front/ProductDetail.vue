@@ -79,31 +79,33 @@
       <div class="h5 text-center swiper-like-rwd ">
         <i class="fas fa-heart text-danger mr-2"></i>猜你喜歡
       </div>
-      <div class="swiper-container swiper-like-rwd swiper-bg" v-if="filterdata.length > 0">
-        <div class="swiper-wrapper py-5">
-          <div class="swiper-slide" v-for="item in filterdata" :key="item.id">
-            <div class="card border-0 bg-transparent card-shadow ml-2" v-if="item.is_enabled" >
-              <a href="#" @click.prevent="goDetail(item.id)" class="text-center card-bg">
-                <img class="card-img-top" alt="..." :src="item.imageUrl" style="max-width:200px;height: 200px;" />
-              </a>
-              <div class="card-body px-0 card-bg pb-1">
-                <div class="m-0 p-1" style="height:60px">
-                  <a
-                    href="#"
-                    class="h6 text-black text-decoration-none"
-                    @click.prevent="goDetail(item.id)"
-                  >{{ item.title }}</a>
-                </div>
-                <div class="d-flex justify-content-between mt-2 p-1">
-                  <del
-                    class="h7 text-muted"
-                    v-if="item.origin_price > 0"
-                  >原價 {{ item.origin_price | currency }} 元</del>
-                  <div v-if="!item.price">
-                    <span class="h5 text-danger">{{ item.origin_price | currency }}元</span>
+      <div class="swiper-bg">
+        <div class="swiper-container swiper-like-rwd " v-if="filterdata.length > 0">
+          <div class="swiper-wrapper py-5">
+            <div class="swiper-slide" v-for="item in filterdata" :key="item.id">
+              <div class="card border-0 bg-transparent card-shadow ml-2" v-if="item.is_enabled" >
+                <a href="#" @click.prevent="goDetail(item.id)" class="text-center card-bg">
+                  <img class="card-img-top" alt="..." :src="item.imageUrl" style="max-width:200px;height: 200px;" />
+                </a>
+                <div class="card-body px-0 card-bg pb-1">
+                  <div class="m-0 p-1" style="height:60px">
+                    <a
+                      href="#"
+                      class="h6 text-black text-decoration-none"
+                      @click.prevent="goDetail(item.id)"
+                    >{{ item.title }}</a>
                   </div>
-                  <div v-if="item.price">
-                    <span class="h5 text-danger">{{ item.price | currency }}元</span>
+                  <div class="d-flex justify-content-between mt-2 p-1">
+                    <del
+                      class="h7 text-muted"
+                      v-if="item.origin_price > 0"
+                    >原價 {{ item.origin_price | currency }} 元</del>
+                    <div v-if="!item.price">
+                      <span class="h5 text-danger">{{ item.origin_price | currency }}元</span>
+                    </div>
+                    <div v-if="item.price">
+                      <span class="h5 text-danger">{{ item.price | currency }}元</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -208,7 +210,11 @@ export default {
                 spaceBetween: 20
               },
               // when window width is <= 640px
-              640: {
+              767: {
+                slidesPerView: 2,
+                spaceBetween: 20
+              },
+              1000: {
                 slidesPerView: 3,
                 spaceBetween: 30
               }
