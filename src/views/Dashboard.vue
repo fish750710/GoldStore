@@ -21,7 +21,6 @@ export default {
   components: {
     Navbar,
     Alert
-
   }
 }
 </script>

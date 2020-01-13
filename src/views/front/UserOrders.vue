@@ -66,8 +66,6 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import $ from 'jquery' // vue 不認識 必須載入jquery
 import Pagin from '@/components/Pagination.vue'
 
 export default {
@@ -86,7 +84,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`
       const vm = this
       vm.isLoading = true
-      this.$http.get(api).then(response => {
+      vm.$http.get(api).then(response => {
         // console.log(response.data);
         vm.isLoading = false
         vm.orders = response.data.orders

@@ -1,15 +1,15 @@
 <template>
   <div>
     <ul class="d-flex justify-content-center align-items-center mt-5 pt-5" style="list-style-type:none">
-      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">1 購物資訊</li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black solid;">1 購物資訊</li>
       <li><i class="fas fa-angle-double-right mr-1"></i></li>
-      <li class="mb-0 p-2 text-white font-weight-bold shop-title-rwd bg-dark rounded" style="border:1px white dashed;">
+      <li class="mb-0 p-2 text-white font-weight-bold shop-title-rwd bg-dark rounded" style="border:1px white solid;">
         <p class="mb-0" >2 訂單資訊</p>
       </li>
       <li><i class="fas fa-angle-double-right animated infinite slideOutRight mr-3 pr-3"></i></li>
-      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">3 完成訂購</li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black solid;">3 完成訂購</li>
       <li><i class="fas fa-angle-double-right mr-1 text-info"></i></li>
-      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">4 付款完成</li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black solid;">4 付款完成</li>
     </ul>
     <!-- 購物資訊 -->
     <div class="container">
@@ -19,7 +19,7 @@
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
                 <button
-                  class="btn btn-link text-decoration-none font-weight-bold"
+                  class="btn btn-link text-decoration-none font-weight-bold text-dark"
                   type="button"
                   data-toggle="collapse"
                   data-target="#shoplist"
@@ -246,7 +246,6 @@ export default {
             // console.log('訂單已建立', response);
             $('#checkorder').modal('hide')
             vm.$bus.$emit('messsage:push', response.data.message, 'success')
-            // vm.getCart();
             if (response.data.success) {
               // console.log('準備跳轉也面');
               vm.$router.push(`/checkout3/${response.data.orderId}`) // $router 轉換頁面
@@ -257,7 +256,6 @@ export default {
         } else {
           $('#checkorder').modal('hide')
           vm.$store.dispatch('updateLoading', false)
-          // console.log('欄位不完整');
         }
       })
     },
@@ -385,10 +383,6 @@ export default {
   .shop-title-rwd p {
     font-size: 18px;
   }
-}
-@include m568() {
-}
-@include m480() {
 }
 @include iphone5() {
   .btn-rwd {

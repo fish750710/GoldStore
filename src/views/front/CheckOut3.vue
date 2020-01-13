@@ -1,15 +1,15 @@
 <template>
   <div>
     <ul class="d-flex justify-content-center align-items-center mt-5 pt-5" style="list-style-type:none">
-      <li class=" mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">1 購物資訊</li>
+      <li class=" mb-0 p-2 mr-1 rounded" style="border:1px black solid;">1 購物資訊</li>
       <li><i class="fas fa-angle-double-right mr-1 "></i></li>
-      <li class=" mb-0 p-2 mr-1 rounded" style="border:1px black dashed;">2 訂單資訊</li>
+      <li class=" mb-0 p-2 mr-1 rounded" style="border:1px black solid;">2 訂單資訊</li>
       <li><i class="fas fa-angle-double-right mr-1 "></i></li>
-      <li class=" mb-0 p-2 mr-1 rounded" :class="[order.is_paid ? '' : 'shop-title-rwd text-white font-weight-bold bg-dark border-white' ]" style="border:1px black dashed;"><p class="mb-0">3 付款方式</p></li>
+      <li class=" mb-0 p-2 mr-1 rounded" :class="[order.is_paid ? '' : 'shop-title-rwd text-white font-weight-bold bg-dark border-white' ]" style="border:1px black solid;"><p class="mb-0">3 付款方式</p></li>
       <li><i class="fas fa-angle-double-right animated infinite slideOutRight mr-3 pr-3 " v-if="!order.is_paid">
         </i><i class="fas fa-angle-double-right mr-1" v-else ></i>
       </li>
-      <li class=" mb-0 p-2 rounded " :class="[order.is_paid ? 'shop-title-rwd text-white font-weight-bold bg-dark border-white' : '' ]" style="border:1px black dashed;"><p class="mb-0">4 付款完成</p></li>
+      <li class=" mb-0 p-2 rounded " :class="[order.is_paid ? 'shop-title-rwd text-white font-weight-bold bg-dark border-white' : '' ]" style="border:1px black solid;"><p class="mb-0">4 付款完成</p></li>
     </ul>
     <div class="container">
     <div class=" row justify-content-center my-5">
@@ -269,10 +269,6 @@ export default {
   .shop-title-rwd p{
     font-size: 18px;
   }
-}
-@include m568() {
-}
-@include m480() {
 }
 @include iphone5() {
   .btn-rwd{

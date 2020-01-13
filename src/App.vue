@@ -5,7 +5,7 @@
 </template>
 
 <style lang="scss">
-@import "./assets/all"; //載入all.scss
+@import "@/assets/all"; //載入all.scss
 
 html,
 body {

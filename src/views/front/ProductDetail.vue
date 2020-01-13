@@ -87,7 +87,7 @@
                 <a href="#" @click.prevent="goDetail(item.id)" class="text-center card-bg">
                   <img class="card-img-top" alt="..." :src="item.imageUrl" style="max-width:200px;height: 200px;" />
                 </a>
-                <div class="card-body px-0 card-bg pb-1">
+                <div class="card-body px-0 card-bg-bottom pb-1">
                   <div class="m-0 p-1" style="height:60px">
                     <a
                       href="#"
@@ -266,31 +266,25 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/all";
-
 .swiper-bg > div{
   background: rgba(0,0,0,.01);
-  border: 1px $info dotted;
+  border: 1px $info solid;
 }
 .card-shadow{
+  border-radius:10px;
   box-shadow: 5px 5px 5px rgba(227, 219, 208, 0.7);
   .card-bg{
+    border-radius:10px 10px 0 0;
     background: #fff;
   }
-}
-
-@include desktop-top() {
-}
-@include pc() {
-}
-@include pad() {
+  .card-bg-bottom{
+    border-radius:0 0 10px 10px;
+    background: #fff;
+  }
 }
 @include m568() {
   .swiper-like-rwd {
     display: none;
   }
-}
-@include m480() {
-}
-@include iphone5() {
 }
 </style>

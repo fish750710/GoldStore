@@ -103,29 +103,6 @@ const routes = [
         component: () => import('@/views/back/Orders.vue'),
         meta: { requiresAuth: true }
       }
-      // 前台模擬訂單
-      // {
-      //   path: '/',
-      //   name: 'Dashboard',
-      //   component: () => import('@/views/Dashboard.vue'),
-      //   children: [
-      //     //巢狀router-view
-      //     {
-      //       path: 'customer_order', //路徑要小寫
-      //       name: 'CustomerOrder',
-      //       component: () => import('@/views/back/CustomerOrder.vue'),
-      //       //不須驗證
-
-      //     },
-      //     {
-      //       path: 'customer_checkout/:orderId', //路徑要小寫，帶上 orderId
-      //       name: 'CustomerCheckout',
-      //       component: () => import('@/views/back/CustomerCheckout.vue'),
-      //       //不須驗證
-      //     },
-      //   ]
-      // },
-
     ]
   }
 ]

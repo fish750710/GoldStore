@@ -16,7 +16,7 @@
           <a href="#" @click="goDetail('-LuQFEYmntflhE3g3af6')" class="d-block">
             <div class="benner-img1">
               <div class="title carousel-caption d-none d-md-block">
-                <h2>全新macbook air</h2>
+                <h1>全新macbook air</h1>
                 <p>絢麗多彩的 Retina 顯示器採用「原彩」顯示技術， 帶來更真實自然的觀看體驗。 • 功能多元的觸控列，提供你更多高效的工作方式</p>
               </div>
             </div>
@@ -26,7 +26,7 @@
           <a href="#" @click="goDetail('-LuQ9Z8JhBgR4O1L2Gb5')" class="d-block">
             <div class="benner-img2">
               <div class="title carousel-caption d-none d-md-block">
-                <h2>新上市 iphone11 PRO</h2>
+                <h1>新上市 iphone11 PRO</h1>
                 <p>• 5.8 吋超 Retina XDR OLED 顯示器</p>
                 <p>• 防潑抗水與防塵功能 (在最深達 4 公尺水中最長可達 30 分鐘，IP68)</p>
                 <p>• 三相機系統，具備 1200 萬像素超廣角、廣角與望遠相機；夜間模式、人像模式與 4K 影片拍攝功能 (最高可達 60 fps)</p>
@@ -38,7 +38,7 @@
           <a href="#" @click="goDetail('-LuQIo2AsSzBCxvJKok_')" class="d-block">
             <div class="benner-img3"></div>
             <div class="title carousel-caption d-none d-md-block">
-              <h2>HTC u19e</h2>
+              <h1>HTC u19e</h1>
               <p>6吋 18:9 全屏大螢幕</p>
               <p>雙主鏡頭相機1600+500萬畫素</p>
               <p>1300萬華素前鏡頭</p>

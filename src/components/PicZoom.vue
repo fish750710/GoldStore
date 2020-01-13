@@ -58,10 +58,10 @@ export default {
     },
     move (ev) {
       this.init()
-      // 鼠标距离屏幕距离
+      // 游標距離螢幕距離
       let moveX = ev.clientX
       let moveY = ev.clientY
-      // 大盒子距离顶部的距离
+      // 大盒子距離頂部的距離
       let offsetLeft = offset(this.oPreviewBox).left
       let offsetTop = offset(this.oPreviewBox).top
       let left = moveX - offsetLeft - this.houverWidth / 2
@@ -270,11 +270,4 @@ export default {
   }
 
 }
-@include m568() {
-}
-@include m480() {
-}
-@include iphone5() {
-}
-
 </style>

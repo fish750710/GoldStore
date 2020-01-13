@@ -1,21 +1,21 @@
 <template>
   <div>
     <ul class="d-flex justify-content-center align-items-center mt-5 pt-5 pl-1 pr-1" style="list-style-type:none;">
-      <li class="mb-0 p-2 text-white font-weight-bold shop-title-rwd bg-dark rounded" style="border:1px white dashed;">
+      <li class="mb-0 p-2 text-white font-weight-bold shop-title-rwd bg-dark rounded" style="border:1px white solid;">
         <p class="mb-0">1 購物資訊</p>
       </li>
       <li><i class="fas fa-angle-double-right animated infinite slideOutRight mr-3 pr-3"></i></li>
-      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed; ">2 訂單資訊</li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black solid; ">2 訂單資訊</li>
       <li><i class="fas fa-angle-double-right mr-1 text-info"></i></li>
-      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed; ">3 完成訂購</li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black solid; ">3 完成訂購</li>
       <li><i class="fas fa-angle-double-right mr-1 text-info"></i></li>
-      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black dashed; ">4 付款完成</li>
+      <li class="mb-0 p-2 mr-1 rounded" style="border:1px black solid; ">4 付款完成</li>
     </ul>
     <!-- 購物車內容 -->
     <div class="container">
       <div class="row justify-content-center" v-if="cart.carts.length > 0">
         <div class="col-md-12 my-5">
-          <h3 class="text-primary font-weight-bold">購物清單</h3>
+          <h3 class="text-dark font-weight-bold">購物清單</h3>
           <div class="table-responsive-sm">
             <table class="table table-rwd">
               <thead>
@@ -300,10 +300,6 @@ export default {
   .shop-title-rwd p {
     font-size: 18px;
   }
-}
-@include m568() {
-}
-@include m480() {
 }
 @include iphone5() {
   .btn-rwd {
