@@ -163,40 +163,42 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body py-0 d-flex justify-content-center">
+          <div class="modal-body py-0">
             <table class="table table-borderless table-sm" v-if="cart.carts.length > 0">
               <thead>
                 <th width="100"></th>
-                <th>商品</th>
+                <th class="text-center">商品</th>
                 <th width="110">價格 / 數量</th>
               </thead>
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
-                  <td class width="100">
+                  <td class="">
                     <a href="#" @click="goDetail(item.product.id)">
                       <img :src="item.product.imageUrl" class="w-100 p-1 border" />
                     </a>
                   </td>
                   <td class="align-middle pl-0">
-                    <thead>
-                      <th class="border-0 pl-0 pt-0">
-                        <a
-                          href="#"
-                          class="text-decoration-none text-black"
-                          @click="goDetail(item.product.id)"
-                        >{{ item.product.title }}</a>
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td
-                          class="border-0 p-0"
-                          width="235"
-                        >{{ item.product.content}} / {{ item.product.spec }}</td>
-                      </tr>
-                    </tbody>
+                    <div>
+                      <thead>
+                        <th class="border-0 pl-0 pt-0">
+                          <a
+                            href="#"
+                            class="text-decoration-none text-black"
+                            @click="goDetail(item.product.id)"
+                          >{{ item.product.title }}</a>
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td
+                            class="border-0 p-0"
+                            width="235"
+                          >{{ item.product.content}} / {{ item.product.spec }}</td>
+                        </tr>
+                      </tbody>
+                    </div>
                   </td>
-                  <td>
+                  <td class="">
                     <button class="btn pt-0 pb-0 pl-1 pr-1" @click="minusQty(item)" :disabled="item.id ===loadingItem">
                       <i class="fas fa-minus" v-if="item.id != loadingItem"></i>
                       <i class="fas fa-spinner fa-pulse" v-else></i>
@@ -281,16 +283,16 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body py-0 d-flex justify-content-center">
+          <div class="modal-body py-0">
             <table class="table table-borderless table-sm" v-if="myfavorite.length > 0">
               <thead>
                 <th width="100"></th>
-                <th>商品</th>
+                <th class="text-center">商品</th>
                 <th width>收藏</th>
               </thead>
               <tbody>
                 <tr v-for="item in myfavorite" :key="item.id">
-                  <td class width="100">
+                  <td width="100">
                     <a href="#" @click="goDetail(item.id)">
                       <img :src="item.imageUrl" class="w-100 p-1 border" />
                     </a>
