@@ -1,0 +1,6 @@
+@import "~bootstrap/scss/functions";   //載入 BS4的方法
+@import "./helpers/variables";  //載入自訂義的變數
+@import "~bootstrap/scss/bootstrap";
+
+@import "./_dashboard";  //dashboard.scss檔案
+@import "./helpers/grid"; //RWD
