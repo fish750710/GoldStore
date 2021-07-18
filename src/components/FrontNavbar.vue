@@ -434,12 +434,11 @@
                         <a href="#" class="text-decoration-none">忘記密碼</a>
                       </div>
                       <div v-if="!message.success" class="text-danger mb-3">{{ message.message }}</div>
-
                       <button
                         class="btn btn-lg btn-primary btn-block font-weight-bold"
                         type="submit"
                         @keyup.enter="signin()"
-                        v-if="!ischange"
+                        v-if="!ischange" :disabled="invalid"
                       >登入</button>
                     </form>
                   <button

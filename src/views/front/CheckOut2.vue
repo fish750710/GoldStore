@@ -90,122 +90,141 @@
     </div>
     <!-- 訂單 -->
     <div class="my-5 d-flex justify-content-center">
-      <form class="col-md-6" @submit.prevent="createOrder">
-        <div class="form-group">
-          <label for="useremail">*Email</label>
-          <input
-            type="email"
-            class="form-control"
-            name="email"
-            id="useremail"
-            v-validate="'required|email'"
-            :class="{'is-invalid': errors.has('email')}"
-            v-model="form.user.email"
-            placeholder="請輸入 Email"
-          />
-          <span class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</span>
-        </div>
-        <div class="form-group">
-          <label for="username">*收件人姓名</label>
-          <input
-            type="text"
-            class="form-control"
-            name="name"
-            id="username"
-            :class="{'is-invalid': errors.has('name')}"
-            v-model="form.user.name"
-            v-validate="'required'"
-            placeholder="輸入姓名"
-          />
-          <span class="text-danger" v-if="errors.has('name')">姓名必須輸入</span>
-        </div>
-        <div class="form-group">
-          <label for="usertel">*收件人電話</label>
-          <input
-            type="tel"
-            class="form-control"
-            name="tel"
-            id="usertel"
-            v-model="form.user.tel"
-            placeholder="請輸入電話"
-            :class="{'is-invalid': errors.has('tel')}"
-            v-validate="'required'"
-          />
-          <span class="text-danger" v-if="errors.has('tel')">電話必須輸入</span>
-        </div>
-        <div class="form-group">
-          <label for="useraddress">*收件人地址</label>
-          <input
-            type="address"
-            class="form-control"
-            name="address"
-            :class="{'is-invalid': errors.has('address')}"
-            id="useraddress"
-            v-model="form.user.address"
-            v-validate="'required'"
-            placeholder="請輸入地址"
-          />
-          <span class="text-danger" v-if="errors.has('address')">地址欄位不得留空</span>
-        </div>
-        <div class="form-group">
-          <label for="usermsg">留言</label>
-          <textarea
-            name
-            id="usermsg"
-            class="form-control"
-            cols="30"
-            rows="3"
-            v-model="form.message"
-          ></textarea>
-        </div>
-        <div class="d-flex justify-content-between">
-          <button class="btn btn-secondary" @click.prevent="goCheckOut">
-            <i class="fas fa-backspace pl-3">
-              <span class="pl-2 h6 font-weight-bold">上一步</span>
-            </i>
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger"
-            data-toggle="modal"
-            data-target="#checkorder"
+      <validation-observer v-slot="{ invalid }">
+        <form class="col-md-6" @submit.prevent="createOrder">
+          <div class="form-group">
+            <label for="useremail">*Email</label>
+            <validation-provider rules="required|email" v-slot="{errors, classes}">
+              <input id="useremail" type="email" name="email" v-model="form.user.email" class="form-control mb-2" :class="classes" placeholder="請輸入 Email">
+              <span class="text-danger">{{errors[0]}}</span>
+            </validation-provider>
+            <!-- <input
+              type="email"
+              class="form-control"
+              name="email"
+              id="useremail"
+              v-validate="'required|email'"
+              :class="{'is-invalid': errors.has('email')}"
+              v-model="form.user.email"
+              placeholder="請輸入 Email"
+            />
+            <span class="text-danger" v-if="errors.has('email')">{{ errors.first('email') }}</span> -->
+          </div>
+          <div class="form-group">
+            <label for="username">*收件人姓名</label>
+            <ValidationProvider rules="required" v-slot="{errors, classes}">
+              <input id="username" type="text" name="name" v-model="form.user.name" class="form-control" :class="classes" placeholder="輸入姓名">
+              <span class="text-danger">{{errors[0]}}</span>
+            </ValidationProvider>
+            <!-- <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="username"
+              :class="{'is-invalid': errors.has('name')}"
+              v-model="form.user.name"
+              v-validate="'required'"
+              placeholder="輸入姓名"
+            />
+            <span class="text-danger" v-if="errors.has('name')">姓名必須輸入</span> -->
+          </div>
+          <div class="form-group">
+            <label for="usertel">*收件人電話</label>
+            <ValidationProvider rules="required" v-slot="{errors, classes}">
+              <input id="usertel" type="tel" name="tel" v-model="form.user.tel" class="form-control" :class="classes" placeholder="請輸入電話">
+              <span class="text-danger">{{errors[0]}}</span>
+            </ValidationProvider>
+            <!-- <input
+              type="tel"
+              class="form-control"
+              name="tel"
+              id="usertel"
+              v-model="form.user.tel"
+              placeholder="請輸入電話"
+              :class="{'is-invalid': errors.has('tel')}"
+              v-validate="'required'"
+            />
+            <span class="text-danger" v-if="errors.has('tel')">電話必須輸入</span> -->
+          </div>
+          <div class="form-group">
+            <label for="useraddress">*收件人地址</label>
+             <ValidationProvider rules="required" v-slot="{errors, classes}">
+              <input id="useraddress" type="address" name="address" v-model="form.user.address" class="form-control" :class="classes" placeholder="請輸入地址">
+              <span class="text-danger">{{errors[0]}}</span>
+            </ValidationProvider>
+            <!-- <input
+              type="address"
+              class="form-control"
+              name="address"
+              :class="{'is-invalid': errors.has('address')}"
+              id="useraddress"
+              v-model="form.user.address"
+              v-validate="'required'"
+              placeholder="請輸入地址"
+            />
+            <span class="text-danger" v-if="errors.has('address')">地址欄位不得留空</span> -->
+          </div>
+          <div class="form-group">
+            <label for="usermsg">留言</label>
+            <textarea
+              name
+              id="usermsg"
+              class="form-control"
+              cols="30"
+              rows="3"
+              v-model="form.message"
+            ></textarea>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-secondary" @click.prevent="goCheckOut">
+              <i class="fas fa-backspace pl-3">
+                <span class="pl-2 h6 font-weight-bold">上一步</span>
+              </i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-toggle="modal"
+              data-target="#checkorder"
+              :disabled="invalid"
+            >
+              <i class="fas fa-arrow-alt-circle-right">
+                <span class="pl-2 h6 font-weight-bold">送出訂單</span>
+              </i>
+            </button>
+          </div>
+          <!-- 確認視窗 -->
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="checkorder"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="orderTitle"
+            aria-hidden="true"
           >
-            <i class="fas fa-arrow-alt-circle-right">
-              <span class="pl-2 h6 font-weight-bold">送出訂單</span>
-            </i>
-          </button>
-        </div>
-        <!-- 確認視窗 -->
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="checkorder"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="orderTitle"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="orderTitle">確認訂單</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body h5 text-danger font-weight-bold">請再次確認商品訂單無誤，謝謝</div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button
-                  type="button"
-                  class="btn btn-danger font-weight-bold"
-                  @click="createOrder"
-                >送出訂單</button>
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="orderTitle">確認訂單</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body h5 text-danger font-weight-bold">請再次確認商品訂單無誤，謝謝</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                  <button
+                    type="button"
+                    class="btn btn-danger font-weight-bold"
+                    @click="createOrder"
+                  >送出訂單</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </validation-observer>
     </div>
   </div>
 </template>
@@ -239,24 +258,16 @@ export default {
       const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`
       const order = vm.form
       vm.$store.dispatch('updateLoading', true)
-
-      vm.$validator.validate().then(result => {
-        if (result) {
-          vm.$http.post(url, { data: order }).then(response => {
-            // console.log('訂單已建立', response);
-            $('#checkorder').modal('hide')
-            vm.$bus.$emit('messsage:push', response.data.message, 'success')
-            if (response.data.success) {
-              // console.log('準備跳轉也面');
-              vm.$router.push(`/checkout3/${response.data.orderId}`) // $router 轉換頁面
-            }
-            this.$bus.$emit('refreshCart')
-            vm.$store.dispatch('updateLoading', false)
-          })
-        } else {
-          $('#checkorder').modal('hide')
-          vm.$store.dispatch('updateLoading', false)
+      vm.$http.post(url, { data: order }).then(response => {
+        // console.log('訂單已建立', response);
+        $('#checkorder').modal('hide')
+        vm.$bus.$emit('messsage:push', response.data.message, 'success')
+        if (response.data.success) {
+          // console.log('準備跳轉也面');
+          vm.$router.push(`/checkout3/${response.data.orderId}`) // $router 轉換頁面
         }
+        this.$bus.$emit('refreshCart')
+        vm.$store.dispatch('updateLoading', false)
       })
     },
     goCheckOut () {
