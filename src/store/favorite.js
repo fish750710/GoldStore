@@ -6,7 +6,10 @@ export default {
   // 操作行為
   actions: {
     getfavorite (context) {
-      let myfavorite = JSON.parse(localStorage.getItem('favorite') || [])
+      let myfavorite = []
+      if (localStorage.getItem('favorite')) {
+        myfavorite = JSON.parse(localStorage.getItem('favorite'))
+      }
       context.dispatch('getProducts')
       context.commit('MYFAVORITES', myfavorite)
     },

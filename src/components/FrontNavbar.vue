@@ -226,7 +226,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="text-center h4 align-self-center" v-else>
+            <div class="text-center h4 align-self-center preset-info" v-else>
               空無一物
               <div>
                 <button
@@ -325,7 +325,7 @@
                 </tr>
               </tbody>
             </table>
-            <div class="text-center h4 align-self-center" v-else>
+            <div class="text-center h4 align-self-center preset-info" v-else>
               空無一物
               <div>
                 <button
@@ -653,9 +653,10 @@ export default {
   },
   created () {
     this.getCart()
-    this.issuccess()
+    if (this.$store.state.cookie) {
+      this.issuccess()
+    }
     this.getfavorite()
-
     $(function () {
       $('.menuButton > a').click(function (e) {
         e.preventDefault()
@@ -772,7 +773,9 @@ export default {
 .userlogo {
   font-size: 22px;
 }
-
+.preset-info{
+  margin-top: 20rem;
+}
 @keyframes ad_width {
   from {
     width: 0;

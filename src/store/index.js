@@ -12,7 +12,8 @@ export default new Vuex.Store({
   // 嚴謹模式
   strict: true,
   state: {
-    isLoading: false
+    isLoading: false,
+    cookie: ''
   },
   // 操作行為
   actions: {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
   mutations: {
     LOADING (state, status) {
       state.isLoading = status
+    },
+    SETCOOKIE (state, cookie) {
+      state.cookie = cookie
     },
     ARRAYLTOH (state, item) {
       if (item === 'lowPrice') {

@@ -2,7 +2,6 @@
     <div>
         <Navbar/>
         <div class="d-flex justify-content-center align-items-center"><alert/> </div>
-
         <div class="container-fluid">
             <div class="row">
                 <main role="main" class="col-md ml-sm-auto col-lg px-4">

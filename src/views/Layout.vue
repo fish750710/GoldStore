@@ -20,6 +20,7 @@ export default {
   },
   created () {
     const myCookie = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    this.$store.commit('SETCOOKIE', myCookie)
     this.$http.defaults.headers.common['Authorization'] = `${myCookie}`
   }
 }
